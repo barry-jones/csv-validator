@@ -5,30 +5,18 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
-    public class StringLengthValidator
+    public class StringLengthValidator : IValidator
     {
         private int _maxLength;
 
-        public StringLengthValidator()
+        public StringLengthValidator(int maxLength)
         {
-            _maxLength = 0;
+            _maxLength = maxLength;
         }
 
         public bool IsValid(string toCheck)
         {
-            return toCheck.Length <= MaxLength;
-        }
-
-        public int MaxLength
-        {
-            get
-            {
-                return _maxLength;
-            }
-            set
-            {
-                _maxLength = value;
-            }
+            return toCheck.Length <= _maxLength;
         }
     }
 }

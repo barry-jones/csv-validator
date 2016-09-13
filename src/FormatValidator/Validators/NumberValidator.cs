@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
-    public class NumberValidator
+    public class NumberValidator : IValidator
     {
         public bool IsValid(string toCheck)
         {

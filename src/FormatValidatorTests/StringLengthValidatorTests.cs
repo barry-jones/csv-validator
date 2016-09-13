@@ -17,8 +17,7 @@ namespace FormatValidatorTests
             const string INPUT = "a test string";
             const bool EXPECTED = false;
 
-            StringLengthValidator validator = new StringLengthValidator();
-            validator.MaxLength = 10;
+            StringLengthValidator validator = new StringLengthValidator(10);
 
             bool result = validator.IsValid(INPUT);
 
@@ -32,8 +31,7 @@ namespace FormatValidatorTests
             const bool EXPECTED = true;
             const int MAX_LENGTH = 13;
 
-            StringLengthValidator validator = new StringLengthValidator();
-            validator.MaxLength = MAX_LENGTH;
+            StringLengthValidator validator = new StringLengthValidator(MAX_LENGTH);
 
             bool result = validator.IsValid(INPUT);
 
@@ -47,8 +45,7 @@ namespace FormatValidatorTests
             const bool EXPECTED = true;
             const int MAX_LENGTH = 13;
 
-            StringLengthValidator validator = new StringLengthValidator();
-            validator.MaxLength = MAX_LENGTH;
+            StringLengthValidator validator = new StringLengthValidator(MAX_LENGTH);
 
             bool result = validator.IsValid(INPUT);
 
