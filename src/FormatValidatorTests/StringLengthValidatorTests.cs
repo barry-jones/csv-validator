@@ -12,19 +12,6 @@ namespace FormatValidatorTests
     public class StringLengthValidatorTests
     {
         [TestMethod]
-        public void Nothing()
-        {
-            string fromFile = string.Empty;
-
-            Validator validator = new Validator();
-            validator.LoadRequirements(fromFile);
-
-            bool hasRequirements = validator.HasRequirments;
-
-            Assert.IsTrue(hasRequirements);
-        }
-
-        [TestMethod]
         public void StringLengthValidator_WhenStringIsLongerThanMaxLength_IsValid()
         {
             const string INPUT = "a test string";
