@@ -6,7 +6,7 @@ using FormatValidator;
 using FormatValidator.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FormatValidatorTests
+namespace FormatValidatorTests.Unit
 {
     [TestClass]
     public class StringLengthValidatorTests

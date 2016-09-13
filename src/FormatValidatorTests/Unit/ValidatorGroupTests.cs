@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using FormatValidator.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FormatValidatorTests
+namespace FormatValidatorTests.Unit
 {
     [TestClass]
-    public class MultipleValidatorsTests
+    public class ValidatorGroupTests
     {
         [TestMethod]
         public void Multiple_OnSingleValue_IsInvalid()
