@@ -10,7 +10,6 @@ namespace FormatValidatorTests
     [TestClass]
     public class InvalidCharactersValidatorTests
     {
-
         [TestMethod]
         public void InvalidCharactersValidator_WhenContains_IsNotValid()
         {
