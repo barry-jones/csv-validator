@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FormatValidatorTests
 {
     [TestClass]
-    public class Class1
+    public class StringLengthValidatorTests
     {
         [TestMethod]
         public void Nothing()
