@@ -136,5 +136,55 @@ namespace FormatValidatorTests.Unit
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
             ValidationErrorHelper.CheckError(0, "Could not convert 'row' to a number.", errors[0]);
         }
+
+        [TestMethod]
+        public void RowValidator_WhenValidatingMultipleRows_ErrorsDontStackUp()
+        {
+            const string ROW1 = @"this5,notnull,a,row";
+            const string ROW2 = @"this5,notnull,a,row";
+            const int EXPECTED_ERRORCOUNT = 2;
+            List<ValidationError> errors = new List<ValidationError>();
+
+            RowValidator validator = new RowValidator(',');
+            validator.AddColumnValidator(1, new StringLengthValidator(4));
+            
+            validator.IsValid(ROW1);
+            errors.AddRange(validator.GetErrors());
+            validator.ClearErrors();
+            validator.IsValid(ROW2);
+            errors.AddRange(validator.GetErrors());
+
+            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
+        }
+
+        [TestMethod]
+        public void RowValidator_WhenValidatingMultipleRowsAndUnique_ErrorsDontStackUp()
+        {
+            const string ROW1 = @"this1,notnull,a,notuniqueid";
+            const string ROW2 = @"this2,notnull,a,notuniqueid";
+            const string ROW3 = @"this3,notnull,a,notuniqueid";
+            const string ROW4 = @"this4,notnull,a,notuniqueid";
+            const int EXPECTED_ERRORCOUNT = 7;
+            List<ValidationError> errors = new List<ValidationError>();
+
+            RowValidator validator = new RowValidator(',');
+            validator.AddColumnValidator(1, new StringLengthValidator(4));
+            validator.AddColumnValidator(4, new UniqueColumnValidator());
+
+            validator.IsValid(ROW1);
+            errors.AddRange(validator.GetErrors());
+            validator.ClearErrors();
+            validator.IsValid(ROW2);
+            errors.AddRange(validator.GetErrors());
+            validator.ClearErrors();
+            validator.IsValid(ROW3);
+            errors.AddRange(validator.GetErrors());
+            validator.ClearErrors();
+            validator.IsValid(ROW4);
+            errors.AddRange(validator.GetErrors());
+            validator.ClearErrors();
+
+            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
+        }
     }
 }

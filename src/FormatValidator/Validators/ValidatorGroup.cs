@@ -34,6 +34,15 @@ namespace FormatValidator.Validators
             return isValid;
         }
 
+        public override void ClearErrors()
+        {
+            base.ClearErrors();
+            foreach(IValidator current in _validators)
+            {
+                current.ClearErrors();
+            }
+        }
+
         public void Add(IValidator validator)
         {
             _validators.Add(validator);

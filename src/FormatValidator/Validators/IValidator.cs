@@ -10,5 +10,7 @@ namespace FormatValidator.Validators
         bool IsValid(string toCheck);
 
         IList<ValidationError> GetErrors();
+
+        void ClearErrors();
     }
 }

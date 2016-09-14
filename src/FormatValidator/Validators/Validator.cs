@@ -16,9 +16,14 @@ namespace FormatValidator.Validators
 
         public abstract bool IsValid(string toCheck);
 
-        public IList<ValidationError> GetErrors()
+        public virtual IList<ValidationError> GetErrors()
         {
             return _errors;
+        }
+
+        public virtual void ClearErrors()
+        {
+            _errors.Clear();
         }
 
         protected List<ValidationError> Errors

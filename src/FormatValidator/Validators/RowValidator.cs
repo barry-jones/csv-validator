@@ -34,6 +34,15 @@ namespace FormatValidator.Validators
             return isValid;
         }
 
+        public override void ClearErrors()
+        {
+            base.ClearErrors();
+            foreach(ValidatorGroup current in _columns)
+            {
+                current.ClearErrors();
+            }
+        }
+
         public void AddColumnValidator(int toColumn, IValidator validator)
         {
             CheckAndResizeColumnList(toColumn);
