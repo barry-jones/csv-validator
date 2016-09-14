@@ -5,41 +5,33 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
-    public class ValidatorGroup : IValidator
+    public class ValidatorGroup : Validator
     {
         private List<IValidator> _validators;
-        private List<ValidationError> _errors;
 
         public ValidatorGroup()
         {
-            _errors = new List<ValidationError>();
             _validators = new List<IValidator>();
         }
 
         public ValidatorGroup(IList<IValidator> group)
         {
-            _errors = new List<ValidationError>();
             _validators = new List<IValidator>();
             _validators.AddRange(group);
         }
 
-        public bool IsValid(string toCheck)
+        public override bool IsValid(string toCheck)
         {
             bool isValid = true;
 
             foreach(IValidator current in _validators)
             {
                 bool currentValid = current.IsValid(toCheck);
-                _errors.AddRange(current.GetErrors());
+                Errors.AddRange(current.GetErrors());
                 isValid = isValid & currentValid;
             }
 
             return isValid;
-        }
-
-        public IList<ValidationError> GetErrors()
-        {
-            return _errors;
         }
 
         public void Add(IValidator validator)

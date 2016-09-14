@@ -5,18 +5,16 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
-    public class InvalidCharactersValidator : IValidator
+    public class InvalidCharactersValidator : Validator
     {
         private List<Char> _characters;
-        private List<ValidationError> _errors;
 
         public InvalidCharactersValidator()
         {
             _characters = new List<char>();
-            _errors = new List<ValidationError>();
         }
 
-        public bool IsValid(string toCheck)
+        public override bool IsValid(string toCheck)
         {
             bool isValid = true;
 
@@ -24,17 +22,12 @@ namespace FormatValidator.Validators
             {
                 if (toCheck.Contains(current.ToString()))
                 {
-                    _errors.Add(new ValidationError(toCheck.IndexOf(current) + 1, string.Format("'{0}' invalid character found.", current)));
+                    Errors.Add(new ValidationError(toCheck.IndexOf(current) + 1, string.Format("'{0}' invalid character found.", current)));
                     isValid = false;
                 }
             }
 
             return isValid;
-        }
-
-        public IList<ValidationError> GetErrors()
-        {
-            return _errors;
         }
 
         public List<char> Characters

@@ -5,20 +5,18 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
-    public class RowValidator : IValidator
+    public class RowValidator : Validator
     {
         private char _columnSeperator;
         private ValidatorGroup[] _columns;
-        private List<ValidationError> _errors;
 
         public RowValidator(char columnSeperator)
         {
-            _errors = new List<ValidationError>();
             _columns = new ValidatorGroup[0];
             _columnSeperator = columnSeperator;
         }
         
-        public bool IsValid(string toCheck)
+        public override bool IsValid(string toCheck)
         {
             bool isValid = true;
             string[] parts = toCheck.Split(_columnSeperator);
@@ -28,17 +26,12 @@ namespace FormatValidator.Validators
                 if(i < _columns.Length)
                 {
                     bool currentResult = _columns[i].IsValid(parts[i]);
-                    _errors.AddRange(_columns[i].GetErrors());
+                    Errors.AddRange(_columns[i].GetErrors());
                     isValid = isValid & currentResult;
                 }
             }
 
             return isValid;
-        }
-
-        public IList<ValidationError> GetErrors()
-        {
-            return _errors;
         }
 
         public void AddColumnValidator(int toColumn, IValidator validator)

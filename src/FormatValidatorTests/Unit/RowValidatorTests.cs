@@ -101,7 +101,7 @@ namespace FormatValidatorTests.Unit
 
             validator.AddColumnValidator(1, new StringLengthValidator(2));
             validator.AddColumnValidator(2, new NotNullableValidator());
-            validator.AddColumnValidator(3, new TextFormatValidator(@"b"));
+            validator.AddColumnValidator(3, new TextFormatValidator(@"[b]"));
             validator.AddColumnValidator(4, new NumberValidator());
 
             bool result = validator.IsValid(ROW);
