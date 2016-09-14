@@ -18,6 +18,7 @@ namespace FormatValidator.Validators
 
         public ValidatorGroup(IList<IValidator> group)
         {
+            _errors = new List<ValidationError>();
             _validators = new List<IValidator>();
             _validators.AddRange(group);
         }
@@ -29,6 +30,7 @@ namespace FormatValidator.Validators
             foreach(IValidator current in _validators)
             {
                 bool currentValid = current.IsValid(toCheck);
+                _errors.AddRange(current.GetErrors());
                 isValid = isValid & currentValid;
             }
 

@@ -27,7 +27,7 @@ namespace FormatValidator.Validators
 
         public IList<ValidationError> GetErrors()
         {
-            throw new NotImplementedException();
+            return _errors;
         }
     }
 }

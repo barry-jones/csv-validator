@@ -19,8 +19,14 @@ namespace FormatValidator.Validators
 
         public bool IsValid(string toCheck)
         {
+            bool isValid = _format.IsMatch(toCheck);
+            if(!isValid)
+            {
+                _errors.Add(new ValidationError(0, string.Format("String {0} was not in correct format.", toCheck)));
+            }
             return _format.IsMatch(toCheck);
         }
+
         public IList<ValidationError> GetErrors()
         {
             return _errors;

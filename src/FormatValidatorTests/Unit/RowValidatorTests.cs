@@ -95,18 +95,20 @@ namespace FormatValidatorTests.Unit
         {
             const string ROW = @"this,,a,row";
             const bool EXPECTED_RESULT = false;
+            const int EXPECTED_ERRORCOUNT = 4;
 
             RowValidator validator = new RowValidator(',');
 
-            validator.AddColumnValidator(1, new StringLengthValidator(5));
+            validator.AddColumnValidator(1, new StringLengthValidator(2));
             validator.AddColumnValidator(2, new NotNullableValidator());
-            validator.AddColumnValidator(3, new TextFormatValidator(@"[b]"));
+            validator.AddColumnValidator(3, new TextFormatValidator(@"b"));
             validator.AddColumnValidator(4, new NumberValidator());
 
             bool result = validator.IsValid(ROW);
             IList<ValidationError> errors = validator.GetErrors();
 
             Assert.AreEqual(EXPECTED_RESULT, result);
+            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
         }
     }
 }

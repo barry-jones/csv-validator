@@ -59,7 +59,6 @@ namespace FormatValidatorTests.Unit
             const string INPUT = "a te#st |string";
             const bool EXPECTED = false;
             const int EXPECTED_ERRORCOUNT = 2;
-            const string EXPECTED_ERRORS = "'#' at 5, '|' at 9";
 
             InvalidCharactersValidator validator = new InvalidCharactersValidator();
             validator.Characters.AddRange(new char[] { '#', '|' });
@@ -69,12 +68,14 @@ namespace FormatValidatorTests.Unit
 
             Assert.AreEqual(EXPECTED, result);
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
+            CheckError(5, "'#' invalid character found.", errors[0]);
+            CheckError(9, "'|' invalid character found.", errors[1]);
+        }
 
-            Assert.AreEqual(5, errors[0].At);
-            Assert.AreEqual("'#' invalid character found.", errors[0].Message);
-
-            Assert.AreEqual(9, errors[1].At);
-            Assert.AreEqual("'|' invalid character found.", errors[1].Message);
+        private void CheckError(int expectedAt, string expectedMessage, ValidationError error)
+        {
+            Assert.AreEqual(expectedAt, error.At);
+            Assert.AreEqual(expectedMessage, error.Message);
         }
     }
 }
