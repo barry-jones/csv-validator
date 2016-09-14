@@ -8,12 +8,12 @@ namespace FormatValidator.Validators
     public class InvalidCharactersValidator : IValidator
     {
         private List<Char> _characters;
-        private List<string> _errors;
+        private List<ValidationError> _errors;
 
         public InvalidCharactersValidator()
         {
             _characters = new List<char>();
-            _errors = new List<string>();
+            _errors = new List<ValidationError>();
         }
 
         public bool IsValid(string toCheck)
@@ -24,12 +24,17 @@ namespace FormatValidator.Validators
             {
                 if (toCheck.Contains(current.ToString()))
                 {
-                    _errors.Add(string.Format("'{0}' at {1}", current, toCheck.IndexOf(current) + 1));
+                    _errors.Add(new ValidationError(toCheck.IndexOf(current) + 1, string.Format("'{0}' invalid character found.", current)));
                     isValid = false;
                 }
             }
 
             return isValid;
+        }
+
+        public IList<ValidationError> GetErrors()
+        {
+            return _errors;
         }
 
         public List<char> Characters
@@ -42,11 +47,6 @@ namespace FormatValidator.Validators
             {
                 _characters = value;
             }
-        }
-
-        public string GetErrors()
-        {
-            return string.Join(", ", _errors);
         }
     }
 }

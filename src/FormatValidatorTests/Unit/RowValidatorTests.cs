@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FormatValidator;
 using FormatValidator.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -85,6 +86,25 @@ namespace FormatValidatorTests.Unit
             validator.AddColumnValidator(4, new NumberValidator());
 
             bool result = validator.IsValid(ROW);
+
+            Assert.AreEqual(EXPECTED_RESULT, result);
+        }
+
+        [TestMethod]
+        public void RowValidator_ValidatesAllColumns_HasMultipleErrors()
+        {
+            const string ROW = @"this,,a,row";
+            const bool EXPECTED_RESULT = false;
+
+            RowValidator validator = new RowValidator(',');
+
+            validator.AddColumnValidator(1, new StringLengthValidator(5));
+            validator.AddColumnValidator(2, new NotNullableValidator());
+            validator.AddColumnValidator(3, new TextFormatValidator(@"[b]"));
+            validator.AddColumnValidator(4, new NumberValidator());
+
+            bool result = validator.IsValid(ROW);
+            IList<ValidationError> errors = validator.GetErrors();
 
             Assert.AreEqual(EXPECTED_RESULT, result);
         }

@@ -8,9 +8,11 @@ namespace FormatValidator.Validators
     public class ValidatorGroup : IValidator
     {
         private List<IValidator> _validators;
+        private List<ValidationError> _errors;
 
         public ValidatorGroup()
         {
+            _errors = new List<ValidationError>();
             _validators = new List<IValidator>();
         }
 
@@ -31,6 +33,11 @@ namespace FormatValidator.Validators
             }
 
             return isValid;
+        }
+
+        public IList<ValidationError> GetErrors()
+        {
+            return _errors;
         }
 
         public void Add(IValidator validator)

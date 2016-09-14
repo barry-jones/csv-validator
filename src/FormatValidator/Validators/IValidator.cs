@@ -8,5 +8,7 @@ namespace FormatValidator.Validators
     public interface IValidator
     {
         bool IsValid(string toCheck);
+
+        IList<ValidationError> GetErrors();
     }
 }
