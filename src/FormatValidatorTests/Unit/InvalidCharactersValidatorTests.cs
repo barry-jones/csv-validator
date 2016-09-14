@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FormatValidator;
 using FormatValidator.Validators;
+using FormatValidatorTests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FormatValidatorTests.Unit
@@ -68,14 +69,8 @@ namespace FormatValidatorTests.Unit
 
             Assert.AreEqual(EXPECTED, result);
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
-            CheckError(5, "'#' invalid character found.", errors[0]);
-            CheckError(9, "'|' invalid character found.", errors[1]);
-        }
-
-        private void CheckError(int expectedAt, string expectedMessage, ValidationError error)
-        {
-            Assert.AreEqual(expectedAt, error.At);
-            Assert.AreEqual(expectedMessage, error.Message);
+            ValidationErrorHelper.CheckError(5, "'#' invalid character found.", errors[0]);
+            ValidationErrorHelper.CheckError(9, "'|' invalid character found.", errors[1]);
         }
     }
 }

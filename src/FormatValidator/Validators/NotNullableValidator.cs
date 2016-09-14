@@ -7,7 +7,6 @@ namespace FormatValidator.Validators
 {
     public class NotNullableValidator : Validator
     {
-
         public override bool IsValid(string toCheck)
         {
             bool isValid = !string.IsNullOrEmpty(toCheck);

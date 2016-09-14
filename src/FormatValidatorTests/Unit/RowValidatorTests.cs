@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FormatValidator;
 using FormatValidator.Validators;
+using FormatValidatorTests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FormatValidatorTests.Unit
@@ -77,6 +78,7 @@ namespace FormatValidatorTests.Unit
         {
             const string ROW = @"this,,a,row";
             const bool EXPECTED_RESULT = false;
+            const int EXPECTED_ERRORCOUNT = 3;
 
             RowValidator validator = new RowValidator(',');
 
@@ -86,8 +88,10 @@ namespace FormatValidatorTests.Unit
             validator.AddColumnValidator(4, new NumberValidator());
 
             bool result = validator.IsValid(ROW);
+            IList<ValidationError> errors = validator.GetErrors();
 
             Assert.AreEqual(EXPECTED_RESULT, result);
+            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
         }
 
         [TestMethod]
@@ -109,6 +113,28 @@ namespace FormatValidatorTests.Unit
 
             Assert.AreEqual(EXPECTED_RESULT, result);
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
+        }
+
+        [TestMethod]
+        public void RowValidator_ValidatesAllColumns_HasAnErrorOnLastColumn()
+        {
+            const string ROW = @"this,notnull,a,row";
+            const bool EXPECTED_RESULT = false;
+            const int EXPECTED_ERRORCOUNT = 1;
+
+            RowValidator validator = new RowValidator(',');
+
+            validator.AddColumnValidator(1, new StringLengthValidator(4));
+            validator.AddColumnValidator(2, new NotNullableValidator());
+            validator.AddColumnValidator(3, new TextFormatValidator(@"[a]"));
+            validator.AddColumnValidator(4, new NumberValidator());
+
+            bool result = validator.IsValid(ROW);
+            IList<ValidationError> errors = validator.GetErrors();
+
+            Assert.AreEqual(EXPECTED_RESULT, result);
+            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
+            ValidationErrorHelper.CheckError(0, "Could not convert 'row' to a number.", errors[0]);
         }
     }
 }
