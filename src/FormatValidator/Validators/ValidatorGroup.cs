@@ -14,6 +14,12 @@ namespace FormatValidator.Validators
             _validators = new List<IValidator>();
         }
 
+        public ValidatorGroup(IList<IValidator> group)
+        {
+            _validators = new List<IValidator>();
+            _validators.AddRange(group);
+        }
+
         public bool IsValid(string toCheck)
         {
             bool isValid = true;
