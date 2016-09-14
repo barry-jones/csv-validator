@@ -10,7 +10,7 @@ namespace FormatValidator.Validators
         public override bool IsValid(string toCheck)
         {
             double parsed = 0;
-            bool isValid = double.TryParse(toCheck, out parsed);
+            bool isValid = string.IsNullOrWhiteSpace(toCheck) || double.TryParse(toCheck, out parsed);
 
             if(!isValid)
             {
