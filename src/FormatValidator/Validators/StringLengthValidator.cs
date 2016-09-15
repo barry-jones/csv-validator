@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
-    public class StringLengthValidator : Validator
+    public class StringLengthValidator : ValidationEntry
     {
         private int _maxLength;
 

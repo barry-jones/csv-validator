@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
-    public class TextFormatValidator : Validator
+    public class TextFormatValidator : ValidationEntry
     {
         private Regex _format;
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
-    public class ValidatorGroup : Validator
+    public class ValidatorGroup : ValidationEntry
     {
         private List<IValidator> _validators;
 

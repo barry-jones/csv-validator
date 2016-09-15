@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
-    public class RowValidator : Validator
+    public class RowValidator : ValidationEntry
     {
         private char _columnSeperator;
         private ValidatorGroup[] _columns;

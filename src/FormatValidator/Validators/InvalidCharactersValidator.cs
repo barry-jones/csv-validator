@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
-    public class InvalidCharactersValidator : Validator
+    public class InvalidCharactersValidator : ValidationEntry
     {
         private List<Char> _characters;
 

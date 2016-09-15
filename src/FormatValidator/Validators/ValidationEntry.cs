@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
-    public abstract class Validator : IValidator
+    public abstract class ValidationEntry : IValidator
     {
         private List<ValidationError> _errors;
 
-        public Validator()
+        public ValidationEntry()
         {
             _errors = new List<ValidationError>();
         }
