@@ -1,0 +1,19 @@
+﻿{
+  "columns": {
+    "1": {
+      "unique": true
+    },
+    "2": {
+      "maxLength": 12
+    },
+    "3": {
+      "pattern": "^\\d\\d\\d\\d-\\d\\d-\\d\\d$"
+    },
+    "4": {
+      "isRequired": true
+    },
+    "5": {
+      "isNumeric": true
+    }
+  }
+}

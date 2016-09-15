@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Input
 {
-    interface ISourceReader
+    public interface ISourceReader
     {
         IEnumerable<string> ReadLines();
     }

@@ -10,6 +10,7 @@ namespace FormatValidator
         private int _at;
         private string _message;
         private int _row;
+        private string _rowContent;
 
         public ValidationError(int at, string message)
         {
@@ -50,6 +51,18 @@ namespace FormatValidator
             set
             {
                 _row = value;
+            }
+        }
+
+        public string RowContent
+        {
+            get
+            {
+                return _rowContent;
+            }
+            set
+            {
+                _rowContent = value;
             }
         }
     }

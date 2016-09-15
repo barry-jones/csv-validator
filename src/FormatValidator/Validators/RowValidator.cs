@@ -30,7 +30,14 @@ namespace FormatValidator.Validators
                 if(i < _columns.Length)
                 {
                     bool currentResult = _columns[i].IsValid(parts[i]);
-                    Errors.AddRange(_columns[i].GetErrors());
+
+                    IList<ValidationError> newErrors = _columns[i].GetErrors();
+                    foreach(ValidationError current in newErrors)
+                    {
+                        current.RowContent = toCheck;
+                    }
+                    Errors.AddRange(newErrors);
+
                     isValid = isValid & currentResult;
                 }
             }

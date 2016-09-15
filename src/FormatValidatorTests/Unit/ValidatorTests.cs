@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FormatValidator;
+using FormatValidator.Input;
 using FormatValidator.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -33,6 +34,18 @@ namespace FormatValidatorTests.Unit
             Assert.AreEqual(2, columns[0].Count());
             Assert.AreEqual(1, columns[1].Count());
             Assert.AreEqual(1, columns[2].Count());
+        }
+
+        [TestMethod]
+        public void Validator_WhenValidating_Validates()
+        {
+            string INPUTFILE = @"data\simplefile.csv";
+            string JSON = System.IO.File.ReadAllText(@"data\configuration\configuration.json");
+
+            Validator validator = Validator.FromJson(JSON);
+            FileSourceReader reader = new FileSourceReader(INPUTFILE, "\r\n");
+
+            List<ValidationError> errors = validator.Validate(reader);
         }
     }
 }

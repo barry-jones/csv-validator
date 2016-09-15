@@ -17,7 +17,10 @@ namespace FormatValidator.Input
 
         public IEnumerable<string> ReadLines()
         {
-            return new List<string>();
+            foreach(string current in System.IO.File.ReadLines(_file))
+            {
+                yield return current;
+            }
         }
     }
 }

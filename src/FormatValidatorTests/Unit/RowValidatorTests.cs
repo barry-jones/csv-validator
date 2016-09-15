@@ -200,5 +200,26 @@ namespace FormatValidatorTests.Unit
 
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
         }
+
+        [TestMethod]
+        public void RowValidator_WhenRowInvalid_ShouldStoreRowInError()
+        {
+            const string ROW1 = @"this1,notnull";
+            const string ROW2 = @"this2,notnull";
+
+            List<ValidationError> errors = new List<ValidationError>();
+            RowValidator validator = new RowValidator(',');
+
+            validator.AddColumnValidator(2, new UniqueColumnValidator());
+
+            validator.IsValid(ROW1);
+            errors.AddRange(validator.GetErrors());
+            validator.ClearErrors();
+            validator.IsValid(ROW2);
+            errors.AddRange(validator.GetErrors());
+            validator.ClearErrors();
+
+            Assert.AreEqual(ROW2, errors[0].RowContent);
+        }
     }
 }

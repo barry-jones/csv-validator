@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FormatValidator.Configuration;
+using FormatValidator.Input;
 using FormatValidator.Validators;
 
 namespace FormatValidator
@@ -25,6 +26,20 @@ namespace FormatValidator
             validator.TransferConvertedColumns(converted);
 
             return validator;
+        }
+        
+        public List<ValidationError> Validate(ISourceReader reader)
+        {
+            List<ValidationError> errors = new List<ValidationError>();
+
+            foreach(string line in reader.ReadLines())
+            {
+                _rowValidator.IsValid(line);
+                errors.AddRange(_rowValidator.GetErrors());
+                _rowValidator.ClearErrors();
+            }
+
+            return errors;
         }
 
         public List<ValidatorGroup> GetColumnValidators()
