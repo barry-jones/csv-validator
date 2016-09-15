@@ -52,5 +52,16 @@ namespace FormatValidatorTests.Unit
 
             Assert.AreEqual(EXPECTED_VALUE, result);
         }
+
+        [TestMethod]
+        public void ValidatorGroup_WhenHasValidators_CountIsCorrect()
+        {
+            const int EXPECTED_COUNT = 1;
+
+            ValidatorGroup group = new ValidatorGroup();
+            group.Add(new UniqueColumnValidator());
+
+            Assert.AreEqual(EXPECTED_COUNT, group.Count());
+        }
     }
 }

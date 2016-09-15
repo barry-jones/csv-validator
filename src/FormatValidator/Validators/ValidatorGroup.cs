@@ -47,5 +47,10 @@ namespace FormatValidator.Validators
         {
             _validators.Add(validator);
         }
+
+        public object Count()
+        {
+            return _validators.Count();
+        }
     }
 }

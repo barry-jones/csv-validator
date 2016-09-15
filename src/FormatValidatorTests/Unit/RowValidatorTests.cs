@@ -13,6 +13,20 @@ namespace FormatValidatorTests.Unit
     public class RowValidatorTests
     {
         [TestMethod]
+        public void RowValidator_WhenGettingColumnValidators_ReturnsValidators()
+        {
+            RowValidator validator = new RowValidator(',');
+
+            validator.AddColumnValidator(1, new ValidatorGroup(new List<IValidator>() { new StringLengthValidator(3) }));
+            validator.AddColumnValidator(2, new NotNullableValidator());
+            validator.AddColumnValidator(4, new StringLengthValidator(4));
+
+            List<ValidatorGroup> columnValidators = validator.GetColumnValidators();
+
+            Assert.AreEqual(4, columnValidators.Count);
+        }
+
+        [TestMethod]
         public void RowValidator_ValidatesFirstColumn_IsInvalid()
         {
             const string ROW = @"this,is,a,row";

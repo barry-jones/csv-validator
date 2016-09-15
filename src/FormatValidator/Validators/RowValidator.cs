@@ -38,7 +38,7 @@ namespace FormatValidator.Validators
             AddRowDetailsToErrors();
 
             return isValid;
-        }
+        }        
 
         public override void ClearErrors()
         {
@@ -54,6 +54,11 @@ namespace FormatValidator.Validators
             CheckAndResizeColumnList(toColumn);
 
             _columns[toColumn - 1].Add(validator);
+        }
+
+        public List<ValidatorGroup> GetColumnValidators()
+        {
+            return new List<ValidatorGroup>(_columns);
         }
 
         private void CheckAndResizeColumnList(int allowColumnAt)

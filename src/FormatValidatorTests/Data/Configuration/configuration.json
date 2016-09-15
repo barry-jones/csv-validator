@@ -1,0 +1,13 @@
+﻿{
+  "columnSeperator": ",",
+  "rowSeperator": "@@#@\r\n",
+  "columns": {
+    "1": {
+      "unique": true,
+      "maxLength": 5
+    },
+    "2": {
+      "format": "^\\d\\d\\d\\d-\\d\\d-\\d\\d$"
+    }
+  }
+}
