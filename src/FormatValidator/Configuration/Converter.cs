@@ -12,6 +12,9 @@ namespace FormatValidator.Configuration
         {
             ConvertedValidators converted = new ConvertedValidators();
 
+            converted.RowSeperator = UnescapeString(config.RowSeperator);
+            converted.ColumnSeperator = UnescapeString(config.ColumnSeperator);
+
             if(config.Columns != null && config.Columns.Count > 0)
             {
                 foreach(KeyValuePair<int, ColumnValidatorConfiguration> columnConfig in config.Columns)
@@ -29,6 +32,13 @@ namespace FormatValidator.Configuration
             }
 
             return converted;
+        }
+
+        private string UnescapeString(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return input;
+
+            return System.Text.RegularExpressions.Regex.Unescape(input);
         }
     }
 }

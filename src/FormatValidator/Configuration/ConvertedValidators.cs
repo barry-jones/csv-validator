@@ -9,6 +9,8 @@ namespace FormatValidator.Configuration
     public class ConvertedValidators
     {
         private Dictionary<int, List<IValidator>> _columns;
+        private string _columnSeperator;
+        private string _rowSeperator;
 
         public ConvertedValidators()
         {
@@ -20,6 +22,30 @@ namespace FormatValidator.Configuration
             get
             {
                 return _columns;
+            }
+        }
+
+        public string RowSeperator
+        {
+            get
+            {
+                return _rowSeperator;
+            }
+            set
+            {
+                _rowSeperator = value;
+            }
+        }
+
+        public string ColumnSeperator
+        {
+            get
+            {
+                return _columnSeperator;
+            }
+            set
+            {
+                _columnSeperator = value;
             }
         }
     }

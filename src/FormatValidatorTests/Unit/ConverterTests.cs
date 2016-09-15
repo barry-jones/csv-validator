@@ -95,5 +95,35 @@ namespace FormatValidatorTests.Unit
 
             Assert.IsNotNull(validators.Columns[1].Find(p => p.GetType() == typeof(NotNullableValidator)));
         }
+
+        [TestMethod]
+        public void Converter_WhenRowSeperatorWithNewLine_UnescapesTheString()
+        {
+            const string EXPECTED_SEPERATOR = @"##@#
+";
+            Converter converter = new Converter();
+            ValidatorConfiguration config = new ValidatorConfiguration();
+
+            config.RowSeperator = @"##@#\r\n";
+
+            ConvertedValidators validators = converter.Convert(config);
+
+            Assert.AreEqual(EXPECTED_SEPERATOR, validators.RowSeperator);
+        }
+
+        [TestMethod]
+        public void Converter_WhenColumnSeperatorProvided_Converts()
+        {
+            const string EXPECTED_SEPERATOR = "|";
+            const string INPUT = "|";
+
+            Converter converter = new Converter();
+            ValidatorConfiguration config = new ValidatorConfiguration();
+            config.ColumnSeperator = INPUT;
+
+            ConvertedValidators converted = converter.Convert(config);
+
+            Assert.AreEqual(EXPECTED_SEPERATOR, converted.ColumnSeperator);
+        }
     }
 }
