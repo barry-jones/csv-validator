@@ -18,7 +18,7 @@ namespace FormatValidator
 
         public static Validator FromJson(string json)
         {
-            ValidatorConfiguration configuration = Newtonsoft.Json.JsonConvert.DeserializeObject<ValidatorConfiguration>(json);
+            ValidatorConfiguration configuration = new JsonReader().Read(json);
             ConvertedValidators converted = new Converter().Convert(configuration);
 
             Validator validator = new Validator();
