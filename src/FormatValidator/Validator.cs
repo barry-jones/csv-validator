@@ -22,12 +22,7 @@ namespace FormatValidator
             ConvertedValidators converted = new Converter().Convert(configuration);
 
             Validator validator = new Validator();
-            validator._rowValidator = new RowValidator(',');
-
-            foreach(KeyValuePair<int, ValidatorGroup> column in converted.Columns)
-            {
-                validator._rowValidator.AddColumnValidator(column.Key, column.Value);
-            }
+            validator.TransferConvertedColumns(converted);
 
             return validator;
         }
@@ -35,6 +30,19 @@ namespace FormatValidator
         public List<ValidatorGroup> GetColumnValidators()
         {
             return _rowValidator.GetColumnValidators();
+        }
+
+        private void TransferConvertedColumns(ConvertedValidators converted)
+        {
+            _rowValidator = new RowValidator(',');
+
+            foreach (KeyValuePair<int, List<IValidator>> column in converted.Columns)
+            {
+                foreach (IValidator columnValidator in column.Value)
+                {
+                    _rowValidator.AddColumnValidator(column.Key, columnValidator);
+                }
+            }
         }
     }
 }

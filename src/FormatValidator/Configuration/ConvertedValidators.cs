@@ -8,14 +8,14 @@ namespace FormatValidator.Configuration
 {
     public class ConvertedValidators
     {
-        private Dictionary<int, ValidatorGroup> _columns;
+        private Dictionary<int, List<IValidator>> _columns;
 
         public ConvertedValidators()
         {
-            _columns = new Dictionary<int, ValidatorGroup>();
+            _columns = new Dictionary<int, List<IValidator>>();
         }
 
-        public Dictionary<int, ValidatorGroup> Columns
+        public Dictionary<int, List<IValidator>> Columns
         {
             get
             {

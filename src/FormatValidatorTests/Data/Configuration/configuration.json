@@ -7,7 +7,10 @@
       "maxLength": 5
     },
     "2": {
-      "format": "^\\d\\d\\d\\d-\\d\\d-\\d\\d$"
+      "pattern": "^\\d\\d\\d\\d-\\d\\d-\\d\\d$"
+    },
+    "3": {
+      "isNumeric": true
     }
   }
 }

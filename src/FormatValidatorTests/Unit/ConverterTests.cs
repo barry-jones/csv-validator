@@ -57,5 +57,43 @@ namespace FormatValidatorTests.Unit
             Assert.AreEqual(EXPECTED_COUNT_TWO, validators.Columns[3].Count());
             Assert.AreEqual(EXPECTED_COUNT_THREE, validators.Columns[9].Count());
         }
+
+        [TestMethod]
+        public void Converter_WhenColumnHasPatternAttribute_ShouldCreateValidator()
+        {
+            ValidatorConfiguration config = new ValidatorConfiguration();
+            config.Columns.Add(1, new ColumnValidatorConfiguration() { Pattern = @"\d\d\d\d" });
+
+            Converter converter = new Converter();
+
+            ConvertedValidators validators = converter.Convert(config);
+
+            Assert.IsNotNull(validators.Columns[1].Find(p => p.GetType() == typeof(TextFormatValidator)));
+        }
+
+        [TestMethod]
+        public void Converter_WhenColumnHasIsNumericAttribute_ShouldCreateValidator()
+        {
+            ValidatorConfiguration config = new ValidatorConfiguration();
+            config.Columns.Add(1, new ColumnValidatorConfiguration() { IsNumeric = true });
+
+            Converter converter = new Converter();
+
+            ConvertedValidators validators = converter.Convert(config);
+
+            Assert.IsNotNull(validators.Columns[1].Find(p => p.GetType() == typeof(NumberValidator)));
+        }
+
+        [TestMethod]
+        public void Converter_WhenColumnHasNullableAttribute_ShouldCreateValidator()
+        {
+            Converter converter = new Converter();
+            ValidatorConfiguration config = new ValidatorConfiguration();
+            config.Columns.Add(1, new ColumnValidatorConfiguration() { IsRequired = true });
+
+            ConvertedValidators validators = converter.Convert(config);
+
+            Assert.IsNotNull(validators.Columns[1].Find(p => p.GetType() == typeof(NotNullableValidator)));
+        }
     }
 }

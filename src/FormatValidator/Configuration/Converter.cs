@@ -16,10 +16,13 @@ namespace FormatValidator.Configuration
             {
                 foreach(KeyValuePair<int, ColumnValidatorConfiguration> columnConfig in config.Columns)
                 {
-                    ValidatorGroup group = new ValidatorGroup();
+                    List<IValidator> group = new List<IValidator>();
 
                     if (columnConfig.Value.Unique) group.Add(new UniqueColumnValidator());
                     if (columnConfig.Value.MaxLength > 0) group.Add(new StringLengthValidator(columnConfig.Value.MaxLength));
+                    if (!string.IsNullOrWhiteSpace(columnConfig.Value.Pattern)) group.Add(new TextFormatValidator(columnConfig.Value.Pattern));
+                    if (columnConfig.Value.IsNumeric) group.Add(new NumberValidator());
+                    if (columnConfig.Value.IsRequired) group.Add(new NotNullableValidator());
 
                     converted.Columns.Add(columnConfig.Key, group);
                 }

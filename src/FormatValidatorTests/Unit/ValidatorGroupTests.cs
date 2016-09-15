@@ -63,5 +63,18 @@ namespace FormatValidatorTests.Unit
 
             Assert.AreEqual(EXPECTED_COUNT, group.Count());
         }
+
+        [TestMethod]
+        public void ValidatorGroup_WhenHasValidators_FindReturnsCorrectly()
+        {
+            TextFormatValidator textValidator = new TextFormatValidator(string.Empty);
+
+            ValidatorGroup group = new ValidatorGroup();
+            group.Add(textValidator);
+
+            IValidator validator = group.Find(p => p.GetType() == typeof(TextFormatValidator));
+
+            Assert.AreSame(textValidator, validator);
+        }
     }
 }

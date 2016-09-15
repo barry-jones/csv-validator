@@ -29,7 +29,10 @@ namespace FormatValidatorTests.Unit
             List<ValidatorGroup> columns = created.GetColumnValidators();
 
             Assert.IsNotNull(created);
-            Assert.AreEqual(2, columns.Count);
+            Assert.AreEqual(3, columns.Count);
+            Assert.AreEqual(2, columns[0].Count());
+            Assert.AreEqual(1, columns[1].Count());
+            Assert.AreEqual(1, columns[2].Count());
         }
     }
 }

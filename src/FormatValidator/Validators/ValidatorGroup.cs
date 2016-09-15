@@ -52,5 +52,10 @@ namespace FormatValidator.Validators
         {
             return _validators.Count();
         }
+
+        public IValidator Find(Predicate<IValidator> validator)
+        {
+            return _validators.Find(validator);
+        }
     }
 }

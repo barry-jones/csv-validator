@@ -10,5 +10,11 @@ namespace FormatValidator.Configuration
         public bool Unique { get; set; }
 
         public int MaxLength { get; set; }
+
+        public string Pattern { get; set; }
+
+        public bool IsNumeric { get; set; }
+
+        public bool IsRequired { get; set; }
     }
 }
