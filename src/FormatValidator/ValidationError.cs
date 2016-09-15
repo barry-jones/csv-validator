@@ -9,6 +9,7 @@ namespace FormatValidator
     {
         private int _at;
         private string _message;
+        private int _row;
 
         public ValidationError(int at, string message)
         {
@@ -37,6 +38,18 @@ namespace FormatValidator
             set
             {
                 _message = value;
+            }
+        }
+
+        public int Row
+        {
+            get
+            {
+                return _row;
+            }
+            set
+            {
+                _row = value;
             }
         }
     }

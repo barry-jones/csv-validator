@@ -9,9 +9,11 @@ namespace FormatValidator.Validators
     {
         private char _columnSeperator;
         private ValidatorGroup[] _columns;
+        private int _rowCounter;
 
         public RowValidator(char columnSeperator)
         {
+            _rowCounter = 0;
             _columns = new ValidatorGroup[0];
             _columnSeperator = columnSeperator;
         }
@@ -20,6 +22,8 @@ namespace FormatValidator.Validators
         {
             bool isValid = true;
             string[] parts = toCheck.Split(_columnSeperator);
+
+            MoveRowCounterToCurrentRow();
 
             for(int i = 0; i < parts.Length; i++)
             {
@@ -30,6 +34,8 @@ namespace FormatValidator.Validators
                     isValid = isValid & currentResult;
                 }
             }
+
+            AddRowDetailsToErrors();
 
             return isValid;
         }
@@ -75,6 +81,19 @@ namespace FormatValidator.Validators
                     _columns[i] = new ValidatorGroup();
                 }
             }
+        }
+
+        private void AddRowDetailsToErrors()
+        {
+            foreach(ValidationError current in Errors)
+            {
+                current.Row = _rowCounter;
+            }
+        }
+
+        private void MoveRowCounterToCurrentRow()
+        {
+            _rowCounter++;
         }
     }
 }
