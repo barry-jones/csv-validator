@@ -12,16 +12,23 @@ namespace FormatValidatorTests.Unit
     [TestClass]
     public class InvalidCharactersValidatorTests
     {
+        private InvalidCharactersValidator _validator;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            _validator = new InvalidCharactersValidator();
+        }
+
         [TestMethod]
         public void InvalidCharactersValidator_WhenContains_IsNotValid()
         {
             const string INPUT = "a test |string";
             const bool EXPECTED = false;
 
-            InvalidCharactersValidator validator = new InvalidCharactersValidator();
-            validator.Characters = new List<Char> { '|' };
+            _validator.Add(new char[] { '|' });
 
-            bool result = validator.IsValid(INPUT);
+            bool result = _validator.IsValid(INPUT);
 
             Assert.AreEqual(EXPECTED, result);
         }
@@ -32,10 +39,9 @@ namespace FormatValidatorTests.Unit
             const string INPUT = "a test string";
             const bool EXPECTED = true;
 
-            InvalidCharactersValidator validator = new InvalidCharactersValidator();
-            validator.Characters = new List<Char> { '|' };
+            _validator.Add(new char[] { '|' });
 
-            bool result = validator.IsValid(INPUT);
+            bool result = _validator.IsValid(INPUT);
 
             Assert.AreEqual(EXPECTED, result);
         }
@@ -46,10 +52,9 @@ namespace FormatValidatorTests.Unit
             const string INPUT = "a te#st |string";
             const bool EXPECTED = false;
 
-            InvalidCharactersValidator validator = new InvalidCharactersValidator();
-            validator.Characters.AddRange(new char[] { '|', '#' });
+            _validator.Add(new char[] { '|', '#' });
 
-            bool result = validator.IsValid(INPUT);
+            bool result = _validator.IsValid(INPUT);
 
             Assert.AreEqual(EXPECTED, result);
         }
@@ -61,11 +66,10 @@ namespace FormatValidatorTests.Unit
             const bool EXPECTED = false;
             const int EXPECTED_ERRORCOUNT = 2;
 
-            InvalidCharactersValidator validator = new InvalidCharactersValidator();
-            validator.Characters.AddRange(new char[] { '#', '|' });
+            _validator.Add(new char[] { '#', '|' });
 
-            bool result = validator.IsValid(INPUT);
-            IList<ValidationError> errors = validator.GetErrors();
+            bool result = _validator.IsValid(INPUT);
+            IList<ValidationError> errors = _validator.GetErrors();
 
             Assert.AreEqual(EXPECTED, result);
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);

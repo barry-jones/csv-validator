@@ -10,10 +10,12 @@ namespace FormatValidatorTests.Unit
     [TestClass]
     public class NumberValidatorTests
     {
-        [TestMethod]
-        public void NumberValidator_Create()
+        private NumberValidator _validator;
+
+        [TestInitialize]
+        public void Setup()
         {
-            NumberValidator validator = new NumberValidator();
+            _validator = new NumberValidator();
         }
 
         [TestMethod]
@@ -22,9 +24,7 @@ namespace FormatValidatorTests.Unit
             const string INPUT = "1";
             const bool EXPECTED_RESULT = true;
 
-            NumberValidator validator = new NumberValidator();
-
-            bool result = validator.IsValid(INPUT);
+            bool result = _validator.IsValid(INPUT);
 
             Assert.AreEqual(EXPECTED_RESULT, result);
         }
@@ -35,9 +35,7 @@ namespace FormatValidatorTests.Unit
             const string INPUT = "1234567890123456789012345678901234567890";
             const bool EXPECTED_RESULT = true;
 
-            NumberValidator validator = new NumberValidator();
-
-            bool result = validator.IsValid(INPUT);
+            bool result = _validator.IsValid(INPUT);
 
             Assert.AreEqual(EXPECTED_RESULT, result);
         }
@@ -48,9 +46,29 @@ namespace FormatValidatorTests.Unit
             const string INPUT = "1234567890123456789012345.678901234567890";
             const bool EXPECTED_RESULT = true;
 
-            NumberValidator validator = new NumberValidator();
+            bool result = _validator.IsValid(INPUT);
 
-            bool result = validator.IsValid(INPUT);
+            Assert.AreEqual(EXPECTED_RESULT, result);
+        }
+
+        [TestMethod]
+        public void NumberValidator_WhenNotNumeric_IsInvalid()
+        {
+            const string INPUT = "test";
+            const bool EXPECTED_RESULT = false;
+
+            bool result = _validator.IsValid(INPUT);
+
+            Assert.AreEqual(EXPECTED_RESULT, result);
+        }
+
+        [TestMethod]
+        public void NumberValidator_WhenEmptyStringOrWhitespace_IsValid()
+        {
+            const string INPUT = "  ";
+            const bool EXPECTED_RESULT = true;
+
+            bool result = _validator.IsValid(INPUT);
 
             Assert.AreEqual(EXPECTED_RESULT, result);
         }

@@ -10,10 +10,12 @@ namespace FormatValidatorTests.Unit
     [TestClass]
     public class NotNullableValidatorTests
     {
-        [TestMethod]
-        public void NotNullableValidator_Create()
+        private NotNullableValidator _validator;
+
+        [TestInitialize]
+        public void Setup()
         {
-            NotNullableValidator validator = new NotNullableValidator();
+            _validator = new NotNullableValidator();
         }
 
         [TestMethod]
@@ -22,8 +24,7 @@ namespace FormatValidatorTests.Unit
             const string INPUT = "";
             const bool EXPECTED_RESULT = false;
 
-            NotNullableValidator validator = new NotNullableValidator();
-            bool result = validator.IsValid(INPUT);
+            bool result = _validator.IsValid(INPUT);
 
             Assert.AreEqual(EXPECTED_RESULT, result);
         }
@@ -34,8 +35,7 @@ namespace FormatValidatorTests.Unit
             const string INPUT = null;
             const bool EXPECTED_RESULT = false;
 
-            NotNullableValidator validator = new NotNullableValidator();
-            bool result = validator.IsValid(INPUT);
+            bool result = _validator.IsValid(INPUT);
 
             Assert.AreEqual(EXPECTED_RESULT, result);
         }
@@ -46,8 +46,7 @@ namespace FormatValidatorTests.Unit
             const string INPUT = " ";
             const bool EXPECTED_RESULT = true;
 
-            NotNullableValidator validator = new NotNullableValidator();
-            bool result = validator.IsValid(INPUT);
+            bool result = _validator.IsValid(INPUT);
 
             Assert.AreEqual(EXPECTED_RESULT, result);
         }

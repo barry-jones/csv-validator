@@ -30,15 +30,16 @@ namespace FormatValidator.Validators
             return isValid;
         }
 
+        public void Add(char[] invalidCharacters)
+        {
+            _characters.AddRange(invalidCharacters);
+        }
+
         public List<char> Characters
         {
             get
             {
                 return _characters;
-            }
-            set
-            {
-                _characters = value;
             }
         }
     }

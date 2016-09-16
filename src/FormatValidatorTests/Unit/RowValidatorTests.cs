@@ -12,16 +12,22 @@ namespace FormatValidatorTests.Unit
     [TestClass]
     public class RowValidatorTests
     {
+        private RowValidator _validator;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            _validator = new RowValidator(',');
+        }
+
         [TestMethod]
         public void RowValidator_WhenGettingColumnValidators_ReturnsValidators()
         {
-            RowValidator validator = new RowValidator(',');
+            _validator.AddColumnValidator(1, new ValidatorGroup(new List<IValidator>() { new StringLengthValidator(3) }));
+            _validator.AddColumnValidator(2, new NotNullableValidator());
+            _validator.AddColumnValidator(4, new StringLengthValidator(4));
 
-            validator.AddColumnValidator(1, new ValidatorGroup(new List<IValidator>() { new StringLengthValidator(3) }));
-            validator.AddColumnValidator(2, new NotNullableValidator());
-            validator.AddColumnValidator(4, new StringLengthValidator(4));
-
-            List<ValidatorGroup> columnValidators = validator.GetColumnValidators();
+            List<ValidatorGroup> columnValidators = _validator.GetColumnValidators();
 
             Assert.AreEqual(4, columnValidators.Count);
         }
@@ -32,11 +38,9 @@ namespace FormatValidatorTests.Unit
             const string ROW = @"this,is,a,row";
             const bool EXPECTED_RESULT = false;
 
-            RowValidator validator = new RowValidator(',');
+            _validator.AddColumnValidator(1, new ValidatorGroup(new List<IValidator>() { new StringLengthValidator(3) }));
 
-            validator.AddColumnValidator(1, new ValidatorGroup(new List<IValidator>() { new StringLengthValidator(3) }));
-
-            bool result = validator.IsValid(ROW);
+            bool result = _validator.IsValid(ROW);
 
             Assert.AreEqual(EXPECTED_RESULT, result);
         }
@@ -47,11 +51,9 @@ namespace FormatValidatorTests.Unit
             const string ROW = @"this,is,a,row";
             const bool EXPECTED_RESULT = true;
 
-            RowValidator validator = new RowValidator(',');
+            _validator.AddColumnValidator(1, new ValidatorGroup(new List<IValidator>() { new StringLengthValidator(4) }));
 
-            validator.AddColumnValidator(1, new ValidatorGroup(new List<IValidator>() { new StringLengthValidator(4) }));
-
-            bool result = validator.IsValid(ROW);
+            bool result = _validator.IsValid(ROW);
 
             Assert.AreEqual(EXPECTED_RESULT, result);
         }
@@ -62,12 +64,10 @@ namespace FormatValidatorTests.Unit
             const string ROW = @"this,,a,row";
             const bool EXPECTED_RESULT = false;
 
-            RowValidator validator = new RowValidator(',');
+            _validator.AddColumnValidator(2, new NotNullableValidator());
+            _validator.AddColumnValidator(4, new StringLengthValidator(4));
 
-            validator.AddColumnValidator(2, new NotNullableValidator());
-            validator.AddColumnValidator(4, new StringLengthValidator(4));
-
-            bool result = validator.IsValid(ROW);
+            bool result = _validator.IsValid(ROW);
 
             Assert.AreEqual(EXPECTED_RESULT, result);
         }
@@ -78,11 +78,9 @@ namespace FormatValidatorTests.Unit
             const string ROW = @"this,,a,row";
             const bool EXPECTED_RESULT = true;
 
-            RowValidator validator = new RowValidator(',');
+            _validator.AddColumnValidator(4, new StringLengthValidator(3));
 
-            validator.AddColumnValidator(4, new StringLengthValidator(3));
-
-            bool result = validator.IsValid(ROW);
+            bool result = _validator.IsValid(ROW);
 
             Assert.AreEqual(EXPECTED_RESULT, result);
         }
@@ -94,15 +92,13 @@ namespace FormatValidatorTests.Unit
             const bool EXPECTED_RESULT = false;
             const int EXPECTED_ERRORCOUNT = 3;
 
-            RowValidator validator = new RowValidator(',');
+            _validator.AddColumnValidator(1, new StringLengthValidator(5));
+            _validator.AddColumnValidator(2, new NotNullableValidator());
+            _validator.AddColumnValidator(3, new TextFormatValidator(@"[b]"));
+            _validator.AddColumnValidator(4, new NumberValidator());
 
-            validator.AddColumnValidator(1, new StringLengthValidator(5));
-            validator.AddColumnValidator(2, new NotNullableValidator());
-            validator.AddColumnValidator(3, new TextFormatValidator(@"[b]"));
-            validator.AddColumnValidator(4, new NumberValidator());
-
-            bool result = validator.IsValid(ROW);
-            RowValidationError errors = validator.GetError();
+            bool result = _validator.IsValid(ROW);
+            RowValidationError errors = _validator.GetError();
 
             Assert.AreEqual(EXPECTED_RESULT, result);
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Errors.Count);
@@ -115,15 +111,13 @@ namespace FormatValidatorTests.Unit
             const bool EXPECTED_RESULT = false;
             const int EXPECTED_ERRORCOUNT = 4;
 
-            RowValidator validator = new RowValidator(',');
+            _validator.AddColumnValidator(1, new StringLengthValidator(2));
+            _validator.AddColumnValidator(2, new NotNullableValidator());
+            _validator.AddColumnValidator(3, new TextFormatValidator(@"[b]"));
+            _validator.AddColumnValidator(4, new NumberValidator());
 
-            validator.AddColumnValidator(1, new StringLengthValidator(2));
-            validator.AddColumnValidator(2, new NotNullableValidator());
-            validator.AddColumnValidator(3, new TextFormatValidator(@"[b]"));
-            validator.AddColumnValidator(4, new NumberValidator());
-
-            bool result = validator.IsValid(ROW);
-            RowValidationError errors = validator.GetError();
+            bool result = _validator.IsValid(ROW);
+            RowValidationError errors = _validator.GetError();
 
             Assert.AreEqual(EXPECTED_RESULT, result);
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Errors.Count);
@@ -136,15 +130,13 @@ namespace FormatValidatorTests.Unit
             const bool EXPECTED_RESULT = false;
             const int EXPECTED_ERRORCOUNT = 1;
 
-            RowValidator validator = new RowValidator(',');
+            _validator.AddColumnValidator(1, new StringLengthValidator(4));
+            _validator.AddColumnValidator(2, new NotNullableValidator());
+            _validator.AddColumnValidator(3, new TextFormatValidator(@"[a]"));
+            _validator.AddColumnValidator(4, new NumberValidator());
 
-            validator.AddColumnValidator(1, new StringLengthValidator(4));
-            validator.AddColumnValidator(2, new NotNullableValidator());
-            validator.AddColumnValidator(3, new TextFormatValidator(@"[a]"));
-            validator.AddColumnValidator(4, new NumberValidator());
-
-            bool result = validator.IsValid(ROW);
-            RowValidationError errors = validator.GetError();
+            bool result = _validator.IsValid(ROW);
+            RowValidationError errors = _validator.GetError();
 
             Assert.AreEqual(EXPECTED_RESULT, result);
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Errors.Count);
@@ -159,14 +151,10 @@ namespace FormatValidatorTests.Unit
             const int EXPECTED_ERRORCOUNT = 2;
             List<ValidationError> errors = new List<ValidationError>();
 
-            RowValidator validator = new RowValidator(',');
-            validator.AddColumnValidator(1, new StringLengthValidator(4));
-            
-            validator.IsValid(ROW1);
-            errors.AddRange(validator.GetError().Errors);
-            validator.ClearErrors();
-            validator.IsValid(ROW2);
-            errors.AddRange(validator.GetError().Errors);
+            _validator.AddColumnValidator(1, new StringLengthValidator(4));
+
+            CountAndClearErrors(ROW1, errors);
+            CountAndClearErrors(ROW2, errors);
 
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
         }
@@ -179,24 +167,16 @@ namespace FormatValidatorTests.Unit
             const string ROW3 = @"this3,notnull,a,notuniqueid";
             const string ROW4 = @"this4,notnull,a,notuniqueid";
             const int EXPECTED_ERRORCOUNT = 7;
+
             List<ValidationError> errors = new List<ValidationError>();
+            
+            _validator.AddColumnValidator(1, new StringLengthValidator(4));
+            _validator.AddColumnValidator(4, new UniqueColumnValidator());
 
-            RowValidator validator = new RowValidator(',');
-            validator.AddColumnValidator(1, new StringLengthValidator(4));
-            validator.AddColumnValidator(4, new UniqueColumnValidator());
-
-            validator.IsValid(ROW1);
-            errors.AddRange(validator.GetError().Errors);
-            validator.ClearErrors();
-            validator.IsValid(ROW2);
-            errors.AddRange(validator.GetError().Errors);
-            validator.ClearErrors();
-            validator.IsValid(ROW3);
-            errors.AddRange(validator.GetError().Errors);
-            validator.ClearErrors();
-            validator.IsValid(ROW4);
-            errors.AddRange(validator.GetError().Errors);
-            validator.ClearErrors();
+            CountAndClearErrors(ROW1, errors);
+            CountAndClearErrors(ROW2, errors);
+            CountAndClearErrors(ROW3, errors);
+            CountAndClearErrors(ROW4, errors);
 
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
         }
@@ -208,18 +188,20 @@ namespace FormatValidatorTests.Unit
             const string ROW2 = @"this2,notnull";
 
             List<ValidationError> errors = new List<ValidationError>();
-            RowValidator validator = new RowValidator(',');
 
-            validator.AddColumnValidator(2, new UniqueColumnValidator());
+            _validator.AddColumnValidator(2, new UniqueColumnValidator());
 
-            validator.IsValid(ROW1);
-            errors.AddRange(validator.GetError().Errors);
-            validator.ClearErrors();
-            validator.IsValid(ROW2);
-            errors.AddRange(validator.GetError().Errors);
-            validator.ClearErrors();
+            CountAndClearErrors(ROW1, errors);
+            CountAndClearErrors(ROW2, errors);
 
             Assert.AreEqual(ROW2, errors[0].RowContent);
+        }
+
+        private void CountAndClearErrors(string input, List<ValidationError> errors)
+        {
+            _validator.IsValid(input);
+            errors.AddRange(_validator.GetError().Errors);
+            _validator.ClearErrors();
         }
     }
 }
