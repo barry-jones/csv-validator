@@ -20,7 +20,8 @@ namespace FormatValidator
         public static Validator FromJson(string json)
         {
             ValidatorConfiguration configuration = new JsonReader().Read(json);
-            ConvertedValidators converted = new Converter().Convert(configuration);
+            Converter converter = new Converter(configuration);
+            ConvertedValidators converted = converter.Convert();
 
             Validator validator = new Validator();
             validator.TransferConvertedColumns(converted);

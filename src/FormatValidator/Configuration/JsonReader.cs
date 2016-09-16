@@ -9,13 +9,9 @@ namespace FormatValidator.Configuration
     {
         public ValidatorConfiguration Read(string json)
         {
-            ValidatorConfiguration configuration = null;
+            ValidatorConfiguration configuration = new ValidatorConfiguration();
 
-            if (string.IsNullOrEmpty(json))
-            {
-                configuration = new ValidatorConfiguration();
-            }
-            else
+            if (!string.IsNullOrEmpty(json))
             {
                 configuration = Newtonsoft.Json.JsonConvert.DeserializeObject<ValidatorConfiguration>(json);
             }

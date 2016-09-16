@@ -8,16 +8,36 @@ namespace FormatValidator.Configuration
 {
     public class Converter
     {
-        public ConvertedValidators Convert(ValidatorConfiguration config)
+        private ConvertedValidators _converted;
+        private ValidatorConfiguration _fromConfig;
+
+        public Converter(ValidatorConfiguration fromConfig)
         {
-            ConvertedValidators converted = new ConvertedValidators();
+            _fromConfig = fromConfig;
+            _converted = new ConvertedValidators();
+        }
 
-            converted.RowSeperator = UnescapeString(config.RowSeperator);
-            converted.ColumnSeperator = UnescapeString(config.ColumnSeperator);
+        public ConvertedValidators Convert()
+        {
+            _converted = new ConvertedValidators();
+            
+            ConvertProperties();
+            ConvertColumns();
 
-            if(config.Columns != null && config.Columns.Count > 0)
+            return _converted;
+        }
+
+        private void ConvertProperties()
+        {
+            _converted.RowSeperator = UnescapeString(_fromConfig.RowSeperator);
+            _converted.ColumnSeperator = UnescapeString(_fromConfig.ColumnSeperator);
+        }
+
+        private void ConvertColumns()
+        {
+            if (ConfigHasColumns())
             {
-                foreach(KeyValuePair<int, ColumnValidatorConfiguration> columnConfig in config.Columns)
+                foreach (KeyValuePair<int, ColumnValidatorConfiguration> columnConfig in _fromConfig.Columns)
                 {
                     List<IValidator> group = new List<IValidator>();
 
@@ -27,11 +47,9 @@ namespace FormatValidator.Configuration
                     if (columnConfig.Value.IsNumeric) group.Add(new NumberValidator());
                     if (columnConfig.Value.IsRequired) group.Add(new NotNullableValidator());
 
-                    converted.Columns.Add(columnConfig.Key, group);
+                    _converted.Columns.Add(columnConfig.Key, group);
                 }
             }
-
-            return converted;
         }
 
         private string UnescapeString(string input)
@@ -39,6 +57,11 @@ namespace FormatValidator.Configuration
             if (string.IsNullOrEmpty(input)) return input;
 
             return System.Text.RegularExpressions.Regex.Unescape(input);
+        }
+
+        private bool ConfigHasColumns()
+        {
+            return _fromConfig.Columns != null && _fromConfig.Columns.Count > 0;
         }
     }
 }

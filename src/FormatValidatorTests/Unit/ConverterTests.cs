@@ -11,13 +11,20 @@ namespace FormatValidatorTests.Unit
     [TestClass]
     public class ConverterTests
     {
+        private ValidatorConfiguration _configuration;
+        private Converter _converter;
+
+        [TestInitialize]
+        public void Setup()
+        {
+            _configuration = new ValidatorConfiguration();
+            _converter = new Converter(_configuration);
+        }
+
         [TestMethod]
         public void Converter_WhenEmptyConfiguration_ReturnsEmptyList()
         {
-            ValidatorConfiguration config = new ValidatorConfiguration();
-            Converter converter = new Converter();
-
-            ConvertedValidators validators = converter.Convert(config);
+            ConvertedValidators validators = _converter.Convert();
 
             Assert.AreEqual(0, validators.Columns.Count);
         }
@@ -25,14 +32,11 @@ namespace FormatValidatorTests.Unit
         [TestMethod]
         public void Converter_WhenHasColumnConfiguration_HasColumns()
         {
-            ValidatorConfiguration config = new ValidatorConfiguration();
-            config.Columns.Add(1, new ColumnValidatorConfiguration() { Unique = true });
-            config.Columns.Add(3, new ColumnValidatorConfiguration() { MaxLength = 10 });
-            config.Columns.Add(9, new ColumnValidatorConfiguration() { Unique = true, MaxLength = 10 });
+            _configuration.Columns.Add(1, new ColumnValidatorConfiguration() { Unique = true });
+            _configuration.Columns.Add(3, new ColumnValidatorConfiguration() { MaxLength = 10 });
+            _configuration.Columns.Add(9, new ColumnValidatorConfiguration() { Unique = true, MaxLength = 10 });
 
-            Converter converter = new Converter();
-
-            ConvertedValidators validators = converter.Convert(config);
+            ConvertedValidators validators = _converter.Convert();
 
             Assert.AreEqual(3, validators.Columns.Count);
         }
@@ -44,14 +48,11 @@ namespace FormatValidatorTests.Unit
             const int EXPECTED_COUNT_TWO = 1;
             const int EXPECTED_COUNT_THREE = 2;
 
-            ValidatorConfiguration config = new ValidatorConfiguration();
-            config.Columns.Add(1, new ColumnValidatorConfiguration() { Unique = true });
-            config.Columns.Add(3, new ColumnValidatorConfiguration() { MaxLength = 10 });
-            config.Columns.Add(9, new ColumnValidatorConfiguration() { Unique = true, MaxLength = 10 });
+            _configuration.Columns.Add(1, new ColumnValidatorConfiguration() { Unique = true });
+            _configuration.Columns.Add(3, new ColumnValidatorConfiguration() { MaxLength = 10 });
+            _configuration.Columns.Add(9, new ColumnValidatorConfiguration() { Unique = true, MaxLength = 10 });
 
-            Converter converter = new Converter();
-
-            ConvertedValidators validators = converter.Convert(config);
+            ConvertedValidators validators = _converter.Convert();
 
             Assert.AreEqual(EXPECTED_COUNT_ONE, validators.Columns[1].Count());
             Assert.AreEqual(EXPECTED_COUNT_TWO, validators.Columns[3].Count());
@@ -61,12 +62,9 @@ namespace FormatValidatorTests.Unit
         [TestMethod]
         public void Converter_WhenColumnHasPatternAttribute_ShouldCreateValidator()
         {
-            ValidatorConfiguration config = new ValidatorConfiguration();
-            config.Columns.Add(1, new ColumnValidatorConfiguration() { Pattern = @"\d\d\d\d" });
+            _configuration.Columns.Add(1, new ColumnValidatorConfiguration() { Pattern = @"\d\d\d\d" });
 
-            Converter converter = new Converter();
-
-            ConvertedValidators validators = converter.Convert(config);
+            ConvertedValidators validators = _converter.Convert();
 
             Assert.IsNotNull(validators.Columns[1].Find(p => p.GetType() == typeof(TextFormatValidator)));
         }
@@ -74,12 +72,9 @@ namespace FormatValidatorTests.Unit
         [TestMethod]
         public void Converter_WhenColumnHasIsNumericAttribute_ShouldCreateValidator()
         {
-            ValidatorConfiguration config = new ValidatorConfiguration();
-            config.Columns.Add(1, new ColumnValidatorConfiguration() { IsNumeric = true });
+            _configuration.Columns.Add(1, new ColumnValidatorConfiguration() { IsNumeric = true });
 
-            Converter converter = new Converter();
-
-            ConvertedValidators validators = converter.Convert(config);
+            ConvertedValidators validators = _converter.Convert();
 
             Assert.IsNotNull(validators.Columns[1].Find(p => p.GetType() == typeof(NumberValidator)));
         }
@@ -87,11 +82,9 @@ namespace FormatValidatorTests.Unit
         [TestMethod]
         public void Converter_WhenColumnHasNullableAttribute_ShouldCreateValidator()
         {
-            Converter converter = new Converter();
-            ValidatorConfiguration config = new ValidatorConfiguration();
-            config.Columns.Add(1, new ColumnValidatorConfiguration() { IsRequired = true });
+            _configuration.Columns.Add(1, new ColumnValidatorConfiguration() { IsRequired = true });
 
-            ConvertedValidators validators = converter.Convert(config);
+            ConvertedValidators validators = _converter.Convert();
 
             Assert.IsNotNull(validators.Columns[1].Find(p => p.GetType() == typeof(NotNullableValidator)));
         }
@@ -101,12 +94,10 @@ namespace FormatValidatorTests.Unit
         {
             const string EXPECTED_SEPERATOR = @"##@#
 ";
-            Converter converter = new Converter();
-            ValidatorConfiguration config = new ValidatorConfiguration();
+            
+            _configuration.RowSeperator = @"##@#\r\n";
 
-            config.RowSeperator = @"##@#\r\n";
-
-            ConvertedValidators validators = converter.Convert(config);
+            ConvertedValidators validators = _converter.Convert();
 
             Assert.AreEqual(EXPECTED_SEPERATOR, validators.RowSeperator);
         }
@@ -117,11 +108,9 @@ namespace FormatValidatorTests.Unit
             const string EXPECTED_SEPERATOR = "|";
             const string INPUT = "|";
 
-            Converter converter = new Converter();
-            ValidatorConfiguration config = new ValidatorConfiguration();
-            config.ColumnSeperator = INPUT;
+            _configuration.ColumnSeperator = INPUT;
 
-            ConvertedValidators converted = converter.Convert(config);
+            ConvertedValidators converted = _converter.Convert();
 
             Assert.AreEqual(EXPECTED_SEPERATOR, converted.ColumnSeperator);
         }
