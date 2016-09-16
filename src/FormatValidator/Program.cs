@@ -10,51 +10,24 @@ namespace FormatValidator
     {
         public static void Main(string[] args)
         {
-            const int PREVIEW_LENGTH = 40;
             string configurationData = System.IO.File.ReadAllText(@"d:\development\personal\formatvalidator\src\formatvalidatortests\data\configuration\simplefile-configuration.json");
             string filename = @"d:\development\personal\formatvalidator\src\formatvalidatortests\data\simplefile.csv";
 
+            ConsoleUserInterface ui = new ConsoleUserInterface();
             FileSourceReader source = new FileSourceReader(filename, "\r\n");
             Validator validator = Validator.FromJson(configurationData);
 
-            List<RowValidationError> errors = validator.Validate(source);
-
-            foreach(RowValidationError current in errors)
+            List<RowValidationError> errors = new List<RowValidationError>();
+                
+            foreach(RowValidationError current in validator.Validate(source))
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(string.Format("[{0}] ", current.Row));
-                Console.ResetColor();
-                Console.WriteLine(current.Content.Trim().Substring(0, current.Content.Trim().Length > PREVIEW_LENGTH ? PREVIEW_LENGTH : current.Content.Trim().Length));
-
-                foreach (ValidationError rowSpecificErrors in current.Errors)
-                {
-                    Console.WriteLine(
-                        string.Format("\t{1}: {2}", current.Row, rowSpecificErrors.At, rowSpecificErrors.Message)
-                        );
-                }
+                errors.Add(current);
+                ui.ReportRowError(current);
             }
 
-            WriteSummary(errors);
+            ui.ShowSummary(errors);
 
             Console.ReadLine();
-        }
-
-        private static void WriteSummary(List<RowValidationError> errors)
-        {
-            Console.WriteLine();
-
-            if(errors.Count > 0)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("FAILED");
-            }
-            else
-            {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("PASSED");
-            }
-
-            Console.ResetColor();
         }
     }
 }

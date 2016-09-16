@@ -29,20 +29,18 @@ namespace FormatValidator
             return validator;
         }
         
-        public List<RowValidationError> Validate(ISourceReader reader)
+        public IEnumerable<RowValidationError> Validate(ISourceReader reader)
         {
-            List<RowValidationError> errors = new List<RowValidationError>();
-
             foreach(string line in reader.ReadLines())
             {
                 if (!_rowValidator.IsValid(line))
                 {
-                    errors.Add(_rowValidator.GetError());
+                    RowValidationError error = _rowValidator.GetError();
                     _rowValidator.ClearErrors();
+
+                    yield return error;
                 }
             }
-
-            return errors;
         }
 
         public List<ValidatorGroup> GetColumnValidators()

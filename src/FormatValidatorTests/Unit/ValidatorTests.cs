@@ -45,7 +45,7 @@ namespace FormatValidatorTests.Unit
             Validator validator = Validator.FromJson(JSON);
             FileSourceReader reader = new FileSourceReader(INPUTFILE, "\r\n");
 
-            List<RowValidationError> errors = validator.Validate(reader);
+            List<RowValidationError> errors = new List<RowValidationError>(validator.Validate(reader));
         }
     }
 }
