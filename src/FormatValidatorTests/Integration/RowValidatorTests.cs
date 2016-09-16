@@ -29,9 +29,11 @@ namespace FormatValidatorTests.Integration
 
             foreach(string currentRow in fileContents)
             {
-                validator.IsValid(currentRow);
-                errors.AddRange(validator.GetErrors());
-                validator.ClearErrors();
+                if (!validator.IsValid(currentRow))
+                {
+                    errors.AddRange(validator.GetError().Errors);
+                    validator.ClearErrors();
+                }
             }
 
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);

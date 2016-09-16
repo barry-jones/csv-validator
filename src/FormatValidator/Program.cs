@@ -17,17 +17,21 @@ namespace FormatValidator
             FileSourceReader source = new FileSourceReader(filename, "\r\n");
             Validator validator = Validator.FromJson(configurationData);
 
-            List<ValidationError> errors = validator.Validate(source);
+            List<RowValidationError> errors = validator.Validate(source);
 
-            foreach(ValidationError current in errors)
+            foreach(RowValidationError current in errors)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write(string.Format("[{0}] ", current.Row));
                 Console.ResetColor();
-                Console.WriteLine(current.RowContent.Trim().Substring(0, current.RowContent.Trim().Length > PREVIEW_LENGTH ? PREVIEW_LENGTH : current.RowContent.Trim().Length));
-                Console.WriteLine(
-                    string.Format("\t{1}: {2}",current.Row, current.At, current.Message)
-                    );
+                Console.WriteLine(current.Content.Trim().Substring(0, current.Content.Trim().Length > PREVIEW_LENGTH ? PREVIEW_LENGTH : current.Content.Trim().Length));
+
+                foreach (ValidationError rowSpecificErrors in current.Errors)
+                {
+                    Console.WriteLine(
+                        string.Format("\t{1}: {2}", current.Row, rowSpecificErrors.At, rowSpecificErrors.Message)
+                        );
+                }
             }
 
             WriteSummary(errors);
@@ -35,7 +39,7 @@ namespace FormatValidator
             Console.ReadLine();
         }
 
-        private static void WriteSummary(List<ValidationError> errors)
+        private static void WriteSummary(List<RowValidationError> errors)
         {
             Console.WriteLine();
 

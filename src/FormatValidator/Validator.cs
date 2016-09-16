@@ -28,15 +28,17 @@ namespace FormatValidator
             return validator;
         }
         
-        public List<ValidationError> Validate(ISourceReader reader)
+        public List<RowValidationError> Validate(ISourceReader reader)
         {
-            List<ValidationError> errors = new List<ValidationError>();
+            List<RowValidationError> errors = new List<RowValidationError>();
 
             foreach(string line in reader.ReadLines())
             {
-                _rowValidator.IsValid(line);
-                errors.AddRange(_rowValidator.GetErrors());
-                _rowValidator.ClearErrors();
+                if (!_rowValidator.IsValid(line))
+                {
+                    errors.Add(_rowValidator.GetError());
+                    _rowValidator.ClearErrors();
+                }
             }
 
             return errors;

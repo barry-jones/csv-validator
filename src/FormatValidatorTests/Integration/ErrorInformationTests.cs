@@ -20,7 +20,7 @@ namespace FormatValidatorTests.Integration
                 "2",
                 "1"
             };
-            List<ValidationError> errors = new List<ValidationError>();
+            List<RowValidationError> errors = new List<RowValidationError>();
 
             RowValidator validator = new RowValidator(',');
             validator.AddColumnValidator(1, new UniqueColumnValidator());
@@ -29,7 +29,7 @@ namespace FormatValidatorTests.Integration
             {
                 if (!validator.IsValid(current))
                 {
-                    errors.AddRange(validator.GetErrors());
+                    errors.Add(validator.GetError());
                     validator.ClearErrors();
                 }
             }

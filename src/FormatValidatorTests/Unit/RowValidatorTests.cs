@@ -102,10 +102,10 @@ namespace FormatValidatorTests.Unit
             validator.AddColumnValidator(4, new NumberValidator());
 
             bool result = validator.IsValid(ROW);
-            IList<ValidationError> errors = validator.GetErrors();
+            RowValidationError errors = validator.GetError();
 
             Assert.AreEqual(EXPECTED_RESULT, result);
-            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
+            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Errors.Count);
         }
 
         [TestMethod]
@@ -123,10 +123,10 @@ namespace FormatValidatorTests.Unit
             validator.AddColumnValidator(4, new NumberValidator());
 
             bool result = validator.IsValid(ROW);
-            IList<ValidationError> errors = validator.GetErrors();
+            RowValidationError errors = validator.GetError();
 
             Assert.AreEqual(EXPECTED_RESULT, result);
-            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
+            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Errors.Count);
         }
 
         [TestMethod]
@@ -144,11 +144,11 @@ namespace FormatValidatorTests.Unit
             validator.AddColumnValidator(4, new NumberValidator());
 
             bool result = validator.IsValid(ROW);
-            IList<ValidationError> errors = validator.GetErrors();
+            RowValidationError errors = validator.GetError();
 
             Assert.AreEqual(EXPECTED_RESULT, result);
-            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
-            ValidationErrorHelper.CheckError(0, "Could not convert 'row' to a number.", errors[0]);
+            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Errors.Count);
+            ValidationErrorHelper.CheckError(0, "Could not convert 'row' to a number.", errors.Errors[0]);
         }
 
         [TestMethod]
@@ -163,10 +163,10 @@ namespace FormatValidatorTests.Unit
             validator.AddColumnValidator(1, new StringLengthValidator(4));
             
             validator.IsValid(ROW1);
-            errors.AddRange(validator.GetErrors());
+            errors.AddRange(validator.GetError().Errors);
             validator.ClearErrors();
             validator.IsValid(ROW2);
-            errors.AddRange(validator.GetErrors());
+            errors.AddRange(validator.GetError().Errors);
 
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
         }
@@ -186,16 +186,16 @@ namespace FormatValidatorTests.Unit
             validator.AddColumnValidator(4, new UniqueColumnValidator());
 
             validator.IsValid(ROW1);
-            errors.AddRange(validator.GetErrors());
+            errors.AddRange(validator.GetError().Errors);
             validator.ClearErrors();
             validator.IsValid(ROW2);
-            errors.AddRange(validator.GetErrors());
+            errors.AddRange(validator.GetError().Errors);
             validator.ClearErrors();
             validator.IsValid(ROW3);
-            errors.AddRange(validator.GetErrors());
+            errors.AddRange(validator.GetError().Errors);
             validator.ClearErrors();
             validator.IsValid(ROW4);
-            errors.AddRange(validator.GetErrors());
+            errors.AddRange(validator.GetError().Errors);
             validator.ClearErrors();
 
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
@@ -213,10 +213,10 @@ namespace FormatValidatorTests.Unit
             validator.AddColumnValidator(2, new UniqueColumnValidator());
 
             validator.IsValid(ROW1);
-            errors.AddRange(validator.GetErrors());
+            errors.AddRange(validator.GetError().Errors);
             validator.ClearErrors();
             validator.IsValid(ROW2);
-            errors.AddRange(validator.GetErrors());
+            errors.AddRange(validator.GetError().Errors);
             validator.ClearErrors();
 
             Assert.AreEqual(ROW2, errors[0].RowContent);

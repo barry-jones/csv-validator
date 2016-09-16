@@ -5,20 +5,22 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
-    public class RowValidator : ValidationEntry
+    public class RowValidator
     {
         private char _columnSeperator;
         private ValidatorGroup[] _columns;
         private int _rowCounter;
+        private RowValidationError _errorInformation;
 
         public RowValidator(char columnSeperator)
         {
             _rowCounter = 0;
+            _errorInformation = new RowValidationError();
             _columns = new ValidatorGroup[0];
             _columnSeperator = columnSeperator;
         }
         
-        public override bool IsValid(string toCheck)
+        public bool IsValid(string toCheck)
         {
             bool isValid = true;
             string[] parts = toCheck.Split(_columnSeperator);
@@ -36,20 +38,25 @@ namespace FormatValidator.Validators
                     {
                         current.RowContent = toCheck;
                     }
-                    Errors.AddRange(newErrors);
+                    _errorInformation.Errors.AddRange(newErrors);
 
                     isValid = isValid & currentResult;
                 }
             }
 
-            AddRowDetailsToErrors();
+            AddRowDetailsToErrors(toCheck);
 
             return isValid;
-        }        
+        }
 
-        public override void ClearErrors()
+        public RowValidationError GetError()
         {
-            base.ClearErrors();
+            return _errorInformation;
+        }
+
+        public void ClearErrors()
+        {
+            _errorInformation = new RowValidationError();
             foreach(ValidatorGroup current in _columns)
             {
                 current.ClearErrors();
@@ -95,12 +102,10 @@ namespace FormatValidator.Validators
             }
         }
 
-        private void AddRowDetailsToErrors()
+        private void AddRowDetailsToErrors(string content)
         {
-            foreach(ValidationError current in Errors)
-            {
-                current.Row = _rowCounter;
-            }
+            _errorInformation.Row = _rowCounter;
+            _errorInformation.Content = content;
         }
 
         private void MoveRowCounterToCurrentRow()
