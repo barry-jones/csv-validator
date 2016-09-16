@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FormatValidator": {
+      "commandName": "Project",
+      "commandLineArgs": "-config \"d:\\development\\personal\\formatvalidator\\src\\formatvalidatortests\\data\\configuration\\simplefile-configuration.json\" -validate \"d:\\development\\personal\\formatvalidator\\src\\formatvalidatortests\\data\\simplefile.csv\""
+    }
+  }
+}

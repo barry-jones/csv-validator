@@ -10,24 +10,51 @@ namespace FormatValidator
     {
         public static void Main(string[] args)
         {
-            string configurationData = System.IO.File.ReadAllText(@"d:\development\personal\formatvalidator\src\formatvalidatortests\data\configuration\simplefile-configuration.json");
-            string filename = @"d:\development\personal\formatvalidator\src\formatvalidatortests\data\simplefile.csv";
-
+            Parameters parameters = new Parameters();
             ConsoleUserInterface ui = new ConsoleUserInterface();
-            FileSourceReader source = new FileSourceReader(filename, "\r\n");
-            Validator validator = Validator.FromJson(configurationData);
-
             List<RowValidationError> errors = new List<RowValidationError>();
-                
-            foreach(RowValidationError current in validator.Validate(source))
+
+            parameters.Read(args);
+
+            if(IsParametersValid(parameters))
             {
-                errors.Add(current);
-                ui.ReportRowError(current);
+                Validator validator = Validator.FromJson(System.IO.File.ReadAllText(parameters.Configuration));
+                FileSourceReader source = new FileSourceReader(parameters.FileToValidate, "\r\n");
+
+                foreach (RowValidationError current in validator.Validate(source))
+                {
+                    errors.Add(current);
+                    ui.ReportRowError(current);
+                }
+
+                ui.ShowSummary(errors);
+
+                Console.ReadLine();
+            }
+        }
+
+        private static bool IsParametersValid(Parameters parameters)
+        {
+            bool isValid = true;
+
+            if (!string.IsNullOrEmpty(parameters.Configuration))
+            {
+                if (!System.IO.File.Exists(parameters.Configuration))
+                {
+                    Console.WriteLine(string.Format("The -config file '{0}' was not provided or the file does not exist.", parameters.Configuration));
+                    isValid = false;
+                }
+            }
+            if (!string.IsNullOrEmpty(parameters.FileToValidate))
+            {
+                if (!System.IO.File.Exists(parameters.FileToValidate))
+                {
+                    Console.WriteLine(string.Format("The -validate file '{0}' was not provided or the file does not exist.", parameters.FileToValidate));
+                    isValid = false;
+                }
             }
 
-            ui.ShowSummary(errors);
-
-            Console.ReadLine();
+            return isValid;
         }
     }
 }
