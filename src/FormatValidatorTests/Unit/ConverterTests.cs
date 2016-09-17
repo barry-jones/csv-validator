@@ -12,13 +12,13 @@ namespace FormatValidatorTests.Unit
     public class ConverterTests
     {
         private ValidatorConfiguration _configuration;
-        private Converter _converter;
+        private ConfigurationConvertor _converter;
 
         [TestInitialize]
         public void Setup()
         {
             _configuration = new ValidatorConfiguration();
-            _converter = new Converter(_configuration);
+            _converter = new ConfigurationConvertor(_configuration);
         }
 
         [TestMethod]

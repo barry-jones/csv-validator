@@ -6,12 +6,12 @@ using FormatValidator.Validators;
 
 namespace FormatValidator.Configuration
 {
-    public class Converter
+    public class ConfigurationConvertor
     {
         private ConvertedValidators _converted;
         private ValidatorConfiguration _fromConfig;
 
-        public Converter(ValidatorConfiguration fromConfig)
+        public ConfigurationConvertor(ValidatorConfiguration fromConfig)
         {
             _fromConfig = fromConfig;
             _converted = new ConvertedValidators();
