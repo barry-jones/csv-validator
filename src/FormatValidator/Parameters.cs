@@ -37,6 +37,18 @@ namespace FormatValidator
             }
         }
 
+        public bool IsValid()
+        {
+            bool isValid = false;
+
+            bool configIsValid = !string.IsNullOrEmpty(_configuration) && System.IO.File.Exists(_configuration);
+            bool fileToValidateIsValid = !string.IsNullOrEmpty(_fileToValidate) && System.IO.File.Exists(_fileToValidate);
+
+            isValid = configIsValid && fileToValidateIsValid;
+
+            return isValid;
+        }
+
         private string ReadValue(int currentIndex, string[] parameters)
         {
             string readValue = string.Empty;

@@ -34,10 +34,6 @@ namespace FormatValidator.Validators
                     bool currentResult = _columns[i].IsValid(parts[i]);
 
                     IList<ValidationError> newErrors = _columns[i].GetErrors();
-                    foreach(ValidationError current in newErrors)
-                    {
-                        current.RowContent = toCheck;
-                    }
                     _errorInformation.Errors.AddRange(newErrors);
 
                     isValid = isValid & currentResult;

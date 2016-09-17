@@ -16,7 +16,7 @@ namespace FormatValidator
 
             parameters.Read(args);
 
-            if(IsParametersValid(parameters))
+            if(parameters.IsValid())
             {
                 Validator validator = Validator.FromJson(System.IO.File.ReadAllText(parameters.Configuration));
                 FileSourceReader source = new FileSourceReader(parameters.FileToValidate, "\r\n");
@@ -31,30 +31,10 @@ namespace FormatValidator
 
                 Console.ReadLine();
             }
-        }
-
-        private static bool IsParametersValid(Parameters parameters)
-        {
-            bool isValid = true;
-
-            if (!string.IsNullOrEmpty(parameters.Configuration))
+            else
             {
-                if (!System.IO.File.Exists(parameters.Configuration))
-                {
-                    Console.WriteLine(string.Format("The -config file '{0}' was not provided or the file does not exist.", parameters.Configuration));
-                    isValid = false;
-                }
+                Console.WriteLine(string.Format("The parameters '{0}' and '{1}' provided either are empty or do not point to files.", parameters.Configuration, parameters.FileToValidate));
             }
-            if (!string.IsNullOrEmpty(parameters.FileToValidate))
-            {
-                if (!System.IO.File.Exists(parameters.FileToValidate))
-                {
-                    Console.WriteLine(string.Format("The -validate file '{0}' was not provided or the file does not exist.", parameters.FileToValidate));
-                    isValid = false;
-                }
-            }
-
-            return isValid;
         }
     }
 }

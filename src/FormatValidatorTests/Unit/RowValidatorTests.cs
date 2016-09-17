@@ -149,14 +149,14 @@ namespace FormatValidatorTests.Unit
             const string ROW1 = @"this5,notnull,a,row";
             const string ROW2 = @"this5,notnull,a,row";
             const int EXPECTED_ERRORCOUNT = 2;
-            List<ValidationError> errors = new List<ValidationError>();
+            int count = 0;
 
             _validator.AddColumnValidator(1, new StringLengthValidator(4));
 
-            CountAndClearErrors(ROW1, errors);
-            CountAndClearErrors(ROW2, errors);
+            count += CountAndClearErrors(ROW1);
+            count += CountAndClearErrors(ROW2);
 
-            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
+            Assert.AreEqual(EXPECTED_ERRORCOUNT, count);
         }
 
         [TestMethod]
@@ -168,17 +168,17 @@ namespace FormatValidatorTests.Unit
             const string ROW4 = @"this4,notnull,a,notuniqueid";
             const int EXPECTED_ERRORCOUNT = 7;
 
-            List<ValidationError> errors = new List<ValidationError>();
+            int count = 0;
             
             _validator.AddColumnValidator(1, new StringLengthValidator(4));
             _validator.AddColumnValidator(4, new UniqueColumnValidator());
 
-            CountAndClearErrors(ROW1, errors);
-            CountAndClearErrors(ROW2, errors);
-            CountAndClearErrors(ROW3, errors);
-            CountAndClearErrors(ROW4, errors);
+            count += CountAndClearErrors(ROW1);
+            count += CountAndClearErrors(ROW2);
+            count += CountAndClearErrors(ROW3);
+            count += CountAndClearErrors(ROW4);
 
-            Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Count);
+            Assert.AreEqual(EXPECTED_ERRORCOUNT, count);
         }
 
         [TestMethod]
@@ -187,21 +187,37 @@ namespace FormatValidatorTests.Unit
             const string ROW1 = @"this1,notnull";
             const string ROW2 = @"this2,notnull";
 
-            List<ValidationError> errors = new List<ValidationError>();
+            List<RowValidationError> errors = new List<RowValidationError>();
 
             _validator.AddColumnValidator(2, new UniqueColumnValidator());
 
-            CountAndClearErrors(ROW1, errors);
-            CountAndClearErrors(ROW2, errors);
+            errors.Add(GetAndClearRowError(ROW1));
+            errors.Add(GetAndClearRowError(ROW2));
 
-            Assert.AreEqual(ROW2, errors[0].RowContent);
+            Assert.AreEqual(1, errors[0].Row);
+            Assert.AreEqual(2, errors[1].Row);
         }
 
-        private void CountAndClearErrors(string input, List<ValidationError> errors)
+        private RowValidationError GetAndClearRowError(string contentToCheck)
         {
-            _validator.IsValid(input);
-            errors.AddRange(_validator.GetError().Errors);
+            RowValidationError error = null;
+
+            _validator.IsValid(contentToCheck);
+            error = _validator.GetError();
             _validator.ClearErrors();
+
+            return error;
+        }
+
+        private int CountAndClearErrors(string contentToCheck)
+        {
+            int count = 0;
+
+            _validator.IsValid(contentToCheck);
+            count = _validator.GetError().Errors.Count();
+            _validator.ClearErrors();
+
+            return count;
         }
     }
 }

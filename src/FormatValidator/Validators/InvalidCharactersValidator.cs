@@ -34,13 +34,5 @@ namespace FormatValidator.Validators
         {
             _characters.AddRange(invalidCharacters);
         }
-
-        public List<char> Characters
-        {
-            get
-            {
-                return _characters;
-            }
-        }
     }
 }
