@@ -27,7 +27,7 @@ namespace FormatValidator.Validators
             }
             else
             {
-                Errors.Add(new ValidationError(0, string.Format("Duplicate ID {0} found.", toCheck)));
+                base.Errors.Add(new ValidationError(0, string.Format("Duplicate ID {0} found.", toCheck)));
             }
 
             return isValid;

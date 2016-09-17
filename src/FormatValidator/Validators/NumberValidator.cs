@@ -14,7 +14,7 @@ namespace FormatValidator.Validators
 
             if(!isValid)
             {
-                Errors.Add(new ValidationError(0, string.Format("Could not convert '{0}' to a number.", toCheck)));
+                base.Errors.Add(new ValidationError(0, string.Format("Could not convert '{0}' to a number.", toCheck)));
             }
 
             return isValid;

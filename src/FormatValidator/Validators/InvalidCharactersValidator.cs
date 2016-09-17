@@ -22,7 +22,7 @@ namespace FormatValidator.Validators
             {
                 if (toCheck.Contains(current.ToString()))
                 {
-                    Errors.Add(new ValidationError(toCheck.IndexOf(current) + 1, string.Format("'{0}' invalid character found.", current)));
+                    base.Errors.Add(new ValidationError(toCheck.IndexOf(current) + 1, string.Format("'{0}' invalid character found.", current)));
                     isValid = false;
                 }
             }

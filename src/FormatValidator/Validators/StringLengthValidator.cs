@@ -19,7 +19,7 @@ namespace FormatValidator.Validators
             bool isValid = toCheck.Length <= _maxLength;
             if(!isValid)
             {
-                Errors.Add(new ValidationError(0, string.Format("Max length is {0}, found length was {1}.", _maxLength, toCheck.Length)));
+                base.Errors.Add(new ValidationError(0, string.Format("Max length is {0}, found length was {1}.", _maxLength, toCheck.Length)));
             }
 
             return isValid;

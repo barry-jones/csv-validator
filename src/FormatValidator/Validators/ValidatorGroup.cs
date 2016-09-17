@@ -27,7 +27,7 @@ namespace FormatValidator.Validators
             foreach(IValidator current in _validators)
             {
                 bool currentValid = current.IsValid(toCheck);
-                Errors.AddRange(current.GetErrors());
+                base.Errors.AddRange(current.GetErrors());
                 isValid = isValid & currentValid;
             }
 
