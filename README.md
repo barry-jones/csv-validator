@@ -1,4 +1,4 @@
-# Format Validator
+# CSV Validator
 
 .NET Core CSV text file validator. Enables the quick verification of column seperated data files. Columns can be 
 checked against multiple requirements for correctness.
