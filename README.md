@@ -47,3 +47,8 @@ be available in the input file.
 
 The columns require the number, which is the ordinal of the column in the input file, you do not need to specify all columns, 
 only those that are to be validated.
+
+## Outstanding Work
+
+- Show character position for error
+- Validate header rows correctly
