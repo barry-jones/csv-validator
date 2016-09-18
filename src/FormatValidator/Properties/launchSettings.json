@@ -2,7 +2,7 @@
   "profiles": {
     "FormatValidator": {
       "commandName": "Project",
-      "commandLineArgs": "-config \"d:\\development\\personal\\formatvalidator\\src\\formatvalidatortests\\data\\configuration\\testfile-configuration.json\" -validate \"d:\\development\\personal\\formatvalidator\\src\\formatvalidatortests\\data\\rowterminator-testfile-1.csv\""
+      "commandLineArgs": "-config \"$(targetDir)..\\..\\formatvalidatortests\\data\\configuration\\testfile-configuration.json\" -validate \"$(targetDir)..\\..\\formatvalidatortests\\data\\rowterminator-testfile-1.csv\""
     }
   }
 }

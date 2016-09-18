@@ -6,7 +6,6 @@
 
   "dependencies": {
     "Microsoft.NETCore.App": {
-      "type": "platform",
       "version": "1.0.0"
     },
     "Newtonsoft.Json": "9.0.1"
@@ -16,5 +15,10 @@
     "netcoreapp1.0": {
       "imports": "dnxcore50"
     }
+  },
+  "runtimes": {
+    "win10-x64": {},
+    "osx.10.10-x64": {},
+    "ubuntu.14.04-x64": {}
   }
 }
