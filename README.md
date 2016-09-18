@@ -24,7 +24,7 @@ To configure the verification a JSON file is used with the following format:
 			"name": "ID",
 			"isRequired": true,
 			"isUnique": true
-		}
+		},
 		"2": {
 			"name": "DOB",
 			"pattern": "^\\d\\d\\d\\d-\\d\\d-\\d-\\d$"
