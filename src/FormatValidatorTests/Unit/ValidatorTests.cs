@@ -43,7 +43,7 @@ namespace FormatValidatorTests.Unit
             string JSON = System.IO.File.ReadAllText(@"data\configuration\configuration.json");
 
             Validator validator = Validator.FromJson(JSON);
-            FileSourceReader reader = new FileSourceReader(INPUTFILE, "\r\n");
+            FileSourceReader reader = new FileSourceReader(INPUTFILE);
 
             List<RowValidationError> errors = new List<RowValidationError>(validator.Validate(reader));
         }

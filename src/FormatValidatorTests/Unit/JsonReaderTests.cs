@@ -19,5 +19,17 @@ namespace FormatValidatorTests.Unit
 
             Assert.IsNotNull(configuration, "configuration reader did not create configuration.");
         }
+
+        [TestMethod]
+        public void JsonReader_WhenColumnNameIsProvided_ShouldBePopulated()
+        {
+            const string EXPECTED = "HEADER";
+            const string INPUT = "{ \"columns\": { \"1\": { \"name\": \"HEADER\" } } }";
+
+            JsonReader reader = new JsonReader();
+            ValidatorConfiguration configuration = reader.Read(INPUT);
+
+            Assert.AreEqual(EXPECTED, configuration.Columns[1].Name);
+        }
     }
 }

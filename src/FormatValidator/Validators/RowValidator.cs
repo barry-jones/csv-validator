@@ -7,23 +7,28 @@ namespace FormatValidator.Validators
 {
     public class RowValidator
     {
-        private char _columnSeperator;
         private ValidatorGroup[] _columns;
         private int _rowCounter;
         private RowValidationError _errorInformation;
+        private string _columnSeperator;
 
-        public RowValidator(char columnSeperator)
+        public RowValidator()
         {
             _rowCounter = 0;
             _errorInformation = new RowValidationError();
             _columns = new ValidatorGroup[0];
+        }
+
+        public RowValidator(string columnSeperator) : this()
+        {
             _columnSeperator = columnSeperator;
         }
         
         public bool IsValid(string toCheck)
         {
             bool isValid = true;
-            string[] parts = toCheck.Split(_columnSeperator);
+            string[] seperators = new string[] { _columnSeperator };            
+            string[] parts = toCheck.Split(seperators, StringSplitOptions.None);
 
             MoveRowCounterToCurrentRow();
 
@@ -107,6 +112,18 @@ namespace FormatValidator.Validators
         private void MoveRowCounterToCurrentRow()
         {
             _rowCounter++;
+        }
+
+        public string ColumnSeperator
+        {
+            get
+            {
+                return _columnSeperator;
+            }
+            set
+            {
+                _columnSeperator = value;
+            }
         }
     }
 }

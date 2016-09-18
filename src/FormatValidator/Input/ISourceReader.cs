@@ -7,6 +7,6 @@ namespace FormatValidator.Input
 {
     public interface ISourceReader
     {
-        IEnumerable<string> ReadLines();
+        IEnumerable<string> ReadLines(string rowSeperator);
     }
 }

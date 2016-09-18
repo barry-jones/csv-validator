@@ -10,8 +10,8 @@ namespace FormatValidatorTests.Unit
     [TestClass]
     public class ParametersTests
     {
-        const string VALID_CONFIGFILE = @"d:\development\personal\formatvalidator\src\formatvalidatortests\data\configuration\configuration.json";
-        const string VALID_INPUTFILE = @"d:\development\personal\formatvalidator\src\formatvalidatortests\data\simplefile.csv";
+        const string VALID_CONFIGFILE = @"data\configuration\configuration.json";
+        const string VALID_INPUTFILE = @"data\simplefile.csv";
 
         private Parameters _parameters;
 
@@ -109,7 +109,7 @@ namespace FormatValidatorTests.Unit
         {
             const bool EXPECTED = false;
 
-            _parameters.Read(new string[] { "-config", @"d:\doesntexit\configuration.json" });
+            _parameters.Read(new string[] { "-config", @"nonexistent-configuration.json" });
 
             bool result = _parameters.IsValid();
 

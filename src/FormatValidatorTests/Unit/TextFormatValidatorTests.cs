@@ -62,5 +62,18 @@ namespace FormatValidatorTests.Unit
 
             Assert.AreEqual(EXPECTED_RESULT, result);
         }
+
+        [TestMethod]
+        public void Format_WhenEmptyInputProvided_IsValid()
+        {
+            const string INPUT = "";
+            const string FORMAT = @"\d\d";
+            const bool EXPECTED_RESULT = true;
+
+            TextFormatValidator validator = new TextFormatValidator(FORMAT);
+            bool result = validator.IsValid(INPUT);
+
+            Assert.AreEqual(EXPECTED_RESULT, result);
+        }
     }
 }

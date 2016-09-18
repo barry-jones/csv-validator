@@ -19,7 +19,7 @@ namespace FormatValidator
             if(parameters.IsValid())
             {
                 Validator validator = Validator.FromJson(System.IO.File.ReadAllText(parameters.Configuration));
-                FileSourceReader source = new FileSourceReader(parameters.FileToValidate, "\r\n");
+                FileSourceReader source = new FileSourceReader(parameters.FileToValidate);
 
                 foreach (RowValidationError current in validator.Validate(source))
                 {

@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FormatValidatorTests.Unit
 {
     [TestClass]
-    public class ConverterTests
+    public class ConfigurationConverterTests
     {
         private ValidatorConfiguration _configuration;
         private ConfigurationConvertor _converter;

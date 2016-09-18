@@ -17,7 +17,7 @@ namespace FormatValidatorTests.Unit
         [TestInitialize]
         public void Setup()
         {
-            _validator = new RowValidator(',');
+            _validator = new RowValidator(",");
         }
 
         [TestMethod]

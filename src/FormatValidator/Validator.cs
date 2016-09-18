@@ -11,10 +11,12 @@ namespace FormatValidator
     public class Validator
     {
         private RowValidator _rowValidator;
+        private string _rowSeperator;
 
         public Validator()
         {
-            _rowValidator = new RowValidator(',');
+            _rowValidator = new RowValidator();
+            _rowSeperator = "\r\n";
         }
 
         public static Validator FromJson(string json)
@@ -24,14 +26,16 @@ namespace FormatValidator
             ConvertedValidators converted = converter.Convert();
 
             Validator validator = new Validator();
+            validator.SetColumnSeperator(converted.ColumnSeperator);
+            validator.SetRowSeperator(converted.RowSeperator);
             validator.TransferConvertedColumns(converted);
 
             return validator;
         }
-        
+
         public IEnumerable<RowValidationError> Validate(ISourceReader reader)
         {
-            foreach(string line in reader.ReadLines())
+            foreach(string line in reader.ReadLines(_rowSeperator))
             {
                 if (!_rowValidator.IsValid(line))
                 {
@@ -48,10 +52,28 @@ namespace FormatValidator
             return _rowValidator.GetColumnValidators();
         }
 
+        public void SetColumnSeperator(string seperator)
+        {
+            if (string.IsNullOrEmpty(seperator))
+            {
+                _rowValidator.ColumnSeperator = ",";
+            }
+            else
+            {
+                _rowValidator.ColumnSeperator = seperator;
+            }
+        }
+
+        public void SetRowSeperator(string rowSeperator)
+        {
+            if(!string.IsNullOrEmpty(rowSeperator))
+            {
+                _rowSeperator = rowSeperator;
+            }                
+        }
+
         private void TransferConvertedColumns(ConvertedValidators converted)
         {
-            _rowValidator = new RowValidator(',');
-
             foreach (KeyValuePair<int, List<IValidator>> column in converted.Columns)
             {
                 foreach (IValidator columnValidator in column.Value)

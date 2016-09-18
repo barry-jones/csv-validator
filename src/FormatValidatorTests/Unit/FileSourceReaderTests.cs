@@ -13,11 +13,11 @@ namespace FormatValidatorTests.Unit
         [TestMethod]
         public void FileSourceReader_Create()
         {
-            const string FILE = @"d:\development\personal\formatvalidator\src\formatvalidatortests\data\simplefile.csv";
-            const string SEPERATOR = "\r\n";
+            const string FILE = @"data\simplefile.csv";
+            const string ROW_SEPERATOR = "\r\n";
 
-            FileSourceReader reader = new FileSourceReader(FILE, SEPERATOR);
-            foreach(string line in reader.ReadLines())
+            FileSourceReader reader = new FileSourceReader(FILE);
+            foreach(string line in reader.ReadLines(ROW_SEPERATOR))
             {
             }
         }

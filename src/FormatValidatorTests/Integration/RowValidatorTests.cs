@@ -19,7 +19,7 @@ namespace FormatValidatorTests.Integration
             string[] fileContents = System.IO.File.ReadAllLines(@"data\simplefile.csv");
 
             List<ValidationError> errors = new List<ValidationError>();
-            RowValidator validator = new RowValidator(',');
+            RowValidator validator = new RowValidator(",");
 
             validator.AddColumnValidator(1, new UniqueColumnValidator());
             // no validator on 2
