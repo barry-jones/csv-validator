@@ -27,7 +27,7 @@ To configure the verification a JSON file is used with the following format:
 		},
 		"2": {
 			"name": "DOB",
-			"pattern": "^\\d\\d\\d\\d-\\d\\d-\\d-\\d$"
+			"pattern": "^\\d\\d\\d\\d-\\d\\d-\\d\\d$"
 		},
 		"3": {
 			"name": "NOTES",
