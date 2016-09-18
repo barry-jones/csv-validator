@@ -52,6 +52,7 @@ namespace FormatValidatorTests.Integration
             FileSourceReader source = new FileSourceReader(testfile);
 
             validator.SetColumnSeperator(seperator);
+            validator.SetRowSeperator("\r\n");
 
             List<RowValidationError> errors = new List<RowValidationError>(validator.Validate(source));
             totalErrorCount = GetTotalErrorCount(errors);
