@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "FormatValidator": {
+    "validate": {
       "commandName": "Project",
       "commandLineArgs": "\"$(targetDir)..\\..\\formatvalidatortests\\data\\rowterminator-testfile-1.csv\" -with \"$(targetDir)..\\..\\formatvalidatortests\\data\\configuration\\testfile-configuration.json\""
     }

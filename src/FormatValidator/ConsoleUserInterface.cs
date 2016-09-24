@@ -12,15 +12,17 @@ namespace FormatValidator
             const int PREVIEW_LENGTH = 40;
 
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(string.Format("[{0}] ", error.Row));
+            Console.Write(string.Format("Error on line {0}: ", error.Row));
             Console.ResetColor();
             Console.WriteLine(error.Content.Trim().Substring(0, error.Content.Trim().Length > PREVIEW_LENGTH ? PREVIEW_LENGTH : error.Content.Trim().Length));
 
             foreach (ValidationError rowSpecificErrors in error.Errors)
             {
-                Console.WriteLine(
-                    string.Format("\t{1}: {2}", error.Row, rowSpecificErrors.AtCharacter, rowSpecificErrors.Message)
-                    );
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.Write(string.Format("\tat character {0} ", rowSpecificErrors.AtCharacter));
+                Console.ResetColor();
+                Console.Write(rowSpecificErrors.Message);
+                Console.Write(Environment.NewLine);
             }
         }
 
