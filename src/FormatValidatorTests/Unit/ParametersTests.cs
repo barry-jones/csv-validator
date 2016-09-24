@@ -22,10 +22,10 @@ namespace FormatValidatorTests.Unit
         }
 
         [TestMethod]
-        public void Parameters_ReadsConfigurationFile_ContentIsValid()
+        public void Parameters_WhenValidInput_ReadsConfigFile()
         {
             const string EXPECTED = "testing";
-            string[] input = new string[] { "-config", "testing" };
+            string[] input = new string[] { "file.csv", "-with", "testing" };
 
             _parameters.Read(input);
 
@@ -33,14 +33,27 @@ namespace FormatValidatorTests.Unit
         }
 
         [TestMethod]
-        public void Parameters_ReadsInputFile_ContentIsValid()
+        public void Parameters_WhenValidInput_ReadsValidationFile()
         {
-            const string EXPECTED = "testing";
-            string[] input = new string[] { "-validate", "testing" };
+            const string EXPECTED = "testing.csv";
+            string[] input = new string[] { "testing.csv", "-with", "config.json" };
 
             _parameters.Read(input);
 
             Assert.AreEqual(EXPECTED, _parameters.FileToValidate);
+        }
+
+        [TestMethod]
+        public void Parameters_WhenCorrectlyConfigured_IsValid()
+        {
+            const bool EXPECTED_RESULT = true;
+            string[] input = new string[] { VALID_INPUTFILE, "-with", VALID_CONFIGFILE };
+
+            _parameters.Read(input);
+
+            bool isValid = _parameters.IsValid();
+
+            Assert.AreEqual(EXPECTED_RESULT, isValid);
         }
 
         [TestMethod]
@@ -53,25 +66,14 @@ namespace FormatValidatorTests.Unit
         }
 
         [TestMethod]
-        public void Parametesr_WhenParameterProvidedWithNoValue_NoValueIsSet()
+        public void Parameters_WhenParameterProvidedWithNoValue_NoValueIsSet()
         {
-            ParameterWithNoValue(new string[] { "-config" });
-            ParameterWithNoValue(new string[] { "-validate" });
+            ParameterWithNoValue(new string[] { "-with" });
+            ParameterWithNoValue(new string[] { "file.csv" });
         }
 
         [TestMethod]
-        public void Parameters_WhenMultipleArgumentsButNoValues_NoValueSet()
-        {
-            string[] ARGUMENTS = { "-config", "-validate" };
-
-            _parameters.Read(ARGUMENTS);
-
-            Assert.AreEqual(string.Empty, _parameters.Configuration);
-            Assert.AreEqual(string.Empty, _parameters.FileToValidate);
-        }
-
-        [TestMethod]
-        public void Parameters_IsValidWithEmptyValues_ReturnsFalse()
+        public void Parameters_WhenNoValuesProvide_IsNotValid()
         {
             const bool EXPECTED = false;
 
@@ -81,11 +83,11 @@ namespace FormatValidatorTests.Unit
         }
 
         [TestMethod]
-        public void Parameters_IsValidWithOnlyValidateValue_ReturnsFalse()
+        public void Parameters_WhenOnlyValidationFileProvided_IsNotValid()
         {
             const bool EXPECTED = false;
 
-            _parameters.Read(new string[] { "-validate", VALID_INPUTFILE });
+            _parameters.Read(new string[] { VALID_INPUTFILE });
 
             bool result = _parameters.IsValid();
 
@@ -93,11 +95,11 @@ namespace FormatValidatorTests.Unit
         }
 
         [TestMethod]
-        public void Parameters_IsValidWithOnlyConfigValue_ReturnsFalse()
+        public void Parameters_WhenOnlyConfigurationFile_IsNotValid()
         {
             const bool EXPECTED = false;
 
-            _parameters.Read(new string[] { "-config", VALID_CONFIGFILE });
+            _parameters.Read(new string[] { "-with", VALID_CONFIGFILE });
 
             bool result = _parameters.IsValid();
 
@@ -105,26 +107,11 @@ namespace FormatValidatorTests.Unit
         }
 
         [TestMethod]
-        public void Parameters_IsValidWithInvalidFile_ReturnsFalse()
+        public void Parameters_WhenConfigFileDoesntExist_IsNotValid()
         {
             const bool EXPECTED = false;
 
-            _parameters.Read(new string[] { "-config", @"nonexistent-configuration.json" });
-
-            bool result = _parameters.IsValid();
-
-            Assert.AreEqual(EXPECTED, result);
-        }
-
-        [TestMethod]
-        public void Parameters_IsValidWhenBothValuesProvidedAndCorrect_IsValid()
-        {
-            const bool EXPECTED = true;
-
-            _parameters.Read(new string[] {
-                "-config", VALID_CONFIGFILE,
-                "-validate", VALID_INPUTFILE
-            });
+            _parameters.Read(new string[] { "-with", @"nonexistent-configuration.json" });
 
             bool result = _parameters.IsValid();
 

@@ -7,7 +7,8 @@ namespace FormatValidator
 {
     public class Parameters
     {
-        private readonly string[] PARAMETERS = { "-config", "-validate" };
+        private const int EXPECTED_NUMBER_PARAMETERS = 3;
+        private readonly string[] PARAMETERS = { "-with" };
 
         private string _configuration;
         private string _fileToValidate;
@@ -20,20 +21,13 @@ namespace FormatValidator
 
         public void Read(string[] parameters)
         {
-            if(parameters != null && parameters.Length > 0)
+            // first value is expected to be the file to validate and the second
+            // value is expected to the requirements, specified by the -with
+            // argument
+            if (hasParameters(parameters))
             {
-                for(int i = 0; i < parameters.Length; i++)
-                {
-                    string current = parameters[i];
-                    if(current == "-config")
-                    {
-                        _configuration = ReadValue(i, parameters);
-                    }
-                    else if(current == "-validate")
-                    {
-                        _fileToValidate = ReadValue(i, parameters);
-                    }
-                }
+                readValidationFile(parameters);
+                readConfigurationFile(parameters);
             }
         }
 
@@ -59,7 +53,7 @@ namespace FormatValidator
                 readValue = parameters[indexOfValue];
             }
 
-            if (ValueIsAParameter(readValue))
+            if (valueIsAParameter(readValue))
             {
                 readValue = string.Empty;
             }
@@ -67,9 +61,26 @@ namespace FormatValidator
             return readValue;
         }
 
-        private bool ValueIsAParameter(string readValue)
+        private bool valueIsAParameter(string readValue)
         {
             return PARAMETERS.Contains(readValue);
+        }
+
+        private bool hasParameters(string[] parameters)
+        {
+            return parameters != null && parameters.Length == EXPECTED_NUMBER_PARAMETERS;
+        }
+
+        private void readValidationFile(string[] parameters)
+        {
+            _fileToValidate = parameters[0];
+        }
+        private void readConfigurationFile(string[] parameters)
+        {
+            if (string.Compare("-with", parameters[1], StringComparison.OrdinalIgnoreCase) == 0)
+            {
+                _configuration = parameters[2];
+            }
         }
 
         public string Configuration

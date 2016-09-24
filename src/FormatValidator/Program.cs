@@ -28,6 +28,10 @@ namespace FormatValidator
                 }
 
                 ui.ShowSummary(errors);
+
+#if DEBUG
+                Console.ReadLine();
+#endif
             }
             else
             {

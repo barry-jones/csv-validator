@@ -8,7 +8,7 @@ checked against multiple requirements for correctness.
 The application is command line based, and has two arguments:
 
 ``` bash
-formatvalidator -config "configuration.json" -validate "input-datafile.csv"
+validate "input-datafile.csv" -with "configuration.json"
 ```
 
 ## Configuration
@@ -47,8 +47,3 @@ be available in the input file.
 
 The columns require the number, which is the ordinal of the column in the input file, you do not need to specify all columns, 
 only those that are to be validated.
-
-## Outstanding Work
-
-- Show character position for error
-- Validate header rows correctly
