@@ -9,39 +9,49 @@ namespace FormatValidator
     {
         public void ReportRowError(RowValidationError error)
         {
-            const int PREVIEW_LENGTH = 40;
-
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.Write(string.Format("Error on line {0}: ", error.Row));
-            Console.ResetColor();
-            Console.WriteLine(error.Content.Trim().Substring(0, error.Content.Trim().Length > PREVIEW_LENGTH ? PREVIEW_LENGTH : error.Content.Trim().Length));
-
             foreach (ValidationError rowSpecificErrors in error.Errors)
             {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write(string.Format("[Error] ", error.Row));
+                Console.ResetColor();
+
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
-                Console.Write(string.Format("\tat character {0} ", rowSpecificErrors.AtCharacter));
+                Console.Write(string.Format("line {1} character {0} ", rowSpecificErrors.AtCharacter, error.Row));
                 Console.ResetColor();
                 Console.Write(rowSpecificErrors.Message);
                 Console.Write(Environment.NewLine);
             }
         }
 
-        public void ShowSummary(List<RowValidationError> errors)
+        public void ShowSummary(Validator validator, List<RowValidationError> errors, TimeSpan duration)
         {
-            Console.WriteLine();
+            ConsoleColor colour;
+            string message = string.Empty;
 
-            if (errors.Count > 0)
+            if(errors.Count > 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("FAILED");
+                colour = ConsoleColor.Red;
+                message = "{0} rows checked and {1} errors found in {2}s.";
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("PASSED");
+                colour = ConsoleColor.Red;
+                message = "{0} rows checked and no errors found in {1}s.";
             }
 
+            Console.WriteLine();
+
+            Console.ForegroundColor = colour;
+            Console.WriteLine(errors.Count > 0 ? "FAILED" : "PASSED");
             Console.ResetColor();
+            Console.WriteLine();
+
+            Console.WriteLine(
+                string.Format(message, 
+                    validator.TotalRowsChecked, 
+                    errors.Count, 
+                    duration.TotalSeconds)
+                );
         }
     }
 }

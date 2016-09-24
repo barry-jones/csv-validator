@@ -12,7 +12,7 @@ namespace FormatValidator.Validators
             bool isValid = !string.IsNullOrEmpty(toCheck);
             if(!isValid)
             {
-                base.Errors.Add(new ValidationError(0, string.Format("Expected a value, actually saw '{0}'.", toCheck)));
+                base.Errors.Add(new ValidationError(0, "Expected a value but none was provided."));
             }
 
             return isValid;

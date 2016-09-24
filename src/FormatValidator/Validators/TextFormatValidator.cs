@@ -20,7 +20,7 @@ namespace FormatValidator.Validators
             bool isValid = string.IsNullOrWhiteSpace(toCheck) || _format.IsMatch(toCheck);
             if(!isValid)
             {
-                base.Errors.Add(new ValidationError(0, string.Format("String {0} was not in correct format.", toCheck)));
+                base.Errors.Add(new ValidationError(0, string.Format("String '{0}' was not in correct format.", toCheck)));
             }
             return isValid;
         }

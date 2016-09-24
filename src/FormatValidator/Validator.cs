@@ -12,6 +12,7 @@ namespace FormatValidator
     {
         private RowValidator _rowValidator;
         private string _rowSeperator;
+        private int _totalRowsChecked;
 
         public Validator()
         {
@@ -37,6 +38,7 @@ namespace FormatValidator
         {
             foreach(string line in reader.ReadLines(_rowSeperator))
             {
+                _totalRowsChecked++;
                 if (!_rowValidator.IsValid(line))
                 {
                     RowValidationError error = _rowValidator.GetError();
@@ -80,6 +82,14 @@ namespace FormatValidator
                 {
                     _rowValidator.AddColumnValidator(column.Key, columnValidator);
                 }
+            }
+        }
+
+        public int TotalRowsChecked
+        {
+            get
+            {
+                return _totalRowsChecked;
             }
         }
     }

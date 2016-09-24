@@ -18,6 +18,7 @@ namespace FormatValidator
 
             if(parameters.IsValid())
             {
+                DateTime start = DateTime.Now;
                 Validator validator = Validator.FromJson(System.IO.File.ReadAllText(parameters.Configuration));
                 FileSourceReader source = new FileSourceReader(parameters.FileToValidate);
 
@@ -27,11 +28,9 @@ namespace FormatValidator
                     ui.ReportRowError(current);
                 }
 
-                ui.ShowSummary(errors);
+                DateTime end = DateTime.Now;
 
-#if DEBUG
-                Console.ReadLine();
-#endif
+                ui.ShowSummary(validator, errors, end.Subtract(start));
             }
             else
             {
