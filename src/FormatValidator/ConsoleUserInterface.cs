@@ -19,7 +19,7 @@ namespace FormatValidator
             foreach (ValidationError rowSpecificErrors in error.Errors)
             {
                 Console.WriteLine(
-                    string.Format("\t{1}: {2}", error.Row, rowSpecificErrors.At, rowSpecificErrors.Message)
+                    string.Format("\t{1}: {2}", error.Row, rowSpecificErrors.AtCharacter, rowSpecificErrors.Message)
                     );
             }
         }

@@ -198,6 +198,31 @@ namespace FormatValidatorTests.Unit
             Assert.AreEqual(2, errors[1].Row);
         }
 
+        [TestMethod]
+        public void RowValidator_WhenDataIsInvalid_PositionOfErrorIsProvided()
+        {
+            const string ROW = @"nine,12/09/1999,,far too long";
+            const int ERROR_ONE = 1;
+            const int ERROR_TWO = 6;
+            const int ERROR_THREE = 17;
+            const int ERROR_FOUR = 18;
+
+            RowValidationError error = null;
+
+            _validator.AddColumnValidator(1, new NumberValidator());
+            _validator.AddColumnValidator(2, new TextFormatValidator(@"^\d\d\d\d-\d\d-\d\d$"));
+            _validator.AddColumnValidator(3, new NotNullableValidator());
+            _validator.AddColumnValidator(4, new StringLengthValidator(6));
+
+            _validator.IsValid(ROW);
+            error = _validator.GetError();
+
+            Assert.AreEqual(ERROR_ONE, error.Errors[0].AtCharacter);
+            Assert.AreEqual(ERROR_TWO, error.Errors[1].AtCharacter);
+            Assert.AreEqual(ERROR_THREE, error.Errors[2].AtCharacter);
+            Assert.AreEqual(ERROR_FOUR, error.Errors[3].AtCharacter);
+        }
+
         private RowValidationError GetAndClearRowError(string contentToCheck)
         {
             RowValidationError error = null;

@@ -7,25 +7,13 @@ namespace FormatValidator
 {
     public class ValidationError
     {
-        private int _at;
+        private int _atCharacter;
         private string _message;
 
         public ValidationError(int at, string message)
         {
-            _at = at;
+            _atCharacter = at;
             _message = message;
-        }
-
-        public int At
-        {
-            get
-            {
-                return _at;
-            }
-            set
-            {
-                _at = value;
-            }
         }
 
         public string Message
@@ -34,9 +22,13 @@ namespace FormatValidator
             {
                 return _message;
             }
-            set
+        }
+
+        public int AtCharacter
+        {
+            get
             {
-                _message = value;
+                return _atCharacter;
             }
         }
     }
