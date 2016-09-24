@@ -140,7 +140,7 @@ namespace FormatValidatorTests.Unit
 
             Assert.AreEqual(EXPECTED_RESULT, result);
             Assert.AreEqual(EXPECTED_ERRORCOUNT, errors.Errors.Count);
-            ValidationErrorHelper.CheckError(0, "Could not convert 'row' to a number.", errors.Errors[0]);
+            ValidationErrorHelper.CheckError(16, "Could not convert 'row' to a number.", errors.Errors[0]);
         }
 
         [TestMethod]

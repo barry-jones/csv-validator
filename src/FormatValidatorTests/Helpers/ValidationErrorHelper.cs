@@ -11,7 +11,7 @@ namespace FormatValidatorTests.Helpers
     {
         public static void CheckError(int expectedAt, string expectedMessage, ValidationError error)
         {
-            Assert.AreEqual(expectedAt, error.At);
+            Assert.AreEqual(expectedAt, error.AtCharacter);
             Assert.AreEqual(expectedMessage, error.Message);
         }
     }

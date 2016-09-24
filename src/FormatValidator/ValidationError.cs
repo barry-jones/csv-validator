@@ -30,6 +30,10 @@ namespace FormatValidator
             {
                 return _atCharacter;
             }
+            set
+            {
+                _atCharacter = value;
+            }
         }
     }
 }

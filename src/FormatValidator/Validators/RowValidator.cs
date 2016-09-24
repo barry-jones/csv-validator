@@ -27,21 +27,26 @@ namespace FormatValidator.Validators
         public bool IsValid(string toCheck)
         {
             bool isValid = true;
-            string[] seperators = new string[] { _columnSeperator };            
+            string[] seperators = new string[] { _columnSeperator };
             string[] parts = toCheck.Split(seperators, StringSplitOptions.None);
+            int[] columnIndexes = CalculateColumnStartIndexes(parts);
 
             MoveRowCounterToCurrentRow();
 
-            for(int i = 0; i < parts.Length; i++)
+            for (int currentColumn = 0; currentColumn < parts.Length; currentColumn++)
             {
-                if(i < _columns.Length)
+                if (currentColumn < _columns.Length)
                 {
-                    bool currentResult = _columns[i].IsValid(parts[i]);
+                    bool result = _columns[currentColumn].IsValid(parts[currentColumn]);
 
-                    IList<ValidationError> newErrors = _columns[i].GetErrors();
+                    IList<ValidationError> newErrors = _columns[currentColumn].GetErrors();
                     _errorInformation.Errors.AddRange(newErrors);
 
-                    isValid = isValid & currentResult;
+                    // set validation character error location for all errors
+                    // on this column to the first character in the column
+                    for (int i = 0; i < newErrors.Count; i++) newErrors[i].AtCharacter = columnIndexes[currentColumn];
+
+                    isValid = isValid & result;
                 }
             }
 
@@ -112,6 +117,29 @@ namespace FormatValidator.Validators
         private void MoveRowCounterToCurrentRow()
         {
             _rowCounter++;
+        }
+
+        private int[] CalculateColumnStartIndexes(string[] parts)
+        {
+            int[] columnIndexes = new int[parts.Length];
+
+            // find the indexes of each of the columns being provided
+            int columnCounter = 1; // the first column always starts at zero
+            int position = 0;
+            if (columnIndexes.Length > 0)
+            {
+                columnIndexes[0] = 1;
+            }
+            foreach (string part in parts)
+            {
+                if (columnCounter < parts.Length)
+                {
+                    position += part.Length + 1; // add 1 for the seperator
+                    columnIndexes[columnCounter++] = position + 1; // because we are not working zero based
+                }
+            }
+
+            return columnIndexes;
         }
 
         public string ColumnSeperator
