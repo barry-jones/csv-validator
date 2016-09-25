@@ -7,6 +7,12 @@ namespace FormatValidator
 {
     public class ConsoleUserInterface : IUserInterface
     {
+        public void ShowStart()
+        {
+            Console.WriteLine("Started validating document.");
+            Console.WriteLine();
+        }
+
         public void ReportRowError(RowValidationError error)
         {
             foreach (ValidationError rowSpecificErrors in error.Errors)

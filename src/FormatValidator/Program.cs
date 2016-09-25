@@ -16,6 +16,8 @@ namespace FormatValidator
 
             parameters.Read(args);
 
+            ui.ShowStart();
+
             if(parameters.IsValid())
             {
                 DateTime start = DateTime.Now;
