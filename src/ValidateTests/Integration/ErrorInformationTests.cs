@@ -20,24 +20,6 @@ namespace FormatValidatorTests.Integration
         }
 
         [TestMethod]
-        public void WhenValidatingARow_ErrorsHaveRowInformation()
-        {
-            string[] ROWS = new string[] {
-                "1",
-                "1",
-                "2",
-                "1"
-            };
-
-            _rowValidator.AddColumnValidator(1, new UniqueColumnValidator());
-
-            List<RowValidationError> errors = ValidateRows(ROWS);
-
-            Assert.AreEqual(2, errors[0].Row);
-            Assert.AreEqual(4, errors[1].Row);
-        }
-
-        [TestMethod]
         public void WhenValidatingARow_ErrorsHaveRowContentInformation()
         {
             string[] ROWS = new string[] {

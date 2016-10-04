@@ -182,23 +182,6 @@ namespace FormatValidatorTests.Unit
         }
 
         [TestMethod]
-        public void RowValidator_WhenRowInvalid_ShouldStoreRowInError()
-        {
-            const string ROW1 = @"this1,notnull";
-            const string ROW2 = @"this2,notnull";
-
-            List<RowValidationError> errors = new List<RowValidationError>();
-
-            _validator.AddColumnValidator(2, new UniqueColumnValidator());
-
-            errors.Add(GetAndClearRowError(ROW1));
-            errors.Add(GetAndClearRowError(ROW2));
-
-            Assert.AreEqual(1, errors[0].Row);
-            Assert.AreEqual(2, errors[1].Row);
-        }
-
-        [TestMethod]
         public void RowValidator_WhenDataIsInvalid_PositionOfErrorIsProvided()
         {
             const string ROW = @"nine,12/09/1999,,far too long";

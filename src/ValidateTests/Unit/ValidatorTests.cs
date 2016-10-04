@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FormatValidator;
+using FormatValidator.Configuration;
 using FormatValidator.Input;
 using FormatValidator.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -46,6 +47,41 @@ namespace FormatValidatorTests.Unit
             FileSourceReader reader = new FileSourceReader(INPUTFILE);
 
             List<RowValidationError> errors = new List<RowValidationError>(validator.Validate(reader));
+        }
+
+        [TestMethod]
+        public void Validator_WhenRowInvalid_ShouldStoreRowInError()
+        {
+            string[] ROWS = {
+                @"this1,",
+                @"this2,"
+            };
+
+            FakeSourceReader source = new FakeSourceReader(ROWS);
+            ValidatorConfiguration configuration = new ValidatorConfiguration();
+            configuration.Columns.Add(2, new ColumnValidatorConfiguration { IsRequired = true });
+
+            Validator validator = Validator.FromConfiguration(configuration);
+
+            List<RowValidationError> errors = validator.Validate(source).ToList();
+
+            Assert.AreEqual(1, errors[0].Row);
+            Assert.AreEqual(2, errors[1].Row);
+        }
+
+        public class FakeSourceReader : ISourceReader
+        {
+            private string[] _rows;
+
+            public FakeSourceReader(string[] rows)
+            {
+                _rows = rows;
+            }
+
+            public IEnumerable<string> ReadLines(string rowSeperator)
+            {
+                return _rows;
+            }
         }
     }
 }
