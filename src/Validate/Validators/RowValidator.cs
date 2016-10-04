@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 
 namespace FormatValidator.Validators
 {
+    /// <summary>
+    /// A collection of column validators that are orchestrated over a single
+    /// row of the file being validated.
+    /// </summary>
+    /// <seealso cref="Validator"/>
     public class RowValidator
     {
         private ValidatorGroup[] _columns;

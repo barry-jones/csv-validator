@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FormatValidator.Input
 {
@@ -18,11 +14,10 @@ namespace FormatValidator.Input
 
         public IEnumerable<string> ReadLines(string rowSeperator)
         {
-            /*
-            foreach(string current in System.IO.File.ReadLines(_file))
-            {
-                yield return current;
-            }*/
+            // We are not sure if a line (terminated by a \r\n or \n) character is a line
+            // for validation purposes. It is possible that some files will not contain new
+            // lines in the row terminater, so we need to continue to read data from teh file
+            // until the row seperator is located or the end of the file is reached.
 
             List<char> readCharacters = new List<char>();
             Queue<char> seperatorCheckQueue = new Queue<char>();
