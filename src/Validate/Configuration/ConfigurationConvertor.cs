@@ -6,6 +6,9 @@ using FormatValidator.Validators;
 
 namespace FormatValidator.Configuration
 {
+    /// <summary>
+    /// Converts a <see cref="ValidatorConfiguration"/> in to a <see cref="ConvertedValidators"/>
+    /// </summary>
     public class ConfigurationConvertor
     {
         private ConvertedValidators _converted;

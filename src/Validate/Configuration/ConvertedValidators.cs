@@ -8,58 +8,17 @@ namespace FormatValidator.Configuration
 {
     public class ConvertedValidators
     {
-        private Dictionary<int, List<IValidator>> _columns;
-        private string _columnSeperator;
-        private string _rowSeperator;
-        private bool _hasHeaderRow;
-
         public ConvertedValidators()
         {
-            _columns = new Dictionary<int, List<IValidator>>();
+            Columns = new Dictionary<int, List<IValidator>>();
         }
 
-        public Dictionary<int, List<IValidator>> Columns
-        {
-            get
-            {
-                return _columns;
-            }
-        }
+        public Dictionary<int, List<IValidator>> Columns { get; private set; }
 
-        public string RowSeperator
-        {
-            get
-            {
-                return _rowSeperator;
-            }
-            set
-            {
-                _rowSeperator = value;
-            }
-        }
+        public string RowSeperator { get; set; }
 
-        public string ColumnSeperator
-        {
-            get
-            {
-                return _columnSeperator;
-            }
-            set
-            {
-                _columnSeperator = value;
-            }
-        }
+        public string ColumnSeperator { get; set; }
 
-        public bool HasHeaderRow
-        {
-            get
-            {
-                return _hasHeaderRow;
-            }
-            set
-            {
-                _hasHeaderRow = value;
-            }
-        }
+        public bool HasHeaderRow { get; set; }
     }
 }
