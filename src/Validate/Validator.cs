@@ -24,6 +24,12 @@ namespace FormatValidator
         public static Validator FromJson(string json)
         {
             ValidatorConfiguration configuration = new JsonReader().Read(json);
+
+            return FromConfiguration(configuration);
+        }
+
+        public static Validator FromConfiguration(ValidatorConfiguration configuration)
+        {
             ConfigurationConvertor converter = new ConfigurationConvertor(configuration);
             ConvertedValidators converted = converter.Convert();
 
@@ -41,9 +47,14 @@ namespace FormatValidator
             foreach(string line in reader.ReadLines(_rowSeperator))
             {
                 _totalRowsChecked++;
-                if (!_rowValidator.IsValid(line, (_totalRowsChecked == 1 && _hasHeaderRow)))
+
+                if (IsHeaderRow())
+                {
+                }
+                else if (!_rowValidator.IsValid(line))
                 {
                     RowValidationError error = _rowValidator.GetError();
+                    error.Row = _totalRowsChecked;
                     _rowValidator.ClearErrors();
 
                     yield return error;
@@ -85,6 +96,11 @@ namespace FormatValidator
                     _rowValidator.AddColumnValidator(column.Key, columnValidator);
                 }
             }
+        }
+
+        private bool IsHeaderRow()
+        {
+            return _hasHeaderRow && _totalRowsChecked == 1;
         }
 
         public int TotalRowsChecked

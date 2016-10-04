@@ -8,13 +8,11 @@ namespace FormatValidator.Validators
     public class RowValidator
     {
         private ValidatorGroup[] _columns;
-        private int _rowCounter;
         private RowValidationError _errorInformation;
         private string _columnSeperator;
 
         public RowValidator()
         {
-            _rowCounter = 0;
             _errorInformation = new RowValidationError();
             _columns = new ValidatorGroup[0];
         }
@@ -23,25 +21,13 @@ namespace FormatValidator.Validators
         {
             _columnSeperator = columnSeperator;
         }
-
-        public bool IsValid(string toCheck)
-        {
-            return IsValid(toCheck, false);
-        }
         
-        public bool IsValid(string toCheck, bool isHeaderRow)
+        public bool IsValid(string toCheck)
         {
             bool isValid = true;
             string[] seperators = new string[] { _columnSeperator };
             string[] parts = toCheck.Split(seperators, StringSplitOptions.None);
             int[] columnIndexes = CalculateColumnStartIndexes(parts);
-
-            MoveRowCounterToCurrentRow();
-
-            if (isHeaderRow)
-            {
-                return true;
-            }
 
             for (int currentColumn = 0; currentColumn < parts.Length; currentColumn++)
             {
@@ -120,13 +106,7 @@ namespace FormatValidator.Validators
 
         private void AddRowDetailsToErrors(string content)
         {
-            _errorInformation.Row = _rowCounter;
             _errorInformation.Content = content;
-        }
-
-        private void MoveRowCounterToCurrentRow()
-        {
-            _rowCounter++;
         }
 
         private int[] CalculateColumnStartIndexes(string[] parts)
