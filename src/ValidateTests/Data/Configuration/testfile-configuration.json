@@ -1,6 +1,7 @@
 ﻿{
   "columnSeperator": ",",
-  "rowSeperator": "@@#@",
+  "rowSeperator": "\r\n",
+  "hasHeaderRow": true,
   "columns": {
     "1": {
       "name": "ID",

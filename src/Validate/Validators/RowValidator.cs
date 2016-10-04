@@ -23,8 +23,13 @@ namespace FormatValidator.Validators
         {
             _columnSeperator = columnSeperator;
         }
-        
+
         public bool IsValid(string toCheck)
+        {
+            return IsValid(toCheck, false);
+        }
+        
+        public bool IsValid(string toCheck, bool isHeaderRow)
         {
             bool isValid = true;
             string[] seperators = new string[] { _columnSeperator };
@@ -32,6 +37,11 @@ namespace FormatValidator.Validators
             int[] columnIndexes = CalculateColumnStartIndexes(parts);
 
             MoveRowCounterToCurrentRow();
+
+            if (isHeaderRow)
+            {
+                return true;
+            }
 
             for (int currentColumn = 0; currentColumn < parts.Length; currentColumn++)
             {

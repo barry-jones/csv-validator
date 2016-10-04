@@ -11,6 +11,7 @@ namespace FormatValidator.Configuration
         private Dictionary<int, List<IValidator>> _columns;
         private string _columnSeperator;
         private string _rowSeperator;
+        private bool _hasHeaderRow;
 
         public ConvertedValidators()
         {
@@ -46,6 +47,18 @@ namespace FormatValidator.Configuration
             set
             {
                 _columnSeperator = value;
+            }
+        }
+
+        public bool HasHeaderRow
+        {
+            get
+            {
+                return _hasHeaderRow;
+            }
+            set
+            {
+                _hasHeaderRow = value;
             }
         }
     }

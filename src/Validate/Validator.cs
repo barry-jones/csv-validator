@@ -13,6 +13,7 @@ namespace FormatValidator
         private RowValidator _rowValidator;
         private string _rowSeperator;
         private int _totalRowsChecked;
+        private bool _hasHeaderRow;
 
         public Validator()
         {
@@ -30,6 +31,7 @@ namespace FormatValidator
             validator.SetColumnSeperator(converted.ColumnSeperator);
             validator.SetRowSeperator(converted.RowSeperator);
             validator.TransferConvertedColumns(converted);
+            validator._hasHeaderRow = converted.HasHeaderRow;
 
             return validator;
         }
@@ -39,7 +41,7 @@ namespace FormatValidator
             foreach(string line in reader.ReadLines(_rowSeperator))
             {
                 _totalRowsChecked++;
-                if (!_rowValidator.IsValid(line))
+                if (!_rowValidator.IsValid(line, (_totalRowsChecked == 1 && _hasHeaderRow)))
                 {
                     RowValidationError error = _rowValidator.GetError();
                     _rowValidator.ClearErrors();

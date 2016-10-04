@@ -4,7 +4,7 @@
 
   "dependencies": {
     "dotnet-test-mstest": "1.1.1-preview",
-    "Validate": "0.0.1-*",
+    "Validate": "0.1.0-*",
     "Moq": "4.6.38-alpha",
     "MSTest.TestFramework": "1.0.1-preview",
     "NETStandard.Library": "1.6.0"
