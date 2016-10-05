@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using FormatValidator.Configuration;
 using FormatValidator.Validators;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -60,13 +57,23 @@ namespace FormatValidatorTests.Unit
         }
 
         [TestMethod]
+        public void Converter_WhenColumnHasUniqueAttribute_ShouldCreateValidator()
+        {
+            _configuration.Columns.Add(1, new ColumnValidatorConfiguration() { Unique = true });
+
+            ConvertedValidators validators = _converter.Convert();
+
+            Assert.IsNotNull(validators.Columns[1][0] as UniqueColumnValidator);
+        }
+
+        [TestMethod]
         public void Converter_WhenColumnHasPatternAttribute_ShouldCreateValidator()
         {
             _configuration.Columns.Add(1, new ColumnValidatorConfiguration() { Pattern = @"\d\d\d\d" });
 
             ConvertedValidators validators = _converter.Convert();
 
-            Assert.IsNotNull(validators.Columns[1].Find(p => p.GetType() == typeof(TextFormatValidator)));
+            Assert.IsNotNull(validators.Columns[1][0] as TextFormatValidator);
         }
 
         [TestMethod]
@@ -76,7 +83,7 @@ namespace FormatValidatorTests.Unit
 
             ConvertedValidators validators = _converter.Convert();
 
-            Assert.IsNotNull(validators.Columns[1].Find(p => p.GetType() == typeof(NumberValidator)));
+            Assert.IsNotNull(validators.Columns[1][0] as NumberValidator);
         }
 
         [TestMethod]
@@ -86,7 +93,17 @@ namespace FormatValidatorTests.Unit
 
             ConvertedValidators validators = _converter.Convert();
 
-            Assert.IsNotNull(validators.Columns[1].Find(p => p.GetType() == typeof(NotNullableValidator)));
+            Assert.IsNotNull(validators.Columns[1][0] as NotNullableValidator);
+        }
+
+        [TestMethod]
+        public void Convertor_WhenColumnHasMaxLengthAttribute_ShouldCreateValidator()
+        {
+            _configuration.Columns.Add(1, new ColumnValidatorConfiguration() { MaxLength = 10 });
+
+            ConvertedValidators validators = _converter.Convert();
+
+            Assert.IsNotNull(validators.Columns[1][0] as StringLengthValidator);
         }
 
         [TestMethod]
@@ -113,6 +130,24 @@ namespace FormatValidatorTests.Unit
             ConvertedValidators converted = _converter.Convert();
 
             Assert.AreEqual(EXPECTED_SEPERATOR, converted.ColumnSeperator);
+        }
+
+        [TestMethod]
+        public void Converter_WhenHasHeaderRowNotProvided_DefaultsToFalse()
+        {
+            ConvertedValidators converted = _converter.Convert();
+
+            Assert.AreEqual(false, converted.HasHeaderRow);
+        }
+
+        [TestMethod]
+        public void Converter_WhenHasHeaderRowProvided_ConvertsValue()
+        {
+            _configuration.HasHeaderRow = true;
+
+            ConvertedValidators converted = _converter.Convert();
+
+            Assert.AreEqual(true, converted.HasHeaderRow);
         }
     }
 }
