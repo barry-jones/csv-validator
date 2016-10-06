@@ -31,7 +31,7 @@ namespace FormatValidatorTests.Integration
         }
 
         [TestMethod]
-        public void Header_1_ValidatesCorrectly()
+        public void Function_WhenHeaderRows_ValidatesCorrectly()
         {
             const string FILE = @"data\headers-testfile-1.csv";
             int totalErrorCount = 0;
