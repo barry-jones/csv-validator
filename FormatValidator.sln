@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Validate", "src\Validate\Validate.xproj", "{6873E19F-6BCC-4873-AD06-C3FCC4B82D7A}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ValidateTests", "src\ValidateTests\ValidateTests.xproj", "{6B336C06-BA6F-4166-A61A-36492742A45F}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ValidateTests", "test\ValidateTests\ValidateTests.xproj", "{6B336C06-BA6F-4166-A61A-36492742A45F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E7E684DE-A4B9-4707-8716-C6BA9C4B0EC5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6873E19F-6BCC-4873-AD06-C3FCC4B82D7A} = {D6F25962-5238-41D2-9E95-CF6DD0AFF47C}
-		{6B336C06-BA6F-4166-A61A-36492742A45F} = {D6F25962-5238-41D2-9E95-CF6DD0AFF47C}
+		{6B336C06-BA6F-4166-A61A-36492742A45F} = {E7E684DE-A4B9-4707-8716-C6BA9C4B0EC5}
 	EndGlobalSection
 EndGlobal
