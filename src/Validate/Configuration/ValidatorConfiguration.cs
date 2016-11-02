@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace FormatValidator.Configuration
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// A direct representation of the Data read from the configuration file
     /// </summary>

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace FormatValidator
 {
     public class ValidationError
@@ -18,22 +14,13 @@ namespace FormatValidator
 
         public string Message
         {
-            get
-            {
-                return _message;
-            }
+            get { return _message; }
         }
 
         public int AtCharacter
         {
-            get
-            {
-                return _atCharacter;
-            }
-            set
-            {
-                _atCharacter = value;
-            }
+            get { return _atCharacter; }
+            set { _atCharacter = value; }
         }
     }
 }

@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FormatValidator;
-using FormatValidator.Input;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+﻿
 namespace FormatValidatorTests.Integration
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using FormatValidator;
+    using FormatValidator.Input;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class FunctionalTests
     {

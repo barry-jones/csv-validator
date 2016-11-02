@@ -1,10 +1,11 @@
-﻿using System.Linq;
-using FormatValidator.Configuration;
-using FormatValidator.Validators;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+﻿
 namespace FormatValidatorTests.Unit
 {
+    using System.Linq;
+    using FormatValidator.Configuration;
+    using FormatValidator.Validators;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class ConfigurationConverterTests
     {

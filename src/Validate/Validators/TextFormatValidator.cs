@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
+﻿
 namespace FormatValidator.Validators
 {
+    using System.Text.RegularExpressions;
+
     public class TextFormatValidator : ValidationEntry
     {
         private Regex _format;

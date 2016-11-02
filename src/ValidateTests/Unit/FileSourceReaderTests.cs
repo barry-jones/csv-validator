@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FormatValidator.Input;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+﻿
 namespace FormatValidatorTests.Unit
 {
+    using FormatValidator.Input;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class FileSourceReaderTests
     {

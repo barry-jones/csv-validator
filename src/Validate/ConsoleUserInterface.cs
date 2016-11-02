@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace FormatValidator
 {
+    using System;
+    using System.Collections.Generic;
+
     public class ConsoleUserInterface : IUserInterface
     {
         public void ShowStart()

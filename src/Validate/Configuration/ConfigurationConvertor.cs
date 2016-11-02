@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FormatValidator.Validators;
-
+﻿
 namespace FormatValidator.Configuration
 {
+    using System.Collections.Generic;
+    using FormatValidator.Validators;
+
     /// <summary>
     /// Converts a <see cref="ValidatorConfiguration"/> in to a <see cref="ConvertedValidators"/>
     /// </summary>

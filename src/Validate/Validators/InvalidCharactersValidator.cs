@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace FormatValidator.Validators
 {
+    using System;
+    using System.Collections.Generic;
+
     public class InvalidCharactersValidator : ValidationEntry
     {
         private List<Char> _characters;

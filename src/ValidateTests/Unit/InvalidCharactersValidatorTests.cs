@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FormatValidator;
-using FormatValidator.Validators;
-using FormatValidatorTests.Helpers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+﻿
 namespace FormatValidatorTests.Unit
 {
+    using System.Collections.Generic;
+    using FormatValidator;
+    using FormatValidator.Validators;
+    using FormatValidatorTests.Helpers;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class InvalidCharactersValidatorTests
     {

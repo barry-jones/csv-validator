@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace FormatValidator
 {
+    using System.Collections.Generic;
+
     public class RowValidationError
     {
         private int _row;
@@ -18,34 +16,19 @@ namespace FormatValidator
 
         public List<ValidationError> Errors
         {
-            get
-            {
-                return _errors;
-            }
+            get { return _errors; }
         }
 
         public int Row
         {
-            get
-            {
-                return _row;
-            }
-            set
-            {
-                _row = value;
-            }
+            get { return _row; }
+            set { _row = value; }
         }
 
         public string Content
         {
-            get
-            {
-                return _content;
-            }
-            set
-            {
-                _content = value;
-            }
+            get { return _content; }
+            set { _content = value; }
         }
     }
 }

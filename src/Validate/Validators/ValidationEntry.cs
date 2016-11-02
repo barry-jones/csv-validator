@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace FormatValidator.Validators
 {
+    using System.Collections.Generic;
+
     public abstract class ValidationEntry : IValidator
     {
         private List<ValidationError> _errors;
@@ -28,10 +26,7 @@ namespace FormatValidator.Validators
 
         protected List<ValidationError> Errors
         {
-            get
-            {
-                return _errors;
-            }
+            get { return _errors; }
         }
     }
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace FormatValidator
 {
+    using System;
+    using System.Linq;
+
     public class Parameters
     {
         private const int EXPECTED_NUMBER_PARAMETERS = 3;
@@ -75,6 +74,7 @@ namespace FormatValidator
         {
             _fileToValidate = parameters[0];
         }
+
         private void readConfigurationFile(string[] parameters)
         {
             if (string.Compare("-with", parameters[1], StringComparison.OrdinalIgnoreCase) == 0)
@@ -85,18 +85,12 @@ namespace FormatValidator
 
         public string Configuration
         {
-            get
-            {
-                return _configuration;
-            }
+            get { return _configuration; }
         }
 
         public string FileToValidate
         {
-            get
-            {
-                return _fileToValidate;
-            }
+            get { return _fileToValidate; }
         }
     }
 }

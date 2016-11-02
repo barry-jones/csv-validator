@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FormatValidator.Configuration;
-using FormatValidator.Input;
-using FormatValidator.Validators;
-
+﻿
 namespace FormatValidator
 {
+    using System.Collections.Generic;
+    using Configuration;
+    using Input;
+    using Validators;
+
     public class Validator
     {
         private RowValidator _rowValidator;
@@ -98,17 +96,11 @@ namespace FormatValidator
             }
         }
 
-        private bool IsHeaderRow()
-        {
-            return _hasHeaderRow && _totalRowsChecked == 1;
-        }
+        private bool IsHeaderRow() => _hasHeaderRow && _totalRowsChecked == 1;
 
         public int TotalRowsChecked
         {
-            get
-            {
-                return _totalRowsChecked;
-            }
+            get {  return _totalRowsChecked; }
         }
     }
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace FormatValidator.Validators
 {
+    using System;
+    using System.Collections.Generic;
+
     /// <summary>
     /// A collection of column validators that are orchestrated over a single
     /// row of the file being validated.
@@ -139,14 +138,8 @@ namespace FormatValidator.Validators
 
         public string ColumnSeperator
         {
-            get
-            {
-                return _columnSeperator;
-            }
-            set
-            {
-                _columnSeperator = value;
-            }
+            get { return _columnSeperator; }
+            set { _columnSeperator = value; }
         }
     }
 }

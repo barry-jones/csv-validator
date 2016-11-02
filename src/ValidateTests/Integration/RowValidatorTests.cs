@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FormatValidator;
-using FormatValidator.Validators;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+﻿
 namespace FormatValidatorTests.Integration
 {
+    using System.Collections.Generic;
+    using FormatValidator;
+    using FormatValidator.Validators;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     [TestClass]
     public class RowValidatorTests
     {

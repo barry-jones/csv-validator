@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
+﻿
 namespace FormatValidator.Validators
 {
+    using System.Collections.Generic;
+
     // this class needs a persitant error management, so that it can last through multiple
     // row validations.
 

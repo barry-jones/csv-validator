@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
+﻿
 namespace FormatValidator.Input
 {
+    using System.Collections.Generic;
+    using System.IO;
+
     public class FileSourceReader : ISourceReader
     {
         private string _file;
