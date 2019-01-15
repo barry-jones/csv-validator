@@ -1,7 +1,6 @@
 # CSV Validator
 
-.NET Core CSV text file validator. Enables the quick verification of column seperated data files. Columns can be 
-checked against multiple requirements for correctness.
+.NET Core CSV text file validator. Enables the quick verification of column separated data files. Columns can be checked against multiple requirements for correctness.
 
 ## Usage
 
@@ -37,13 +36,28 @@ To configure the verification a JSON file is used with the following format:
 }
 ```
 
-The "pattern" property uses regular expressions but it is important to escape the characters else the application will 
-fail when reading the configuration file.
+The `pattern` property uses regular expressions but it is important to escape the characters else the application will fail when reading the configuration file.
 
-"rowSeperator" can be any number of characters, rows can also be seperated by characters and do not need the new line characters to 
-be available in the input file.
+`rowSeperator` can be any number of characters, rows can also be separated by characters and do not need the new line characters to be available in the input file.
 
-"columnSeperator" can be one or more characters.
+`columnSeperator` can be one or more characters.
 
-The columns require the number, which is the ordinal of the column in the input file, you do not need to specify all columns, 
-only those that are to be validated.
+The columns require the number, which is the ordinal of the column in the input file, you do not need to specify all columns, only those that are to be validated.
+
+### Supported validation
+
+```json
+{
+    // validates the column has content
+    "isRequired": true|false,
+    // validates the content is unique in this column across the full file
+    "isUnique": true|false,
+    // validates a string against a regular expression
+    "pattern": "regular expression string",
+    // Maximum allowable length for a column
+    "maxLength": "int",
+    // Check if content is numerical
+    "isNumeric": true|false
+}
+```
+
