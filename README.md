@@ -46,7 +46,7 @@ The columns require the number, which is the ordinal of the column in the input 
 
 ### Supported validation
 
-```json
+```
 {
     // validates the column has content
     "isRequired": true|false,
