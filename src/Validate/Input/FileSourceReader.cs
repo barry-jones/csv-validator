@@ -13,12 +13,15 @@ namespace FormatValidator.Input
             _file = file;
         }
 
+        /// <summary>
+        /// Reads a line from the file, terminating with the <paramref name="rowSeperator"/>
+        /// string.
+        /// </summary>
+        /// <param name="rowSeperator">The sequance of characters denoting a new line.</param>
+        /// <returns>An enumerable list of rows from the file.</returns>
         public IEnumerable<string> ReadLines(string rowSeperator)
         {
-            // We are not sure if a line (terminated by a \r\n or \n) character is a line
-            // for validation purposes. It is possible that some files will not contain new
-            // lines in the row terminater, so we need to continue to read data from teh file
-            // until the row seperator is located or the end of the file is reached.
+            // read characters until row seperator string is located or the files ends.
 
             List<char> readCharacters = new List<char>();
             Queue<char> seperatorCheckQueue = new Queue<char>();

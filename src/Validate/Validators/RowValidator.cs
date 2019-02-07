@@ -26,6 +26,11 @@ namespace FormatValidator.Validators
             _columnSeperator = columnSeperator;
         }
         
+        /// <summary>
+        /// Runs all of the column validators against the string provided in <paramref name="toCheck"/>.
+        /// </summary>
+        /// <param name="toCheck">The row of data to validate</param>
+        /// <returns>True if the row has passed validation else false.</returns>
         public bool IsValid(string toCheck)
         {
             bool isValid = true;
