@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <VersionPrefix>0.2.1</VersionPrefix>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>validate</AssemblyName>
     <OutputType>Exe</OutputType>
