@@ -9,7 +9,7 @@
 The application is command line based, and has two arguments:
 
 ``` bash
-validate "input-datafile.csv" -with "configuration.json"
+validate --file "input-datafile.csv" --with "configuration.json"
 ```
 
 ## Configuration

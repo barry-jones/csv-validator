@@ -4,39 +4,37 @@ namespace FormatValidator
     using System;
     using System.Collections.Generic;
     using Input;
+    using CommandLine;
+    using Validate;
 
     public class Program
     {
         public static void Main(string[] args)
         {
-            Parameters parameters = new Parameters();
+            var result = Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(options => Run(options));
+        }
+
+        internal static void Run(Options options)
+        {
             ConsoleUserInterface ui = new ConsoleUserInterface();
             List<RowValidationError> errors = new List<RowValidationError>();
 
-            parameters.Read(args);
-
             ui.ShowStart();
 
-            if(parameters.IsValid())
+            DateTime start = DateTime.Now;
+            Validator validator = Validator.FromJson(System.IO.File.ReadAllText(options.With));
+            FileSourceReader source = new FileSourceReader(options.File);
+
+            foreach (RowValidationError current in validator.Validate(source))
             {
-                DateTime start = DateTime.Now;
-                Validator validator = Validator.FromJson(System.IO.File.ReadAllText(parameters.Configuration));
-                FileSourceReader source = new FileSourceReader(parameters.FileToValidate);
-
-                foreach (RowValidationError current in validator.Validate(source))
-                {
-                    errors.Add(current);
-                    ui.ReportRowError(current);
-                }
-
-                DateTime end = DateTime.Now;
-
-                ui.ShowSummary(validator, errors, end.Subtract(start));
+                errors.Add(current);
+                ui.ReportRowError(current);
             }
-            else
-            {
-                Console.WriteLine(string.Format("The parameters '{0}' and '{1}' provided either are empty or do not point to files.", parameters.Configuration, parameters.FileToValidate));
-            }
+
+            DateTime end = DateTime.Now;
+
+            ui.ShowSummary(validator, errors, end.Subtract(start));
         }
     }
 }
