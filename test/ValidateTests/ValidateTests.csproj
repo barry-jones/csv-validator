@@ -56,7 +56,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Validate\Validate.csproj" />
+    <ProjectReference Include="..\..\src\Validate.Lib\Validate.Lib.csproj" />
   </ItemGroup>
 
   <ItemGroup>
