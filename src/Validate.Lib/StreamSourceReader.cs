@@ -1,5 +1,5 @@
 
-namespace FormatValidator.Input
+namespace FormatValidator
 {
     using System.Collections.Generic;
     using System.IO;

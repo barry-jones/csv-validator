@@ -1,5 +1,5 @@
 ﻿
-namespace FormatValidator.Configuration
+namespace FormatValidator
 {
     internal interface IReader
     {

@@ -4,8 +4,6 @@ namespace FormatValidatorTests.Unit
     using System.Collections.Generic;
     using System.Linq;
     using FormatValidator;
-    using FormatValidator.Configuration;
-    using FormatValidator.Input;
     using FormatValidator.Validators;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 

@@ -1,5 +1,5 @@
 ﻿
-namespace FormatValidator.Configuration
+namespace FormatValidator
 {
     using System.Collections.Generic;
 

@@ -4,8 +4,6 @@
 namespace FormatValidator
 {
     using System.Collections.Generic;
-    using Configuration;
-    using Input;
     using Validators;
 
     public class Validator

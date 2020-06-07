@@ -1,6 +1,6 @@
 # CSV Validator
 
-[![](https://img.shields.io/github/release/barry-jones/csv-validator.svg)](https://github.com/barry-jones/csv-validator/releases/tag/v0.2.2)
+[![](https://img.shields.io/github/release/barry-jones/csv-validator.svg)](https://github.com/barry-jones/csv-validator/releases/tag/v1.0.0)
 
 .NET Core CSV text file validator. Enables the quick verification of column separated data files. Columns can be checked against multiple requirements for correctness.
 
@@ -63,3 +63,13 @@ The columns require the number, which is the ordinal of the column in the input 
 }
 ```
 
+## API
+
+CSV Validator is also available as a NuGet package, to enable in application validation of text files.
+
+### Usage
+
+``` csharp
+Validator validator = Validator.FromJson(config);
+RowValidationError[] errors = validator.Validate(inputStream);
+```
