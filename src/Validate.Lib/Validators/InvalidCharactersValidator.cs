@@ -4,7 +4,7 @@ namespace FormatValidator.Validators
     using System;
     using System.Collections.Generic;
 
-    public class InvalidCharactersValidator : ValidationEntry
+    internal class InvalidCharactersValidator : ValidationEntry
     {
         private List<Char> _characters;
 

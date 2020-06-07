@@ -1,6 +1,7 @@
 # CSV Validator
 
-[![](https://img.shields.io/github/release/barry-jones/csv-validator.svg)](https://github.com/barry-jones/csv-validator/releases/tag/v0.2.2)
+[![](https://img.shields.io/github/release/barry-jones/csv-validator.svg)](https://github.com/barry-jones/csv-validator/releases/tag/v1.0.0)
+[![Version](https://img.shields.io/nuget/vpre/csvvalidator.svg)](https://www.nuget.org/packages/csvvalidator)
 
 .NET Core CSV text file validator. Enables the quick verification of column separated data files. Columns can be checked against multiple requirements for correctness.
 
@@ -44,7 +45,7 @@ The `pattern` property uses regular expressions but it is important to escape th
 
 `columnSeperator` can be one or more characters.
 
-The columns require the number, which is the ordinal of the column in the input file, you do not need to specify all columns, only those that are to be validated.
+The columns __require__ the number, which is the ordinal of the column in the input file, you do not need to specify all columns, only those that are to be validated.
 
 ### Supported validation
 
@@ -63,3 +64,36 @@ The columns require the number, which is the ordinal of the column in the input 
 }
 ```
 
+## API
+
+CSV Validator is also available as a NuGet package, to enable in application validation of text files. The API conforms to _netstandard 2.0_.
+
+### Installation
+
+``` cli
+dotnet add package csvvalidator
+```
+
+### Usage
+
+``` csharp
+Validator validator = Validator.FromJson(config);
+RowValidationError[] errors = validator.Validate(inputStream);
+```
+
+__Dealing with validation errors.__
+
+Errors are reported heirarchicly, by row and then columns.
+
+``` csharp
+foreach(RowValidationError current in errors) 
+{
+	// row errors provides details of the row number and the content
+	Console.WriteLine($"Errors in row[{current.Row}]: {current.Content}");
+	foreach(ValidationError error in current.Errors)
+	{
+		// all errors then that occur on that row are reported in the error collection
+		Console.WriteLine($"{error.Message} at {error.AtCharacter}");
+	}
+}
+```

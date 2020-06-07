@@ -1,5 +1,5 @@
 ﻿
-namespace FormatValidator.Configuration
+namespace FormatValidator
 {
     using System.Collections.Generic;
     using FormatValidator.Validators;
@@ -7,7 +7,7 @@ namespace FormatValidator.Configuration
     /// <summary>
     /// Converts a <see cref="ValidatorConfiguration"/> in to a <see cref="ConvertedValidators"/>
     /// </summary>
-    public class ConfigurationConvertor
+    internal class ConfigurationConvertor
     {
         private ConvertedValidators _converted;
         private ValidatorConfiguration _fromConfig;

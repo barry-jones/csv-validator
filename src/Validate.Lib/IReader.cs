@@ -1,7 +1,7 @@
 ﻿
-namespace FormatValidator.Configuration
+namespace FormatValidator
 {
-    interface IReader
+    internal interface IReader
     {
         ValidatorConfiguration Read(string content);
     }

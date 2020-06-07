@@ -1,5 +1,5 @@
 ﻿
-namespace FormatValidator.Configuration
+namespace FormatValidator
 {
     using System.Collections.Generic;
 
@@ -10,6 +10,9 @@ namespace FormatValidator.Configuration
     /// <seealso cref="ConvertedValidators"/>
     public class ValidatorConfiguration
     {
+        /// <summary>
+        /// Initialises a new instance of ValidatorConfiguration
+        /// </summary>
         public ValidatorConfiguration()
         {
             Columns = new Dictionary<int, ColumnValidatorConfiguration>();

@@ -4,7 +4,7 @@ namespace FormatValidator
     using System;
     using System.Collections.Generic;
 
-    public class ConsoleUserInterface : IUserInterface
+    internal class ConsoleUserInterface : IUserInterface
     {
         public void ShowStart()
         {

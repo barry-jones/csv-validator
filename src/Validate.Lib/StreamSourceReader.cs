@@ -1,16 +1,22 @@
-﻿
-namespace FormatValidator.Input
+
+namespace FormatValidator
 {
     using System.Collections.Generic;
     using System.IO;
 
-    public class FileSourceReader : ISourceReader
+    /// <summary>
+    /// Reads CSV content from a Stream.
+    /// </summary>
+    /// <remarks>
+    /// This reader will not close the stream, please manage resources.
+    /// </remarks>
+    public class StreamSourceReader : ISourceReader
     {
-        private string _file;
+        private Stream _stream;
 
-        public FileSourceReader(string file)
+        public StreamSourceReader(Stream stream)
         {
-            _file = file;
+            _stream = stream;
         }
 
         /// <summary>
@@ -26,7 +32,7 @@ namespace FormatValidator.Input
             List<char> readCharacters = new List<char>();
             Queue<char> seperatorCheckQueue = new Queue<char>();
 
-            using (StreamReader reader = new StreamReader(System.IO.File.OpenRead(_file)))
+            using (StreamReader reader = new StreamReader(_stream))
             {
                 while (reader.Peek() >= 0)
                 {

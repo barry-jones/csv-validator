@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Validate", "src\Validate\Va
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ValidateTests", "test\ValidateTests\ValidateTests.csproj", "{6B336C06-BA6F-4166-A61A-36492742A45F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validate.Lib", "src\Validate.Lib\Validate.Lib.csproj", "{F3C36355-BF72-424B-A442-E3B01BE8D917}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{6B336C06-BA6F-4166-A61A-36492742A45F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B336C06-BA6F-4166-A61A-36492742A45F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B336C06-BA6F-4166-A61A-36492742A45F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3C36355-BF72-424B-A442-E3B01BE8D917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3C36355-BF72-424B-A442-E3B01BE8D917}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3C36355-BF72-424B-A442-E3B01BE8D917}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3C36355-BF72-424B-A442-E3B01BE8D917}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +44,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{6873E19F-6BCC-4873-AD06-C3FCC4B82D7A} = {D6F25962-5238-41D2-9E95-CF6DD0AFF47C}
 		{6B336C06-BA6F-4166-A61A-36492742A45F} = {E7E684DE-A4B9-4707-8716-C6BA9C4B0EC5}
+		{F3C36355-BF72-424B-A442-E3B01BE8D917} = {D6F25962-5238-41D2-9E95-CF6DD0AFF47C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB3F513E-622B-4396-8AE3-5E0EA1F022F8}

@@ -3,7 +3,7 @@ namespace FormatValidator.Validators
 {
     using System.Collections.Generic;
 
-    public interface IValidator
+    internal interface IValidator
     {
         bool IsValid(string toCheck);
 

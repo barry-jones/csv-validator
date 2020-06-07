@@ -3,12 +3,18 @@ namespace FormatValidator
 {
     using System;
     using System.Collections.Generic;
-    using Input;
     using CommandLine;
     using Validate;
 
+    /// <summary>
+    /// Main application entry point
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Main application entry point
+        /// </summary>
+        /// <param name="args">Application aruments</param>
         public static void Main(string[] args)
         {
             var result = Parser.Default.ParseArguments<Options>(args)

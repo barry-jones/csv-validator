@@ -1,7 +1,7 @@
 ﻿
 namespace FormatValidatorTests.Unit
 {
-    using FormatValidator.Configuration;
+    using FormatValidator;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]

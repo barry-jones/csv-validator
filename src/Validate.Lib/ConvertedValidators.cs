@@ -1,10 +1,10 @@
 ﻿
-namespace FormatValidator.Configuration
+namespace FormatValidator
 {
     using System.Collections.Generic;
     using Validators;
 
-    public class ConvertedValidators
+    internal class ConvertedValidators
     {
         public ConvertedValidators()
         {

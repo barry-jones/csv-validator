@@ -1,12 +1,15 @@
 ﻿
 namespace FormatValidator
 {
+    /// <summary>
+    /// Provides defails of an error found during validation.
+    /// </summary>
     public class ValidationError
     {
         private int _atCharacter;
         private string _message;
 
-        public ValidationError(int at, string message)
+        internal ValidationError(int at, string message)
         {
             _atCharacter = at;
             _message = message;
@@ -20,7 +23,7 @@ namespace FormatValidator
         public int AtCharacter
         {
             get { return _atCharacter; }
-            set { _atCharacter = value; }
+            internal set { _atCharacter = value; }
         }
     }
 }

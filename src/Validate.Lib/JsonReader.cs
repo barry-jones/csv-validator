@@ -1,7 +1,7 @@
 ﻿
-namespace FormatValidator.Configuration
+namespace FormatValidator
 {
-    public class JsonReader : IReader
+    internal class JsonReader : IReader
     {
         public ValidatorConfiguration Read(string json)
         {
