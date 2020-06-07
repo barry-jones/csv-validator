@@ -5,7 +5,9 @@
 
 .NET Core CSV text file validator. Enables the quick verification of column separated data files. Columns can be checked against multiple requirements for correctness.
 
-## Usage
+This application is provided via a CLI and a NuGet package. Details for using both are provided below.
+
+## CLI Usage
 
 The application is command line based, and has two arguments:
 
@@ -64,7 +66,7 @@ The columns __require__ the number, which is the ordinal of the column in the in
 }
 ```
 
-## API
+## API Usage
 
 CSV Validator is also available as a NuGet package, to enable in application validation of text files. The API conforms to _netstandard 2.0_.
 
