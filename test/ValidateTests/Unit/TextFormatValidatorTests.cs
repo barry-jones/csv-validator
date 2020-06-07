@@ -1,6 +1,7 @@
 ﻿
 namespace FormatValidatorTests.Unit
 {
+    using FormatValidator;
     using FormatValidator.Validators;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -71,6 +72,20 @@ namespace FormatValidatorTests.Unit
             bool result = validator.IsValid(INPUT);
 
             Assert.AreEqual(EXPECTED_RESULT, result);
+        }
+
+        [TestMethod]
+        public void Format_WhenInvalid_MessageContainsFormat()
+        {
+            const string INPUT = "aa";
+            const string FORMAT = @"\d\d";
+            const string EXPECTED_RESULT = "String 'aa' was not in correct format [\\d\\d].";
+
+            TextFormatValidator validator = new TextFormatValidator(FORMAT);
+            validator.IsValid(INPUT);
+            ValidationError error = validator.GetErrors()[0];
+
+            Assert.AreEqual(EXPECTED_RESULT, error.Message);
         }
     }
 }

@@ -20,10 +20,22 @@ namespace FormatValidator
             get { return _message; }
         }
 
+        /// <summary>
+        /// The position of the character the error occurred at.
+        /// </summary>
         public int AtCharacter
         {
             get { return _atCharacter; }
             internal set { _atCharacter = value; }
+        }
+
+        /// <summary>
+        /// The column the error occurred in.
+        /// </summary>
+        public int Column
+        {
+            get;
+            internal set;
         }
     }
 }
