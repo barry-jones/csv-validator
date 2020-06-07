@@ -1,7 +1,7 @@
 # CSV Validator
 
 [![](https://img.shields.io/github/release/barry-jones/csv-validator.svg)](https://github.com/barry-jones/csv-validator/releases/tag/v1.0.0)
-[![Version](https://img.shields.io/nuget/vpre/csvvalidator.svg)](https://www.nuget.org/packages/csvvalidator)
+[![Version](https://img.shields.io/nuget/vpre/CsvValidator.svg)](https://www.nuget.org/packages/CsvValidator)
 
 .NET Core CSV text file validator. Enables the quick verification of column separated data files. Columns can be checked against multiple requirements for correctness.
 
@@ -72,6 +72,12 @@ CSV Validator is also available as a NuGet package, to enable in application val
 
 ``` cli
 dotnet add package csvvalidator
+```
+
+``` xml
+<ItemGroup>
+  <PackageReference Include="csvvalidator" Version="1.0.1" />
+</ItemGroup>
 ```
 
 ### Usage
