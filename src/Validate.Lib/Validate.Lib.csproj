@@ -3,19 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>validatelib</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>CsvValidator</PackageId>
+    <Title>CSV Validator</Title>
+    <Description>Provides a framework for performing complex validation over CSV data sources.</Description>
+    <PackageTags>csv validation text configurable</PackageTags>
+    <Authors>Barry Jones</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
-
-  <PropertyGroup>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>csvvalidator</PackageId>
-    <Title>CSV Validator</Title>
-    <Description>Provides a framework for performing complex validation over CSV data sources.</Description>
-    <PackageTags>csv,validation,text,configurable</PackageTags>
-    <Version>1.0.0</Version>
-    <Authors>Barry Jones</Authors>
-  </PropertyGroup>
 </Project>

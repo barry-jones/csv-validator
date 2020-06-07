@@ -3,7 +3,7 @@ namespace FormatValidator.Validators
 {
     using System.Collections.Generic;
 
-    public abstract class ValidationEntry : IValidator
+    internal abstract class ValidationEntry : IValidator
     {
         private List<ValidationError> _errors;
 

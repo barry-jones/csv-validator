@@ -1,4 +1,6 @@
-﻿
+﻿using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("ValidateTests")]
 namespace FormatValidator
 {
     using System.Collections.Generic;
@@ -13,7 +15,7 @@ namespace FormatValidator
         private int _totalRowsChecked;
         private bool _hasHeaderRow;
 
-        public Validator()
+        internal Validator()
         {
             _rowValidator = new RowValidator();
             _rowSeperator = "\r\n";
@@ -60,11 +62,6 @@ namespace FormatValidator
             }
         }
 
-        public List<ValidatorGroup> GetColumnValidators()
-        {
-            return _rowValidator.GetColumnValidators();
-        }
-
         public void SetColumnSeperator(string seperator)
         {
             if (string.IsNullOrEmpty(seperator))
@@ -83,6 +80,11 @@ namespace FormatValidator
             {
                 _rowSeperator = rowSeperator;
             }                
+        }
+
+        internal List<ValidatorGroup> GetColumnValidators()
+        {
+            return _rowValidator.GetColumnValidators();
         }
 
         private void TransferConvertedColumns(ConvertedValidators converted)

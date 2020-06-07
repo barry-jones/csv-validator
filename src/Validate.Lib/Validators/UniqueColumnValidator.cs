@@ -6,7 +6,7 @@ namespace FormatValidator.Validators
     // this class needs a persitant error management, so that it can last through multiple
     // row validations.
 
-    public class UniqueColumnValidator : ValidationEntry
+    internal class UniqueColumnValidator : ValidationEntry
     {
         private List<string> _entries;
 

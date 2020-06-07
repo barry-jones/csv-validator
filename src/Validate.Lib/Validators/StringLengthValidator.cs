@@ -1,7 +1,7 @@
 ﻿
 namespace FormatValidator.Validators
 {
-    public class StringLengthValidator : ValidationEntry
+    internal class StringLengthValidator : ValidationEntry
     {
         private int _maxLength;
 

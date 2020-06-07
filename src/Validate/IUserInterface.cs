@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace FormatValidator
 {
-    public interface IUserInterface
+    internal interface IUserInterface
     {
         /// <summary>
         /// Display a start message

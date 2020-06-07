@@ -5,7 +5,7 @@ namespace FormatValidator.Validators
     using System.Collections.Generic;
     using System.Linq;
 
-    public class ValidatorGroup : ValidationEntry
+    internal class ValidatorGroup : ValidationEntry
     {
         private List<IValidator> _validators;
 

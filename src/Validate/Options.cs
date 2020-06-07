@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Validate
 {
-    class Options
+    internal class Options
     {
         [Option('f', "file", Required = true, HelpText = "The file to validate")]
         public string File { get; set; }

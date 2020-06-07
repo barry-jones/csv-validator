@@ -1,7 +1,7 @@
 ﻿
 namespace FormatValidator.Validators
 {
-    public class NumberValidator : ValidationEntry
+    internal class NumberValidator : ValidationEntry
     {
         public override bool IsValid(string toCheck)
         {

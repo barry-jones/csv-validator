@@ -9,7 +9,7 @@ namespace FormatValidator.Validators
     /// row of the file being validated.
     /// </summary>
     /// <seealso cref="Validator"/>
-    public class RowValidator
+    internal class RowValidator
     {
         private ValidatorGroup[] _columns;
         private RowValidationError _errorInformation;

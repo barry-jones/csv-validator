@@ -3,7 +3,7 @@ namespace FormatValidator.Validators
 {
     using System.Text.RegularExpressions;
 
-    public class TextFormatValidator : ValidationEntry
+    internal class TextFormatValidator : ValidationEntry
     {
         private Regex _format;
 
