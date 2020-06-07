@@ -4,10 +4,17 @@ namespace FormatValidator
     using System.Collections.Generic;
     using System.IO;
 
+    /// <summary>
+    /// Provides configurable access to a file source.
+    /// </summary>
     public class FileSourceReader : ISourceReader
     {
         private string _file;
 
+        /// <summary>
+        /// Initialises a new instance of the FileSourceReader.
+        /// </summary>
+        /// <param name="file">The path to the file to read.</param>
         public FileSourceReader(string file)
         {
             _file = file;

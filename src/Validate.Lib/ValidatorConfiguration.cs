@@ -10,6 +10,9 @@ namespace FormatValidator
     /// <seealso cref="ConvertedValidators"/>
     public class ValidatorConfiguration
     {
+        /// <summary>
+        /// Initialises a new instance of ValidatorConfiguration
+        /// </summary>
         public ValidatorConfiguration()
         {
             Columns = new Dictionary<int, ColumnValidatorConfiguration>();
