@@ -49,7 +49,11 @@ namespace FormatValidator.Validators
 
                     // set validation character error location for all errors
                     // on this column to the first character in the column
-                    for (int i = 0; i < newErrors.Count; i++) newErrors[i].AtCharacter = columnIndexes[currentColumn];
+                    for (int i = 0; i < newErrors.Count; i++)
+                    {
+                        newErrors[i].AtCharacter = columnIndexes[currentColumn];
+                        newErrors[i].Column = currentColumn + 1; // zero based index
+                    }
 
                     isValid = isValid & result;
                 }
