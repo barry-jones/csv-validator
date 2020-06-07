@@ -3,6 +3,7 @@ namespace FormatValidator.Validators
 {
     using System;
     using System.Collections.Generic;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// A collection of column validators that are orchestrated over a single
@@ -34,8 +35,7 @@ namespace FormatValidator.Validators
         public bool IsValid(string toCheck)
         {
             bool isValid = true;
-            string[] seperators = new string[] { _columnSeperator };
-            string[] parts = toCheck.Split(seperators, StringSplitOptions.None);
+            string[] parts = ColumnSplitter.Split(toCheck, _columnSeperator);
             int[] columnIndexes = CalculateColumnStartIndexes(parts);
 
             for (int currentColumn = 0; currentColumn < parts.Length; currentColumn++)
