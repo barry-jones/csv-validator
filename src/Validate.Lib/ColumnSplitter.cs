@@ -18,7 +18,8 @@ namespace FormatValidator
         public static string[] Split(string input, string seperator)
         {
             return Regex.Split(input,
-                $"{EscapeSeperator(seperator)}(?=([^\"]*\"[^\"]*\")*[^\"]*$)"
+                $"{EscapeSeperator(seperator)}(?=([^\"]*\"[^\"]*\")*[^\"]*$)",
+                RegexOptions.ExplicitCapture
                 );
         }
 
