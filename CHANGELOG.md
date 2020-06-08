@@ -1,5 +1,9 @@
 # CSV Validator Change Log
 
+## [v1.0.3](https://github.com/barry-jones/csv-validator/releases/tag/v1.0.3)
+
+* bugfix: Fixed issue with capture groups on Regex string split [pr13](https://github.com/barry-jones/csv-validator/pull/13), closes [#12](https://github.com/barry-jones/csv-validator/issues/12)
+
 ## [v1.0.2](https://github.com/barry-jones/csv-validator/releases/tag/v1.0.2)
 
 * bugfix: Now handles quoted strings [pr11](https://github.com/barry-jones/csv-validator/pull/11), closes [#9](https://github.com/barry-jones/csv-validator/issues/9)
