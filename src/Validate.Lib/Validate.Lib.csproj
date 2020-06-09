@@ -4,11 +4,24 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>validatelib</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageId>CsvValidator</PackageId>
-    <Title>CSV Validator</Title>
-    <Description>Provides a framework for performing complex validation over CSV data sources.</Description>
-    <PackageTags>csv validation text configurable</PackageTags>
-    <Authors>Barry Jones</Authors>
+  </PropertyGroup>
+
+  <PropertyGroup>
+		<!-- Properties related to NuGet packaging: -->
+		<IsPackable>True</IsPackable>
+		<PackageId>CsvValidator</PackageId>
+		<Title>CSV Validator: Fast text file validation</Title>
+		<Description>Library for complex validation of delimited text files.</Description>
+		<PackageReleaseNotes>A changelog is available at https://github.com/barry-jones/csv-validator/blob/master/CHANGELOG.md.</PackageReleaseNotes>
+		<Authors>Barry Jones</Authors>
+		<PackageLicenseUrl>https://github.com/barry-jones/csv-validator/blob/master/LICENSE</PackageLicenseUrl>
+		<PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
+		<NoPackageAnalysis>True</NoPackageAnalysis>
+		<PackageTags>csvvalidator;csv;text;validator;validation</PackageTags>
+		<PackageProjectUrl>https://github.com/barry-jones/csv-validator</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/barry-jones/csv-validator</RepositoryUrl>
+		<IncludeSymbols>True</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
