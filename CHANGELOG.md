@@ -1,5 +1,9 @@
 # CSV Validator Change Log
 
+## [current](https://github.com/barry-jones/csv-validator/)
+
+* fix: Console colour for success messages [pr](https://github.com/barry-jones/csv-validator/pull/16), closes [#](https://github.com/barry-jones/csv-validator/issues/9)
+
 ## [v1.0.4](https://github.com/barry-jones/csv-validator/releases/tag/v1.0.4)
 
 * details added to nuget package
