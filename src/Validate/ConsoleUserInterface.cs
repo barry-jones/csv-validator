@@ -40,7 +40,7 @@ namespace FormatValidator
             }
             else
             {
-                colour = ConsoleColor.Red;
+                colour = ConsoleColor.Green;
                 message = "{0} rows checked and no errors found in {1}s.";
             }
 
