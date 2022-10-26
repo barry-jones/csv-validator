@@ -23,11 +23,12 @@ To configure the verification a JSON file is used with the following format:
 {
 	"rowSeperator": "\r\n",
 	"columnSeperator": ",",
+	"hasHeaderRow": true,
 	"columns": {
 		"1": {
 			"name": "ID",
 			"isRequired": true,
-			"isUnique": true
+			"unique": true
 		},
 		"2": {
 			"name": "DOB",
@@ -56,7 +57,7 @@ The columns __require__ the number, which is the ordinal of the column in the in
     // validates the column has content
     "isRequired": true|false,
     // validates the content is unique in this column across the full file
-    "isUnique": true|false,
+    "unique": true|false,
     // validates a string against a regular expression
     "pattern": "regular expression string",
     // Maximum allowable length for a column
