@@ -14,5 +14,7 @@ namespace FormatValidator
         public bool IsNumeric { get; set; }
 
         public bool IsRequired { get; set; }        
+
+        public bool Trim { get; set; }
     }
 }
