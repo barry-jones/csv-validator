@@ -124,7 +124,11 @@ namespace FormatValidator
             {
                 foreach (IValidator columnValidator in column.Value)
                 {
-                    _rowValidator.AddColumnValidator(column.Key, columnValidator);
+                    _rowValidator.AddColumnValidator(
+                        column.Key, 
+                        columnValidator,
+                        converted.TrimBeforeCheck.Contains(column.Key)
+                    );
                 }
             }
         }

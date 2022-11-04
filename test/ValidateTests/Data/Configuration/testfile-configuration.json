@@ -10,7 +10,8 @@
     },
     "2": {
       "name": "NAME",
-      "maxLength": 10
+      "maxLength": 10,
+      "trim": true
     },
     "3": {
       "name": "DOB",
@@ -18,7 +19,8 @@
     },
     "4": {
       "name": "USERNAME",
-      "isRequired": true
+      "isRequired": true,
+      "trim": true
     }
   }
 }
