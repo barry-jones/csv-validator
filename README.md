@@ -55,8 +55,8 @@ The columns __require__ the number, which is the ordinal of the column in the in
 
 ```
 {
-	// trim value before checking
-	"trim": true|false,
+    // trim value before checking
+    "trim": true|false,
     // validates the column has content
     "isRequired": true|false,
     // validates the content is unique in this column across the full file
