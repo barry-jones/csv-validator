@@ -1,4 +1,6 @@
 ﻿
+using System.Globalization;
+
 namespace FormatValidator.Validators
 {
     internal class NumberValidator : ValidationEntry
@@ -6,7 +8,7 @@ namespace FormatValidator.Validators
         public override bool IsValid(string toCheck)
         {
             double parsed = 0;
-            bool isValid = string.IsNullOrWhiteSpace(toCheck) || double.TryParse(toCheck, out parsed);
+            bool isValid = string.IsNullOrWhiteSpace(toCheck) || double.TryParse(toCheck, NumberStyles.Any, CultureInfo.InvariantCulture, out parsed);
 
             if(!isValid)
             {
