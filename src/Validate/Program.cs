@@ -31,6 +31,7 @@ namespace FormatValidator
             DateTime start = DateTime.Now;
             Validator validator = Validator.FromJson(System.IO.File.ReadAllText(options.With));
             FileSourceReader source = new FileSourceReader(options.File);
+            source.OnProgress = percentage => ui.ReportProgress(percentage);
 
             foreach (RowValidationError current in validator.Validate(source))
             {

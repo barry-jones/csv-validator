@@ -6,14 +6,31 @@ namespace FormatValidator
 
     internal class ConsoleUserInterface : IUserInterface
     {
+        private bool _progressVisible;
+
         public void ShowStart()
         {
             Console.WriteLine("Started validating document.");
             Console.WriteLine();
         }
 
+        public void ReportProgress(int percentage)
+        {
+            const int barWidth = 20;
+            int filled = percentage * barWidth / 100;
+            string bar = new string('█', filled) + new string('░', barWidth - filled);
+            Console.Write($"\r[{bar}] {percentage,3}%");
+            _progressVisible = true;
+        }
+
         public void ReportRowError(RowValidationError error)
         {
+            if (_progressVisible)
+            {
+                Console.WriteLine();
+                _progressVisible = false;
+            }
+
             foreach (ValidationError rowSpecificErrors in error.Errors)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
@@ -42,6 +59,12 @@ namespace FormatValidator
             {
                 colour = ConsoleColor.Green;
                 message = "{0} rows checked and no errors found in {1}s.";
+            }
+
+            if (_progressVisible)
+            {
+                Console.WriteLine();
+                _progressVisible = false;
             }
 
             Console.WriteLine();

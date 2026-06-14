@@ -1,6 +1,7 @@
 ﻿
 namespace FormatValidator
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
 
@@ -10,6 +11,8 @@ namespace FormatValidator
     public class FileSourceReader : ISourceReader
     {
         private string _file;
+
+        public Action<int> OnProgress { get; set; }
 
         /// <summary>
         /// Initialises a new instance of the FileSourceReader.
@@ -32,6 +35,8 @@ namespace FormatValidator
 
             List<char> readCharacters = new List<char>();
             Queue<char> seperatorCheckQueue = new Queue<char>();
+            long fileLength = new FileInfo(_file).Length;
+            int lastReportedPercentage = -1;
 
             using (StreamReader reader = new StreamReader(System.IO.File.OpenRead(_file)))
             {
@@ -52,12 +57,24 @@ namespace FormatValidator
                         yield return new string(readCharacters.ToArray());
                         readCharacters.Clear();
                         seperatorCheckQueue.Clear();
+
+                        if (OnProgress != null && fileLength > 0)
+                        {
+                            int percentage = (int)(reader.BaseStream.Position * 100L / fileLength);
+                            if (percentage != lastReportedPercentage)
+                            {
+                                OnProgress(percentage);
+                                lastReportedPercentage = percentage;
+                            }
+                        }
                     }
                 }
 
                 // return the last set of characters as the last row may not contain the seperator
                 if (readCharacters.Count > 0)
                     yield return new string(readCharacters.ToArray());
+
+                OnProgress?.Invoke(100);
             }
         }
     }
