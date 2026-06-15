@@ -24,5 +24,10 @@ namespace FormatValidator
         /// <param name="errors">The full list of errors</param>
         /// <param name="duration">The duration of the validation</param>
         public void ShowSummary(Validator validator, List<RowValidationError> errors, TimeSpan duration);
+
+        /// <summary>
+        /// Report progress as a percentage (0–100)
+        /// </summary>
+        public void ReportProgress(int percentage);
     }
 }

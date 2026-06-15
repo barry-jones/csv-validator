@@ -20,6 +20,7 @@
     <None Remove="Data\rowterminator-testfile-1.csv" />
     <None Remove="Data\rowterminator-testfile-2.csv" />
     <None Remove="Data\simplefile.csv" />
+    <None Remove="Data\singlerow.csv" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +52,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\simplefile.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\singlerow.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

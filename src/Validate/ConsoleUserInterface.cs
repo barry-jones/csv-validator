@@ -6,16 +6,37 @@ namespace FormatValidator
 
     internal class ConsoleUserInterface : IUserInterface
     {
+        private const int ProgressBarWidth = 20;
+        private const int ProgressLineTotalWidth = 27; // [ + 20 bars + ] + space + 3 digits + %
+        private const string ProgressClearLine = "\r                              \r";
+
+        private bool _progressVisible;
+        private int _lastPercentage;
+
         public void ShowStart()
         {
             Console.WriteLine("Started validating document.");
             Console.WriteLine();
         }
 
+        public void ReportProgress(int percentage)
+        {
+            _lastPercentage = percentage;
+            WriteProgressBar(percentage);
+            _progressVisible = true;
+        }
+
         public void ReportRowError(RowValidationError error)
         {
+            bool overwriting = _progressVisible;
+            _progressVisible = false;
+            bool firstLine = true;
+
             foreach (ValidationError rowSpecificErrors in error.Errors)
             {
+                if (firstLine && overwriting)
+                    Console.Write("\r");
+
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Write(string.Format("[Error] ", error.Row));
                 Console.ResetColor();
@@ -24,8 +45,16 @@ namespace FormatValidator
                 Console.Write(string.Format("line {1} character {0} ", rowSpecificErrors.AtCharacter, error.Row));
                 Console.ResetColor();
                 Console.Write(rowSpecificErrors.Message);
+
+                if (firstLine && overwriting)
+                    Console.Write(new string(' ', ProgressLineTotalWidth));
+
                 Console.Write(Environment.NewLine);
+                firstLine = false;
             }
+
+            WriteProgressBar(_lastPercentage);
+            _progressVisible = true;
         }
 
         public void ShowSummary(Validator validator, List<RowValidationError> errors, TimeSpan duration)
@@ -44,6 +73,12 @@ namespace FormatValidator
                 message = "{0} rows checked and no errors found in {1}s.";
             }
 
+            if (_progressVisible)
+            {
+                Console.Write(ProgressClearLine);
+                _progressVisible = false;
+            }
+
             Console.WriteLine();
 
             Console.ForegroundColor = colour;
@@ -52,11 +87,18 @@ namespace FormatValidator
             Console.WriteLine();
 
             Console.WriteLine(
-                string.Format(message, 
-                    validator.TotalRowsChecked, 
-                    errors.Count, 
+                string.Format(message,
+                    validator.TotalRowsChecked,
+                    errors.Count,
                     duration.TotalSeconds)
                 );
+        }
+
+        private static void WriteProgressBar(int percentage)
+        {
+            int filled = percentage * ProgressBarWidth / 100;
+            string bar = new string('█', filled) + new string('░', ProgressBarWidth - filled);
+            Console.Write($"\r[{bar}] {percentage,3}%");
         }
     }
 }
