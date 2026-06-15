@@ -39,8 +39,15 @@ namespace FormatValidator.Validators
             string[] parts = ColumnSplitter.Split(toCheck, _columnSeperator);
             int[] columnIndexes = CalculateColumnStartIndexes(parts);
 
-            bool columnCountValid = CheckColumnCount(toCheck, parts.Length);
-            isValid = isValid & columnCountValid;
+            if (_strictColumns)
+            {
+                bool isSame = parts.Length == _columns.Length;
+                isValid = isValid & isSame;
+                
+                if (!isSame)
+                    _errorInformation.Errors.Add(new ValidationError(0,
+                        string.Format("Expected {0} columns but found {1}.", _columns.Length, parts.Length)));
+            }
 
             for (int currentColumn = 0; currentColumn < parts.Length; currentColumn++)
             {
@@ -66,24 +73,6 @@ namespace FormatValidator.Validators
             AddRowDetailsToErrors(toCheck);
 
             return isValid;
-        }
-
-        /// <summary>
-        /// Validates only the column count of a row, without running the
-        /// per-column validators. Intended for rows that are not subject to
-        /// content validation (e.g. the header row) but must still be
-        /// count-checked when <see cref="StrictColumns"/> is enabled.
-        /// </summary>
-        /// <param name="toCheck">The row of data to count-check.</param>
-        /// <returns>True if the column count is acceptable else false.</returns>
-        public bool CheckColumnCountOnly(string toCheck)
-        {
-            string[] parts = ColumnSplitter.Split(toCheck, _columnSeperator);
-            bool result = CheckColumnCount(toCheck, parts.Length);
-
-            AddRowDetailsToErrors(toCheck);
-
-            return result;
         }
 
         public RowValidationError GetError()
