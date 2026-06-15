@@ -9,9 +9,12 @@ namespace FormatValidator
         public ConvertedValidators()
         {
             Columns = new Dictionary<int, List<IValidator>>();
+            TrimBeforeCheck = new List<int>();
         }
 
         public Dictionary<int, List<IValidator>> Columns { get; private set; }
+
+        public List<int> TrimBeforeCheck { get; private set; }
 
         public string RowSeperator { get; set; }
 

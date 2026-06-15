@@ -13,6 +13,7 @@ namespace FormatValidator.Validators
     internal class RowValidator
     {
         private ValidatorGroup[] _columns;
+        private List<int> _trimBeforeCheck;
         private RowValidationError _errorInformation;
         private string _columnSeperator;
 
@@ -20,6 +21,7 @@ namespace FormatValidator.Validators
         {
             _errorInformation = new RowValidationError();
             _columns = new ValidatorGroup[0];
+            _trimBeforeCheck = new List<int>();
         }
 
         public RowValidator(string columnSeperator) : this()
@@ -42,7 +44,13 @@ namespace FormatValidator.Validators
             {
                 if (currentColumn < _columns.Length)
                 {
-                    bool result = _columns[currentColumn].IsValid(parts[currentColumn]);
+                    string value = parts[currentColumn];
+                    if (_trimBeforeCheck.Contains(currentColumn))
+                    {
+                        value = value.Trim();
+                    }
+
+                    bool result = _columns[currentColumn].IsValid(value);
 
                     IList<ValidationError> newErrors = _columns[currentColumn].GetErrors();
                     _errorInformation.Errors.AddRange(newErrors);
@@ -78,11 +86,15 @@ namespace FormatValidator.Validators
             }
         }
 
-        public void AddColumnValidator(int toColumn, IValidator validator)
+        public void AddColumnValidator(int toColumn, IValidator validator, bool trim = false)
         {
             CheckAndResizeColumnList(toColumn);
-
-            _columns[toColumn - 1].Add(validator);
+            int index = toColumn - 1;
+            _columns[index].Add(validator);
+            if (trim)
+            {
+                _trimBeforeCheck.Add(index);
+            }
         }
 
         public List<ValidatorGroup> GetColumnValidators()

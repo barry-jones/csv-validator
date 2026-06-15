@@ -28,7 +28,8 @@ To configure the verification a JSON file is used with the following format:
 		"1": {
 			"name": "ID",
 			"isRequired": true,
-			"unique": true
+			"unique": true,
+			"trim": true
 		},
 		"2": {
 			"name": "DOB",
@@ -54,6 +55,8 @@ The columns __require__ the number, which is the ordinal of the column in the in
 
 ```
 {
+    // trim value before checking
+    "trim": true|false,
     // validates the column has content
     "isRequired": true|false,
     // validates the content is unique in this column across the full file

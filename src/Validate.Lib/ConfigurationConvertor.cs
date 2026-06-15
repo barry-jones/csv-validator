@@ -48,6 +48,7 @@ namespace FormatValidator
                     if (!string.IsNullOrWhiteSpace(columnConfig.Value.Pattern)) group.Add(new TextFormatValidator(columnConfig.Value.Pattern));
                     if (columnConfig.Value.IsNumeric) group.Add(new NumberValidator());
                     if (columnConfig.Value.IsRequired) group.Add(new NotNullableValidator());
+                    if (columnConfig.Value.Trim) _converted.TrimBeforeCheck.Add(columnConfig.Key);
 
                     _converted.Columns.Add(columnConfig.Key, group);
                 }
