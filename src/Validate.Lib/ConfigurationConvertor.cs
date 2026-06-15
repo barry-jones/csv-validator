@@ -33,6 +33,7 @@ namespace FormatValidator
             _converted.RowSeperator = UnescapeString(_fromConfig.RowSeperator);
             _converted.ColumnSeperator = UnescapeString(_fromConfig.ColumnSeperator);
             _converted.HasHeaderRow = _fromConfig.HasHeaderRow;
+            _converted.StrictColumns = _fromConfig.StrictColumns;
         }
 
         private void ConvertColumns()

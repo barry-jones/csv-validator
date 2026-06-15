@@ -15,6 +15,7 @@ namespace FormatValidator.Validators
         private ValidatorGroup[] _columns;
         private RowValidationError _errorInformation;
         private string _columnSeperator;
+        private bool _strictColumns;
 
         public RowValidator()
         {
@@ -37,6 +38,9 @@ namespace FormatValidator.Validators
             bool isValid = true;
             string[] parts = ColumnSplitter.Split(toCheck, _columnSeperator);
             int[] columnIndexes = CalculateColumnStartIndexes(parts);
+
+            bool columnCountValid = CheckColumnCount(toCheck, parts.Length);
+            isValid = isValid & columnCountValid;
 
             for (int currentColumn = 0; currentColumn < parts.Length; currentColumn++)
             {
@@ -62,6 +66,24 @@ namespace FormatValidator.Validators
             AddRowDetailsToErrors(toCheck);
 
             return isValid;
+        }
+
+        /// <summary>
+        /// Validates only the column count of a row, without running the
+        /// per-column validators. Intended for rows that are not subject to
+        /// content validation (e.g. the header row) but must still be
+        /// count-checked when <see cref="StrictColumns"/> is enabled.
+        /// </summary>
+        /// <param name="toCheck">The row of data to count-check.</param>
+        /// <returns>True if the column count is acceptable else false.</returns>
+        public bool CheckColumnCountOnly(string toCheck)
+        {
+            string[] parts = ColumnSplitter.Split(toCheck, _columnSeperator);
+            bool result = CheckColumnCount(toCheck, parts.Length);
+
+            AddRowDetailsToErrors(toCheck);
+
+            return result;
         }
 
         public RowValidationError GetError()
@@ -117,6 +139,25 @@ namespace FormatValidator.Validators
             }
         }
 
+        // Returns true when the row width is acceptable. Only enforces a width
+        // when strict-column checking is enabled and a column schema is
+        // configured. The expected width is the size of the configured-columns
+        // collection (i.e. the largest configured column index).
+        private bool CheckColumnCount(string content, int actualColumnCount)
+        {
+            if (!_strictColumns || _columns.Length == 0) return true;
+
+            if (actualColumnCount != _columns.Length)
+            {
+                _errorInformation.Errors.Add(new ValidationError(0,
+                    string.Format("Expected {0} columns but found {1}.", _columns.Length, actualColumnCount)));
+
+                return false;
+            }
+
+            return true;
+        }
+
         private void AddRowDetailsToErrors(string content)
         {
             _errorInformation.Content = content;
@@ -149,6 +190,16 @@ namespace FormatValidator.Validators
         {
             get { return _columnSeperator; }
             set { _columnSeperator = value; }
+        }
+
+        /// <summary>
+        /// When true, rows whose column count does not match the configured
+        /// column schema width are reported as a row-level error.
+        /// </summary>
+        public bool StrictColumns
+        {
+            get { return _strictColumns; }
+            set { _strictColumns = value; }
         }
     }
 }

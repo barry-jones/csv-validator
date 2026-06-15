@@ -16,7 +16,9 @@
     <None Remove="Data\Configuration\configuration.json" />
     <None Remove="Data\Configuration\simplefile-configuration.json" />
     <None Remove="Data\Configuration\testfile-configuration.json" />
+    <None Remove="Data\Configuration\strictcolumns-configuration.json" />
     <None Remove="Data\headers-testfile-1.csv" />
+    <None Remove="Data\strictcolumns-badheader-testfile.csv" />
     <None Remove="Data\rowterminator-testfile-1.csv" />
     <None Remove="Data\rowterminator-testfile-2.csv" />
     <None Remove="Data\simplefile.csv" />
@@ -42,7 +44,13 @@
     <Content Include="Data\Configuration\testfile-configuration.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Data\Configuration\strictcolumns-configuration.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\headers-testfile-1.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\strictcolumns-badheader-testfile.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Data\rowterminator-testfile-1.csv">
@@ -64,10 +72,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
-    <PackageReference Include="MSTest.TestAdapter" Version="2.1.1" />
-    <PackageReference Include="Moq" Version="4.14.1" />
-    <PackageReference Include="MSTest.TestFramework" Version="2.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.0.0" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.0" />
   </ItemGroup>
 
 </Project>

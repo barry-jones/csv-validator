@@ -56,6 +56,7 @@ namespace FormatValidator
             validator.SetRowSeperator(converted.RowSeperator);
             validator.TransferConvertedColumns(converted);
             validator._hasHeaderRow = converted.HasHeaderRow;
+            validator._rowValidator.StrictColumns = converted.StrictColumns;
 
             return validator;
         }
@@ -73,6 +74,17 @@ namespace FormatValidator
 
                 if (IsHeaderRow())
                 {
+                    // The header row is excluded from per-column content
+                    // validation, but its column count must still be checked
+                    // when strict-column enforcement is enabled.
+                    if (!_rowValidator.CheckColumnCountOnly(line))
+                    {
+                        RowValidationError headerError = _rowValidator.GetError();
+                        headerError.Row = _totalRowsChecked;
+                        _rowValidator.ClearErrors();
+
+                        yield return headerError;
+                    }
                 }
                 else if (!_rowValidator.IsValid(line))
                 {
