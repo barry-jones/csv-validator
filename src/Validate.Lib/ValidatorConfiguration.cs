@@ -24,11 +24,6 @@ namespace FormatValidator
 
         public bool HasHeaderRow { get; set; }
 
-        /// <summary>
-        /// When true, every row (including the header) must have exactly the
-        /// number of columns defined by the column schema; otherwise a row-level
-        /// column-count error is reported. Defaults to false (off).
-        /// </summary>
         public bool StrictColumns { get; set; }
 
         public Dictionary<int, ColumnValidatorConfiguration> Columns { get; set; }

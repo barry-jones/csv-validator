@@ -76,6 +76,34 @@ namespace FormatValidatorTests.Integration
             Assert.AreEqual(EXPECTED_TOTALERRORS, totalErrorCount);
         }
 
+        [TestMethod, TestCategory("Functional")]
+        public void Functional_WhenStrictColumnsAndConfigKeysOutOfOrder_UsesHighestIndexAsWidth()
+        {
+            // The expected width is the highest configured column index, not the
+            // order the columns happen to be declared in. With strictColumns on,
+            // a correctly-sized file (header + body) must report no count errors
+            // even when the column keys are declared out of order. Guards both the
+            // header and body paths against deriving width from declaration order.
+            const string CONFIG_JSON = @"{
+                ""columnSeperator"": "","",
+                ""rowSeperator"": ""\n"",
+                ""hasHeaderRow"": true,
+                ""strictColumns"": true,
+                ""columns"": { ""1"": {}, ""2"": {}, ""4"": {}, ""3"": {} }
+            }";
+            const string DATA = "h1,h2,h3,h4\na,b,c,d\n1,2,3,4";
+
+            Validator validator = Validator.FromJson(CONFIG_JSON);
+            using (System.IO.MemoryStream stream = new System.IO.MemoryStream(System.Text.Encoding.UTF8.GetBytes(DATA)))
+            {
+                StreamSourceReader source = new StreamSourceReader(stream);
+
+                List<RowValidationError> errors = new List<RowValidationError>(validator.Validate(source));
+
+                Assert.AreEqual(0, errors.Count);
+            }
+        }
+
         private void TestColumnSeperator(string seperator, string testfile)
         {
             int totalErrorCount = 0;

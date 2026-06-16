@@ -39,15 +39,7 @@ namespace FormatValidator.Validators
             string[] parts = ColumnSplitter.Split(toCheck, _columnSeperator);
             int[] columnIndexes = CalculateColumnStartIndexes(parts);
 
-            if (_strictColumns)
-            {
-                bool isSame = parts.Length == _columns.Length;
-                isValid = isValid & isSame;
-                
-                if (!isSame)
-                    _errorInformation.Errors.Add(new ValidationError(0,
-                        string.Format("Expected {0} columns but found {1}.", _columns.Length, parts.Length)));
-            }
+            isValid = isValid & IsColumnCountValid(parts.Length);
 
             for (int currentColumn = 0; currentColumn < parts.Length; currentColumn++)
             {
@@ -128,11 +120,19 @@ namespace FormatValidator.Validators
             }
         }
 
-        // Returns true when the row width is acceptable. Only enforces a width
-        // when strict-column checking is enabled and a column schema is
-        // configured. The expected width is the size of the configured-columns
-        // collection (i.e. the largest configured column index).
-        private bool CheckColumnCount(string content, int actualColumnCount)
+        // Count-checks a row that is not subject to per-column validation (e.g.
+        // the header) and records a row-level error if the width is wrong.
+        internal bool CheckColumnCountOnly(string toCheck)
+        {
+            string[] parts = ColumnSplitter.Split(toCheck, _columnSeperator);
+            bool result = IsColumnCountValid(parts.Length);
+
+            AddRowDetailsToErrors(toCheck);
+
+            return result;
+        }
+
+        private bool IsColumnCountValid(int actualColumnCount)
         {
             if (!_strictColumns || _columns.Length == 0) return true;
 
@@ -181,10 +181,6 @@ namespace FormatValidator.Validators
             set { _columnSeperator = value; }
         }
 
-        /// <summary>
-        /// When true, rows whose column count does not match the configured
-        /// column schema width are reported as a row-level error.
-        /// </summary>
         public bool StrictColumns
         {
             get { return _strictColumns; }

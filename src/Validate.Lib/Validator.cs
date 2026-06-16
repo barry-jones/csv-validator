@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Net.Security;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("ValidateTests")]
 namespace FormatValidator
@@ -21,7 +19,6 @@ namespace FormatValidator
         private string _rowSeperator;
         private int _totalRowsChecked;
         private bool _hasHeaderRow;
-        private ConvertedValidators _converted;
 
         /// <summary>
         /// Initialises a new instance of Validator
@@ -60,7 +57,6 @@ namespace FormatValidator
             validator.TransferConvertedColumns(converted);
             validator._hasHeaderRow = converted.HasHeaderRow;
             validator._rowValidator.StrictColumns = converted.StrictColumns;
-            validator._converted = converted;
 
             return validator;
         }
@@ -78,21 +74,15 @@ namespace FormatValidator
 
                 if (IsHeaderRow())
                 {
-                    if (_converted.StrictColumns)
+                    // The header is excluded from per-column content validation,
+                    // but its column count must still be checked under strict mode.
+                    if (!_rowValidator.CheckColumnCountOnly(line))
                     {
-                        string[] parts = ColumnSplitter.Split(line, _converted.ColumnSeperator);
-                        bool isSame = parts.Length == _converted.Columns.Keys.Last();
+                        RowValidationError headerError = _rowValidator.GetError();
+                        headerError.Row = _totalRowsChecked;
+                        _rowValidator.ClearErrors();
 
-                        if (!isSame)
-                        {
-                            var rowError = new RowValidationError();
-                            rowError.Row = _totalRowsChecked;
-                            rowError.Content = line;
-                            rowError.Errors.Add(new ValidationError(0,
-                                string.Format("Expected {0} columns but found {1}.",
-                                    _converted.Columns.Keys.Last(), parts.Length)));
-                            yield return rowError;
-                        }
+                        yield return headerError;
                     }
                 }
                 else if (!_rowValidator.IsValid(line))
