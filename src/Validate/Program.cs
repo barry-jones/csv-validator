@@ -15,13 +15,14 @@ namespace FormatValidator
         /// Main application entry point
         /// </summary>
         /// <param name="args">Application aruments</param>
-        public static void Main(string[] args)
+        /// <returns>The process exit code: 0 on success, non-zero on validation errors or invalid arguments.</returns>
+        public static int Main(string[] args)
         {
-            var result = Parser.Default.ParseArguments<Options>(args)
-                .WithParsed(options => Run(options));
+            return Parser.Default.ParseArguments<Options>(args)
+                .MapResult(options => Run(options), errors => 1);
         }
 
-        internal static void Run(Options options)
+        internal static int Run(Options options)
         {
             ConsoleUserInterface ui = new ConsoleUserInterface();
             List<RowValidationError> errors = new List<RowValidationError>();
@@ -42,6 +43,8 @@ namespace FormatValidator
             DateTime end = DateTime.Now;
 
             ui.ShowSummary(validator, errors, end.Subtract(start));
+
+            return errors.Count > 0 ? 1 : 0;
         }
     }
 }
