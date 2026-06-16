@@ -1,0 +1,24 @@
+{
+  "columnSeperator": ",",
+  "rowSeperator": "\r\n",
+  "hasHeaderRow": true,
+  "strictColumns": true,
+  "columns": {
+    "1": {
+      "name": "ID",
+      "isNumeric": true
+    },
+    "2": {
+      "name": "NAME",
+      "maxLength": 10
+    },
+    "3": {
+      "name": "DOB",
+      "pattern": "^\\d\\d\\d\\d-\\d\\d-\\d\\d$"
+    },
+    "4": {
+      "name": "USERNAME",
+      "isRequired": true
+    }
+  }
+}

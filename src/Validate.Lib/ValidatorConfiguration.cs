@@ -24,6 +24,8 @@ namespace FormatValidator
 
         public bool HasHeaderRow { get; set; }
 
+        public bool StrictColumns { get; set; }
+
         public Dictionary<int, ColumnValidatorConfiguration> Columns { get; set; }
     }
 }

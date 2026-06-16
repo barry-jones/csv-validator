@@ -15,6 +15,7 @@ namespace FormatValidator.Validators
         private ValidatorGroup[] _columns;
         private RowValidationError _errorInformation;
         private string _columnSeperator;
+        private bool _strictColumns;
 
         public RowValidator()
         {
@@ -37,6 +38,8 @@ namespace FormatValidator.Validators
             bool isValid = true;
             string[] parts = ColumnSplitter.Split(toCheck, _columnSeperator);
             int[] columnIndexes = CalculateColumnStartIndexes(parts);
+
+            isValid = isValid & IsColumnCountValid(parts.Length);
 
             for (int currentColumn = 0; currentColumn < parts.Length; currentColumn++)
             {
@@ -117,6 +120,33 @@ namespace FormatValidator.Validators
             }
         }
 
+        // Count-checks a row that is not subject to per-column validation (e.g.
+        // the header) and records a row-level error if the width is wrong.
+        internal bool CheckColumnCountOnly(string toCheck)
+        {
+            string[] parts = ColumnSplitter.Split(toCheck, _columnSeperator);
+            bool result = IsColumnCountValid(parts.Length);
+
+            AddRowDetailsToErrors(toCheck);
+
+            return result;
+        }
+
+        private bool IsColumnCountValid(int actualColumnCount)
+        {
+            if (!_strictColumns || _columns.Length == 0) return true;
+
+            if (actualColumnCount != _columns.Length)
+            {
+                _errorInformation.Errors.Add(new ValidationError(0,
+                    string.Format("Expected {0} columns but found {1}.", _columns.Length, actualColumnCount)));
+
+                return false;
+            }
+
+            return true;
+        }
+
         private void AddRowDetailsToErrors(string content)
         {
             _errorInformation.Content = content;
@@ -149,6 +179,12 @@ namespace FormatValidator.Validators
         {
             get { return _columnSeperator; }
             set { _columnSeperator = value; }
+        }
+
+        public bool StrictColumns
+        {
+            get { return _strictColumns; }
+            set { _strictColumns = value; }
         }
     }
 }

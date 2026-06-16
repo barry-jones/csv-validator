@@ -41,6 +41,28 @@ namespace FormatValidatorTests.Unit
         }
 
         [TestMethod]
+        public void JsonReader_WhenStrictColumnsIsProvided_ShouldBePopulated()
+        {
+            const string INPUT = "{ \"strictColumns\": true }";
+            JsonReader reader = new JsonReader();
+
+            ValidatorConfiguration configuration = reader.Read(INPUT);
+
+            Assert.AreEqual(true, configuration.StrictColumns);
+        }
+
+        [TestMethod]
+        public void JsonReader_WhenStrictColumnsAbsent_DefaultsToFalse()
+        {
+            const string INPUT = "{ \"hasHeaderRow\": true }";
+            JsonReader reader = new JsonReader();
+
+            ValidatorConfiguration configuration = reader.Read(INPUT);
+
+            Assert.AreEqual(false, configuration.StrictColumns);
+        }
+
+        [TestMethod]
         public void JsonReader_WhenColumnSeperatorProvided_ShouldBePopulated()
         {
             const string INPUT = "{ \"columnSeperator\": \"|\" }";

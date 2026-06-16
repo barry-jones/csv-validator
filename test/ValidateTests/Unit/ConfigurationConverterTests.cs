@@ -150,5 +150,23 @@ namespace FormatValidatorTests.Unit
 
             Assert.AreEqual(true, converted.HasHeaderRow);
         }
+
+        [TestMethod]
+        public void Converter_WhenStrictColumnsNotProvided_DefaultsToFalse()
+        {
+            ConvertedValidators converted = _converter.Convert();
+
+            Assert.AreEqual(false, converted.StrictColumns);
+        }
+
+        [TestMethod]
+        public void Converter_WhenStrictColumnsProvided_ConvertsValue()
+        {
+            _configuration.StrictColumns = true;
+
+            ConvertedValidators converted = _converter.Convert();
+
+            Assert.AreEqual(true, converted.StrictColumns);
+        }
     }
 }

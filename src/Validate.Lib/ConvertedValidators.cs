@@ -18,5 +18,7 @@ namespace FormatValidator
         public string ColumnSeperator { get; set; }
 
         public bool HasHeaderRow { get; set; }
+
+        public bool StrictColumns { get; set; }
     }
 }
