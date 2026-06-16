@@ -51,7 +51,7 @@ The `pattern` property uses regular expressions but it is important to escape th
 
 The columns __require__ the number, which is the ordinal of the column in the input file, you do not need to specify all columns, only those that are to be validated.
 
-`strictColumns` is an optional boolean (default `false`). When omitted or `false` the validator behaves as before: rows with more columns than the configuration accounts for are ignored, and rows with fewer columns are not flagged for width. When set to `true`, every row — including the header row — whose column count does not equal the expected width is reported as a row-level error.
+`strictColumns` is an optional boolean (default `false`). When set to `true`, every row — including the header row — whose column count does not equal the expected width is reported as a row-level error.
 
 The expected width is taken from the column schema: it is the **highest configured column index**. Intermediate columns may be omitted, but the last column's index sets the expected width. For example, defining only columns `1` and `4` (omitting `2` and `3`) sets the expected width to `4`, so a 4-column row passes the count check. To use `strictColumns` reliably, define every column up to the last one you care about. The column-count error is a row-level error (it has no single column or character position, so its `Column` and `AtCharacter` are `0`); per-column content errors are still reported alongside it.
 

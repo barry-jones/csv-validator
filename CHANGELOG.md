@@ -2,6 +2,7 @@
 
 ## [current](https://github.com/barry-jones/csv-validator/)
 
+* feat: Added `strictColumns` option to report rows (and the header) whose column count does not match the configured schema width [pr30](https://github.com/barry-jones/csv-validator/pull/30)
 * fix: Console colour for success messages [pr](https://github.com/barry-jones/csv-validator/pull/17), closes [#16](https://github.com/barry-jones/csv-validator/issues/9)
 
 ## [v1.0.4](https://github.com/barry-jones/csv-validator/releases/tag/v1.0.4)
