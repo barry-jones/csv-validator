@@ -179,5 +179,25 @@ namespace FormatValidatorTests.Unit
 
             Assert.IsNotNull(validators.Columns[1][0] as AllowedValuesValidator);
         }
+
+        [TestMethod]
+        public void Converter_WhenColumnHasMinLengthAttribute_ShouldCreateValidator()
+        {
+            _configuration.Columns.Add(1, new ColumnValidatorConfiguration() { MinLength = 10 });
+
+            ConvertedValidators validators = _converter.Convert();
+
+            Assert.IsNotNull(validators.Columns[1][0] as StringMinLengthValidator);
+        }
+
+        [TestMethod]
+        public void Converter_WhenColumnHasMinLengthOfZero_ShouldNotCreateValidator()
+        {
+            _configuration.Columns.Add(1, new ColumnValidatorConfiguration() { MinLength = 0 });
+
+            ConvertedValidators validators = _converter.Convert();
+
+            Assert.AreEqual(0, validators.Columns[1].Count);
+        }
     }
 }
