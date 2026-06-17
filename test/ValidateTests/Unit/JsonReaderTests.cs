@@ -83,5 +83,16 @@ namespace FormatValidatorTests.Unit
 
             Assert.AreEqual("\r\n", configuration.RowSeperator);
         }
+
+        [TestMethod]
+        public void JsonReader_WhenAllowedValuesProvided_ShouldBePopulated()
+        {
+            const string INPUT = "{ \"columns\": { \"1\": { \"allowedValues\": [\"YES\", \"NO\", \"MAYBE\"] } } }";
+            JsonReader reader = new JsonReader();
+
+            ValidatorConfiguration configuration = reader.Read(INPUT);
+
+            CollectionAssert.AreEqual(new[] { "YES", "NO", "MAYBE" }, configuration.Columns[1].AllowedValues);
+        }
     }
 }

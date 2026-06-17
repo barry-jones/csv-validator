@@ -69,6 +69,10 @@ The expected width is taken from the column schema: it is the **highest configur
     // Maximum allowable length for a column
     "maxLength": "int",
     // Check if content is numerical
+    "isNumeric": true|false,
+    // Check if content is in a specific set
+    "allowedValues": ["value1", "value2", ...]
+    // Check if content is numerical
     "isNumeric": true|false
 }
 ```

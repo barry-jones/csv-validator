@@ -1,6 +1,7 @@
 ﻿
 namespace FormatValidatorTests.Unit
 {
+    using System.Collections.Generic;
     using System.Linq;
     using FormatValidator;
     using FormatValidator.Validators;
@@ -167,6 +168,16 @@ namespace FormatValidatorTests.Unit
             ConvertedValidators converted = _converter.Convert();
 
             Assert.AreEqual(true, converted.StrictColumns);
+        }
+
+        [TestMethod]
+        public void Converter_WhenColumnHasAllowedValuesAttribute_ShouldCreateValidator()
+        {
+            _configuration.Columns.Add(1, new ColumnValidatorConfiguration() { AllowedValues = new List<string> { "YES", "NO", "MAYBE" } });
+
+            ConvertedValidators validators = _converter.Convert();
+
+            Assert.IsNotNull(validators.Columns[1][0] as AllowedValuesValidator);
         }
     }
 }
