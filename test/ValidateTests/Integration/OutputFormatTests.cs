@@ -69,7 +69,7 @@ namespace FormatValidatorTests.Integration
             int exitCode = RunCaptured(options, out string stdout, out string _);
 
             Assert.AreEqual(0, exitCode);
-            Assert.AreEqual("{ \"success\": true, \"failures\": [] }".Replace(" ", string.Empty), stdout.Replace(" ", string.Empty));
+            Assert.AreEqual("{\"success\":true,\"failures\":[]}", stdout.Trim());
             JObject document = JObject.Parse(stdout);
             Assert.AreEqual(true, (bool)document["success"]);
             Assert.AreEqual(0, ((JArray)document["failures"]).Count);
@@ -109,7 +109,7 @@ namespace FormatValidatorTests.Integration
             errors.Add(row);
 
             StringWriter writer = new StringWriter();
-            StructuredOutput.Write(writer, OutputFormat.Csv, errors);
+            StructuredOutput.Write(writer, OutputFormat.Csv, false, errors);
             string csv = writer.ToString();
 
             string[] lines = csv.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -123,27 +123,27 @@ namespace FormatValidatorTests.Integration
         {
             Options options = new Options { With = CONFIG, File = ERROR_FILE, Output = "xml" };
 
-            int exitCode = RunCaptured(options, out string stdout, out string _);
+            int exitCode = RunCaptured(options, out string stdout, out string stderr);
 
             Assert.AreEqual(1, exitCode);
-            // No structured output; human reporting on stdout (unchanged behaviour).
-            Assert.IsFalse(stdout.TrimStart().StartsWith("{"));
-            Assert.IsTrue(stdout.Contains("Started validating document."));
-            Assert.IsTrue(stdout.Contains("xml"));
-            Assert.IsTrue(stdout.Contains("not supported"));
+            // No structured output is produced; the human report and the notice go to stderr.
+            Assert.AreEqual(string.Empty, stdout);
+            Assert.IsTrue(stderr.Contains("Started validating document."));
+            Assert.IsTrue(stderr.Contains("xml"));
+            Assert.IsTrue(stderr.Contains("not supported"));
         }
 
         [TestMethod]
-        public void Run_NoOutputOption_HumanOutputOnStdoutAndExitCodeUnchanged()
+        public void Run_NoOutputOption_HumanOutputOnStderr_ExitCodeUnchanged()
         {
             Options options = new Options { With = CONFIG, File = ERROR_FILE };
 
             int exitCode = RunCaptured(options, out string stdout, out string stderr);
 
             Assert.AreEqual(1, exitCode);
-            Assert.IsTrue(stdout.Contains("Started validating document."));
-            Assert.IsTrue(stdout.Contains("FAILED"));
-            Assert.AreEqual(string.Empty, stderr);
+            Assert.AreEqual(string.Empty, stdout);
+            Assert.IsTrue(stderr.Contains("Started validating document."));
+            Assert.IsTrue(stderr.Contains("FAILED"));
         }
 
         [TestMethod]

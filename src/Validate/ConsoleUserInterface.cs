@@ -15,8 +15,8 @@ namespace FormatValidator
 
         public void ShowStart()
         {
-            Console.WriteLine("Started validating document.");
-            Console.WriteLine();
+            Console.Error.WriteLine("Started validating document.");
+            Console.Error.WriteLine();
         }
 
         public void ReportProgress(int percentage)
@@ -35,21 +35,21 @@ namespace FormatValidator
             foreach (ValidationError rowSpecificErrors in error.Errors)
             {
                 if (firstLine && overwriting)
-                    Console.Write("\r");
+                    Console.Error.Write("\r");
 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.Write(string.Format("[Error] ", error.Row));
+                Console.Error.Write(string.Format("[Error] ", error.Row));
                 Console.ResetColor();
 
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
-                Console.Write(string.Format("line {1} character {0} ", rowSpecificErrors.AtCharacter, error.Row));
+                Console.Error.Write(string.Format("line {1} character {0} ", rowSpecificErrors.AtCharacter, error.Row));
                 Console.ResetColor();
-                Console.Write(rowSpecificErrors.Message);
+                Console.Error.Write(rowSpecificErrors.Message);
 
                 if (firstLine && overwriting)
-                    Console.Write(new string(' ', ProgressLineTotalWidth));
+                    Console.Error.Write(new string(' ', ProgressLineTotalWidth));
 
-                Console.Write(Environment.NewLine);
+                Console.Error.Write(Environment.NewLine);
                 firstLine = false;
             }
 
@@ -75,18 +75,18 @@ namespace FormatValidator
 
             if (_progressVisible)
             {
-                Console.Write(ProgressClearLine);
+                Console.Error.Write(ProgressClearLine);
                 _progressVisible = false;
             }
 
-            Console.WriteLine();
+            Console.Error.WriteLine();
 
             Console.ForegroundColor = colour;
-            Console.WriteLine(errors.Count > 0 ? "FAILED" : "PASSED");
+            Console.Error.WriteLine(errors.Count > 0 ? "FAILED" : "PASSED");
             Console.ResetColor();
-            Console.WriteLine();
+            Console.Error.WriteLine();
 
-            Console.WriteLine(
+            Console.Error.WriteLine(
                 string.Format(message,
                     validator.TotalRowsChecked,
                     errors.Count,
@@ -98,7 +98,7 @@ namespace FormatValidator
         {
             int filled = percentage * ProgressBarWidth / 100;
             string bar = new string('█', filled) + new string('░', ProgressBarWidth - filled);
-            Console.Write($"\r[{bar}] {percentage,3}%");
+            Console.Error.Write($"\r[{bar}] {percentage,3}%");
         }
     }
 }

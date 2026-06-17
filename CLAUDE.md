@@ -30,10 +30,11 @@ Config-driven pipeline: JSON config → `ValidatorConfiguration` (via `JsonReade
 
 ## Conventions (enforced by review — keep to them)
 
-- **Comments:** XML `///` doc comments on **public API only**. On internal/private members use plain `//` or none — do **not** add XML docs to non-public members.
+- **Comments & naming:** prefer encoding intent in **names, types, and method structure** — a comment that explains *what* the code does is a smell; extract a well-named method instead, and reserve comments for *why* the code can't express. For doc comments: XML `///` on **public API only**; internal/private members use plain `//` or none (no XML docs on non-public members).
 - **Surface:** internal-by-default; keep new types and members as tightly scoped as possible. To test internals, use `[assembly: InternalsVisibleTo("ValidateTests")]` (already present on both `Validate.Lib` and `Validate`) — do **not** widen something to `public` just to test it.
 - **Abstraction:** prefer a little duplication over a premature abstraction (rule of three). Don't grow a class's API to remove a small or one-off duplication.
 - **Single source of truth** for any value that must stay consistent across code paths (see expected-width above).
+- **Console streams:** human-readable / diagnostic output goes to **stderr** (`Console.Error`); **stdout** is reserved for machine-readable output (e.g. `--output`). Don't put human text on stdout.
 - **Tests:** MSTest (`[TestClass]`/`[TestMethod]`); match the style in `test/ValidateTests` (e.g. `Integration/FunctionalTests.cs`). Fixtures live under `test/ValidateTests/Data` and are registered as `<Content>` (copied to output) in `ValidateTests.csproj` — **new fixture files must be added there**. For small cases prefer inline strings fed through `StreamSourceReader`(over a `MemoryStream`) to avoid fixture churn.
 
 ## Gotchas

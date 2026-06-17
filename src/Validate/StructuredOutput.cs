@@ -3,10 +3,8 @@ namespace FormatValidator
 {
     using System.Collections.Generic;
     using System.IO;
-    using System.Text;
     using Newtonsoft.Json;
 
-    // Produces machine-readable output (json/csv) for the --output option.
     internal enum OutputFormat
     {
         None,
@@ -14,10 +12,32 @@ namespace FormatValidator
         Csv
     }
 
+    // The machine-readable contract for --output json. The property names are the wire format.
+    internal sealed class ValidationOutput
+    {
+        [JsonProperty("success")]
+        public bool Success { get; set; }
+
+        [JsonProperty("failures")]
+        public List<ValidationFailure> Failures { get; set; }
+    }
+
+    internal sealed class ValidationFailure
+    {
+        [JsonProperty("character")]
+        public int Character { get; set; }
+
+        [JsonProperty("message")]
+        public string Message { get; set; }
+
+        [JsonProperty("column")]
+        public int Column { get; set; }
+    }
+
     internal static class StructuredOutput
     {
-        // Parses the --output value. Returns false for null/empty (no structured output requested)
-        // and for unsupported values; format is set to None in both cases.
+        // Parses the --output value. Returns false for null/empty (none requested) and for
+        // unsupported values; format is set to None in both cases.
         public static bool TryParse(string value, out OutputFormat format)
         {
             format = OutputFormat.None;
@@ -38,71 +58,63 @@ namespace FormatValidator
             }
         }
 
-        public static void Write(TextWriter writer, OutputFormat format, List<RowValidationError> errors)
+        public static void Write(TextWriter writer, OutputFormat format, bool success, IEnumerable<RowValidationError> errors)
         {
             if (format == OutputFormat.Json)
-                writer.Write(BuildJson(errors));
+                WriteJson(writer, success, errors);
             else if (format == OutputFormat.Csv)
-                writer.Write(BuildCsv(errors));
+                WriteCsv(writer, errors);
         }
 
-        private static string BuildJson(List<RowValidationError> errors)
+        private static void WriteJson(TextWriter writer, bool success, IEnumerable<RowValidationError> errors)
         {
-            StringBuilder failures = new StringBuilder();
-            bool first = true;
+            ValidationOutput output = new ValidationOutput
+            {
+                Success = success,
+                Failures = Flatten(errors)
+            };
+
+            writer.Write(JsonConvert.SerializeObject(output));
+            writer.Write('\n');
+        }
+
+        private static void WriteCsv(TextWriter writer, IEnumerable<RowValidationError> errors)
+        {
+            writer.Write("character,column,message\r\n");
+
+            foreach (ValidationFailure failure in Flatten(errors))
+            {
+                writer.Write(failure.Character);
+                writer.Write(',');
+                writer.Write(failure.Column);
+                writer.Write(',');
+                writer.Write(EscapeCsvField(failure.Message ?? string.Empty));
+                writer.Write("\r\n");
+            }
+        }
+
+        private static List<ValidationFailure> Flatten(IEnumerable<RowValidationError> errors)
+        {
+            List<ValidationFailure> failures = new List<ValidationFailure>();
 
             foreach (RowValidationError row in errors)
             {
                 foreach (ValidationError error in row.Errors)
                 {
-                    if (!first)
-                        failures.Append(",");
-                    first = false;
-
-                    failures.Append("{\"character\":");
-                    failures.Append(error.AtCharacter);
-                    failures.Append(",\"message\":");
-                    failures.Append(JsonConvert.ToString(error.Message ?? string.Empty));
-                    failures.Append(",\"column\":");
-                    failures.Append(error.Column);
-                    failures.Append("}");
+                    failures.Add(new ValidationFailure
+                    {
+                        Character = error.AtCharacter,
+                        Message = error.Message,
+                        Column = error.Column
+                    });
                 }
             }
 
-            bool success = failures.Length == 0;
-            StringBuilder document = new StringBuilder();
-            document.Append("{\"success\":");
-            document.Append(success ? "true" : "false");
-            document.Append(",\"failures\":[");
-            document.Append(failures);
-            document.Append("]}");
-            return document.ToString();
-        }
-
-        private static string BuildCsv(List<RowValidationError> errors)
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.Append("character,column,message");
-            builder.Append("\r\n");
-
-            foreach (RowValidationError row in errors)
-            {
-                foreach (ValidationError error in row.Errors)
-                {
-                    builder.Append(error.AtCharacter);
-                    builder.Append(",");
-                    builder.Append(error.Column);
-                    builder.Append(",");
-                    builder.Append(EscapeCsvField(error.Message ?? string.Empty));
-                    builder.Append("\r\n");
-                }
-            }
-
-            return builder.ToString();
+            return failures;
         }
 
         // RFC-4180: wrap in double quotes if the field contains a comma, double-quote or newline,
-        // and double any internal double-quotes.
+        // doubling any internal double-quotes.
         private static string EscapeCsvField(string field)
         {
             bool mustQuote = field.IndexOf(',') >= 0
