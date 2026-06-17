@@ -6,6 +6,7 @@
 * fix: Console colour for success messages [pr](https://github.com/barry-jones/csv-validator/pull/17), closes [#16](https://github.com/barry-jones/csv-validator/issues/9)
 * feat: Added non-zero exit code for validation failures [pr31](https://github.com/barry-jones/csv-validator/pull/31).
 * feat: Added structured output to JSON or CSV with flags [pr32](https://github.com/barry-jones/csv-validator/pull/32).
+* feat: allowedValues validator lets users limit values to a specific set [pr33](https://github.com/barry-jones/csv-validator/pull/33).
 
 ## [v1.0.4](https://github.com/barry-jones/csv-validator/releases/tag/v1.0.4)
 
