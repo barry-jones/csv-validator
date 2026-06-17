@@ -9,10 +9,11 @@ This application is provided via a CLI and a NuGet package. Details for using bo
 
 ## CLI Usage
 
-The application is command line based, and has two arguments. A non-zero exit code is returned if any validation errors are found.
+The application is command line based, and has three arguments. The `--file` and `--with` arguments are required, `--output` 
+is optional. A non-zero exit code is returned if any validation errors are found.
 
 ``` bash
-validate --file "input-datafile.csv" --with "configuration.json"
+validate --file "input-datafile.csv" --with "configuration.json" --output json
 ```
 
 ## Configuration
