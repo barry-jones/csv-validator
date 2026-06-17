@@ -14,6 +14,9 @@ namespace Validate
         [Option('w', "with", Required =true, HelpText = "The configuration file that details the validation")]
         public string With { get; set; }
 
+        [Option('o', "output", Required = false, HelpText = "Machine-readable output format written to stdout: json or csv (case-insensitive).")]
+        public string Output { get; set; }
+
         [Usage(ApplicationAlias = "validate.exe")]
         public static IEnumerable<Example> Examples
         {
