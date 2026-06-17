@@ -24,8 +24,16 @@ namespace FormatValidator
 
         internal static int Run(Options options)
         {
+            bool requested = !string.IsNullOrWhiteSpace(options.Output);
+            bool structured = StructuredOutput.TryParse(options.Output, out OutputFormat format);
+
             ConsoleUserInterface ui = new ConsoleUserInterface();
             List<RowValidationError> errors = new List<RowValidationError>();
+
+            if (requested && !structured)
+            {
+                Console.Error.WriteLine($"Output format \"{options.Output}\" is not supported; using standard reporting.");
+            }
 
             ui.ShowStart();
 
@@ -44,7 +52,14 @@ namespace FormatValidator
 
             ui.ShowSummary(validator, errors, end.Subtract(start));
 
-            return errors.Count > 0 ? 1 : 0;
+            bool passed = errors.Count == 0;
+
+            if (structured)
+            {
+                StructuredOutput.Write(Console.Out, format, passed, errors);
+            }
+
+            return passed ? 0 : 1;
         }
     }
 }
