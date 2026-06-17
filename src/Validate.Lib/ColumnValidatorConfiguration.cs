@@ -11,6 +11,11 @@ namespace FormatValidator
 
         public int MaxLength { get; set; }
 
+        /// <summary>
+        /// The minimum number of characters required for this column. When greater than zero, any cell value shorter than this length is a validation error.
+        /// </summary>
+        public int MinLength { get; set; }
+
         public string Pattern { get; set; }
 
         public bool IsNumeric { get; set; }

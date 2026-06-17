@@ -68,6 +68,8 @@ The expected width is taken from the column schema: it is the **highest configur
     "pattern": "regular expression string",
     // Maximum allowable length for a column
     "maxLength": "int",
+    // Minimum required length for a column
+    "minLength": "int",
     // Check if content is numerical
     "isNumeric": true|false,
     // Check if content is in a specific set
